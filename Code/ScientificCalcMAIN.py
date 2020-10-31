@@ -47,19 +47,20 @@ class StartPage(tk.Frame): #This class is for the starting page, which will be d
 
     def __init__(self, parent, controller):
 
-        tk.Frame.__init__(self, parent, bg = 'light blue') #Defines the frame, as well as inherits from container class
+        tk.Frame.__init__(self, parent, bg = '#222831') #Defines the frame, as well as inherits from container class
 
-        startlf = tk.LabelFrame(self, bg = 'light blue', borderwidth = 0, highlightthickness = 0) #This label enables positioning buttons centrally
+        startlf = tk.LabelFrame(self, bg = '#222831', borderwidth = 0, highlightthickness = 0) #This label enables positioning buttons centrally
         startlf.grid(row = 2, column = 1, padx = 420, pady = 10)
 
-        label1 = tk.Label(self, text = 'Welcome to the Calculator!', font = TitleFont, fg = 'maroon', bg = 'light green') #These labels are for displaying the title text
+        label1 = tk.Label(self, text = 'Welcome to the Calculator!', font = TitleFont, fg = '#00adb5', bg = '#222831') #These labels are for displaying the title text
         label1.grid(row = 0, column = 1, padx = 250, pady = 10) #To position label
-        label2 = tk.Label(self, text = 'Please press START to continue or QUIT to exit!', font = TitleFont, fg = 'maroon', bg = 'light green')
+        label2 = tk.Label(self, text = 'Please press START to continue or QUIT to exit!', font = TitleFont, fg = '#00adb5', bg = '#222831')
         label2.grid(row = 1, column = 1, padx = 150, pady = 10)
 
         s = ttk.Style() #Button styling
-        s.configure('btn.TButton', font = ('Arial', 12), background = 'light green')
-        s.map('btn.TButton', foreground = [('active', '!disabled', 'maroon')], background = [('active', 'black')])
+        s.theme_use('alt')
+        s.configure('btn.TButton', font = ('Arial', 12), foreground = '#eeeeee', background = '#00adb5')
+        s.map('btn.TButton', foreground = [('active', '!disabled', '#00adb5')], background = [('active', '#393e46')])
 
         startbutton = ttk.Button(startlf, text = 'START', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button redirects to ChoicePage
         startbutton.grid(row = 0, column = 0, padx = 10, pady = 100, sticky = 'e')
@@ -71,12 +72,12 @@ class ChoicePage(tk.Frame): #This class is for the second page, where user can c
 
     def __init__(self, parent, controller):
 
-        tk.Frame.__init__(self, parent, bg = 'light blue')
+        tk.Frame.__init__(self, parent, bg = '#222831')
 
-        choiceslf = tk.LabelFrame(self, bg = 'light blue', borderwidth = 0, highlightthickness = 0) #This label enables positioning buttons centrally
+        choiceslf = tk.LabelFrame(self, bg = '#222831', borderwidth = 0, highlightthickness = 0) #This label enables positioning buttons centrally
         choiceslf.grid(row = 1, column = 0, padx = 360, pady = 100)
 
-        label = tk.Label(self, text = 'So, what are we doing?', font = TitleFont, fg = 'maroon', bg = 'light green') #Title label
+        label = tk.Label(self, text = 'So, what are we doing?', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
         label.grid(row = 0, column = 0, padx = 150, pady = 10, sticky = 'nsew') 
 
         arithbutton = ttk.Button(choiceslf, text = 'Arithmetic', style = 'btn.TButton') #Button to take us to arithmetic operations (PLANNED)
