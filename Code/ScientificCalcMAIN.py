@@ -49,13 +49,31 @@ class StartPage(tk.Frame): #This class is for the starting page, which will be d
 
         tk.Frame.__init__(self, parent, bg = '#222831') #Defines the frame, as well as inherits from container class
 
-        startlf = tk.LabelFrame(self, bg = '#222831', borderwidth = 0, highlightthickness = 0) #This label enables positioning buttons centrally
-        startlf.grid(row = 2, column = 1, padx = 420, pady = 10)
+        def setPreci(): #This function sets global precision
+            try:
+                global prec
+                
+                val = int(precifield.get())
+
+                prec = val
+                precvar.set('Precision is now ' + str(prec))
+            except:
+                precvar.set('ERROR')
+
+        def msclick(event): #This function is to empty precifield upon mouse click
+            precifield.delete(0, 'end')
+            return None
+
+        precvar = tk.StringVar()
+        precvar.set('Enter Precision')
 
         label1 = tk.Label(self, text = 'Welcome to the Calculator!', font = TitleFont, fg = '#00adb5', bg = '#222831') #These labels are for displaying the title text
         label1.grid(row = 0, column = 1, padx = 250, pady = 10) #To position label
         label2 = tk.Label(self, text = 'Please press START to continue or QUIT to exit!', font = TitleFont, fg = '#00adb5', bg = '#222831')
         label2.grid(row = 1, column = 1, padx = 150, pady = 10)
+
+        startlf = tk.LabelFrame(self, bg = '#222831', borderwidth = 0, highlightthickness = 0) #This label enables positioning buttons centrally
+        startlf.grid(row = 2, column = 1, padx = 420, pady = 10)
 
         s = ttk.Style() #Button styling
         s.theme_use('alt')
@@ -63,10 +81,23 @@ class StartPage(tk.Frame): #This class is for the starting page, which will be d
         s.map('btn.TButton', foreground = [('active', '!disabled', '#00adb5')], background = [('active', '#393e46')])
 
         startbutton = ttk.Button(startlf, text = 'START', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button redirects to ChoicePage
-        startbutton.grid(row = 0, column = 0, padx = 10, pady = 100, sticky = 'e')
+        startbutton.grid(row = 0, column = 0, padx = 10, pady = 50, sticky = 'e')
 
         quitbutton = ttk.Button(startlf, text = 'QUIT', style = 'btn.TButton', command = lambda: quit()) #This button ends the program
-        quitbutton.grid(row = 0, column = 1, padx = 10, pady = 100, sticky = 'w')
+        quitbutton.grid(row = 0, column = 1, padx = 10, pady = 50, sticky = 'w')
+
+        precilf = tk.LabelFrame(self, bg = '#393e46', borderwidth = 0, highlightthickness = 0) #This label enables positioning buttons centrally
+        precilf.grid(row = 3, column = 1, padx = 420, pady = 10, sticky = 'n')
+        
+        precilabel = tk.Label(precilf, text = 'Set global precision:', font = LabelFont, fg = '#00adb5', bg = '#222831')
+        precilabel.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+        precifield = tk.Entry(precilf, textvariable = precvar, font = LargeFont) #This entry field displays user input and output
+        precifield.grid(row = 1, column = 0, ipadx = 0.1, ipady = 3, padx = 10, pady = 10)
+        precifield.bind('<Button-1>', msclick)
+
+        precibutton = ttk.Button(precilf, text = 'SET', style = 'btn.TButton', command = lambda: setPreci())
+        precibutton.grid(row = 2, column = 0, padx = 10, pady = 10)
                                 
 class ChoicePage(tk.Frame): #This class is for the second page, where user can choose which part of calculator to use
 
