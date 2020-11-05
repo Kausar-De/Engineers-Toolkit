@@ -32,7 +32,7 @@ class Calculator(tk.Tk): #Main program class w/ container
 
         self.frames = {} #Code for accomodating different frames in which code will run
 
-        for F in (StartPage, ChoicePage, ArithPage, HistPage): #Iterates through the different pages. Different page names will be added here as they are created
+        for F in (StartPage, ChoicePage, ArithPage, NumpyPage, HistPage): #Iterates through the different pages. Different page names will be added here as they are created
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky = 'nsew')
@@ -115,7 +115,7 @@ class ChoicePage(tk.Frame): #This class is for the second page, where user can c
         arithbutton = ttk.Button(choiceslf, text = 'Arithmetic', style = 'btn.TButton', command = lambda: controller.show_frame(ArithPage)) #Button to take us to arithmetic operations (PLANNED)
         arithbutton.grid(row = 0, column = 0, padx = 10, pady = 20)
 
-        numpybutton = ttk.Button(choiceslf, text = 'Matrices & More', style = 'btn.TButton') #Button to take us to numpy operations (PLANNED)
+        numpybutton = ttk.Button(choiceslf, text = 'Matrices & More', style = 'btn.TButton', command = lambda: controller.show_frame(NumpyPage)) #Button to take us to numpy operations
         numpybutton.grid(row = 0, column = 1, padx = 10, pady = 20)
 
         graphbutton = ttk.Button(choiceslf, text = 'Graphs', style = 'btn.TButton') #Button to take us to matplotlib operations (PLANNED)
@@ -411,6 +411,456 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
         histbutton = ttk.Button(self, text = 'History', style = 'btn.TButton', command = lambda: controller.show_frame(HistPage)) #This button takes us to the history page
         histbutton.grid(row = 0, column = 0, padx = 10, sticky = 'w')
 
+class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
+
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent, bg = '#222831')
+
+        def matAdd(): #This function is for matrix addition
+            try:
+                global uHist
+                global uStatement
+
+                anstext.delete('1.0', 'end') #Remove existing quantity in anstext
+
+                mat1 = mattext1.get('1.0', 'end-1c') #Turn user input into list
+                list1 = list(map(float, mat1.split())) 
+                i=0
+                col1 = int(matcolfield1.get()) #Make nested list divided based on user input of column count
+                mat1nl=[]
+                while i<len(list1):
+                    mat1nl.append(list1[i : i + col1])
+                    i += col1
+                arr1 = np.array(mat1nl) #Convert nested list into numpy array
+
+                mat2 = mattext2.get('1.0', 'end-1c') #Same but for mattext2
+                list2 = list(map(float, mat2.split()))
+                j=0
+                col2 = int(matcolfield2.get())
+                mat1n2=[]
+                while j<len(list2):
+                    mat1n2.append(list2[j : j + col2])
+                    j += col2
+                arr2 = np.array(mat1n2)
+            
+                ans = np.add(arr1, arr2).round(decimals = prec) #Calculate sum
+                anslist = ans.tolist() #Display sum in same format as user input
+                for i in anslist:
+                    istr = ' '.join([str(elem) for elem in i]) 
+                    istr = istr + '\n'
+                    anstext.insert(tk.END, istr)
+
+                mat3 = anstext.get('1.0', 'end-1c') #Usage history statement
+                uStatement = str('The addition of' + '\n' + mat1 + '\n' + 'and' + '\n' + mat2 + '\n' + 'is' + '\n' + mat3)
+                uHist.append(uStatement)
+            except:
+                anstext.delete('1.0', 'end')
+                anstext.insert(tk.END, "ERROR")
+
+        def matSub(): #This function is for matrix subtraction
+            try:
+                global uHist
+                global uStatement
+
+                anstext.delete('1.0', 'end') #Remove existing quantity in anstext
+
+                mat1 = mattext1.get('1.0', 'end-1c') #Turn user input into list
+                list1 = list(map(float, mat1.split())) 
+                i=0
+                col1 = int(matcolfield1.get()) #Make nested list divided based on user input of column count
+                mat1nl=[]
+                while i<len(list1):
+                    mat1nl.append(list1[i : i + col1])
+                    i += col1
+                arr1 = np.array(mat1nl) #Convert nested list into numpy array
+
+                mat2 = mattext2.get('1.0', 'end-1c') #Same but for mattext2
+                list2 = list(map(float, mat2.split()))
+                j=0
+                col2 = int(matcolfield2.get())
+                mat1n2=[]
+                while j<len(list2):
+                    mat1n2.append(list2[j : j + col2])
+                    j += col2
+                arr2 = np.array(mat1n2)
+            
+                ans = np.subtract(arr1, arr2).round(decimals = prec) #Calculate difference
+                anslist = ans.tolist() #Display difference in same format as user input
+                for i in anslist:
+                    istr = ' '.join([str(elem) for elem in i]) 
+                    istr = istr + '\n'
+                    anstext.insert(tk.END, istr)
+
+                mat3 = anstext.get('1.0', 'end-1c') #Usage history statement
+                uStatement = str('The difference between' + '\n' + mat1 + '\n' + 'and' + '\n' + mat2 + '\n' + 'is' + '\n' + mat3)
+                uHist.append(uStatement)
+            except:
+                anstext.delete('1.0', 'end')
+                anstext.insert(tk.END, "ERROR")
+
+        def matMul(): #This function is for matrix multiplication
+            try:
+                global uHist
+                global uStatement
+
+                anstext.delete('1.0', 'end') #Remove existing quantity in anstext
+
+                mat1 = mattext1.get('1.0', 'end-1c') #Turn user input into list
+                list1 = list(map(float, mat1.split())) 
+                i=0
+                col1 = int(matcolfield1.get()) #Make nested list divided based on user input of column count
+                mat1nl=[]
+                while i<len(list1):
+                    mat1nl.append(list1[i : i + col1])
+                    i += col1
+                arr1 = np.array(mat1nl) #Convert nested list into numpy array
+
+                mat2 = mattext2.get('1.0', 'end-1c') #Same but for mattext2
+                list2 = list(map(float, mat2.split()))
+                j=0
+                col2 = int(matcolfield2.get())
+                mat1n2=[]
+                while j<len(list2):
+                    mat1n2.append(list2[j : j + col2])
+                    j += col2
+                arr2 = np.array(mat1n2)
+            
+                ans = np.dot(arr1, arr2).round(decimals = prec) #Calculate product
+                anslist = ans.tolist() #Display product in same format as user input
+                for i in anslist:
+                    istr = ' '.join([str(elem) for elem in i]) 
+                    istr = istr + '\n'
+                    anstext.insert(tk.END, istr)
+
+                mat3 = anstext.get('1.0', 'end-1c') #Usage history statement
+                uStatement = str('The product of' + '\n' + mat1 + '\n' + 'and' + '\n' + mat2 + '\n' + 'is' + '\n' + mat3)
+                uHist.append(uStatement)
+            except:
+                anstext.delete('1.0', 'end')
+                anstext.insert(tk.END, "ERROR")       
+
+        def matDiv(): #This function is for matrix division
+            try:
+                global uHist
+                global uStatement
+                
+                if matdivfield.get() != 'Divisor' or '': #This is for dividing matrix by user inputted number
+                    anstext.delete('1.0', 'end') #Remove existing quantity in anstext
+
+                    mat1 = mattext3.get('1.0', 'end-1c') #Turn user input into list
+                    list1 = list(map(float, mat1.split())) 
+                    i=0
+                    col1 = int(matcolfield3.get()) #Make nested list divided based on user input of column count
+                    mat1nl=[]
+                    while i<len(list1):
+                        mat1nl.append(list1[i : i + col1])
+                        i += col1
+                    arr1 = np.array(mat1nl) #Convert nested list into numpy array
+
+                    div = float(matdivfield.get()) #Gets divisor in float form
+                
+                    ans = np.divide(arr1, div).round(decimals = prec) #Calculate division
+                    anslist = ans.tolist() #Display division in same format as user input
+                    for i in anslist:
+                        istr = ' '.join([str(elem) for elem in i]) 
+                        istr = istr + '\n'
+                        anstext.insert(tk.END, istr)
+
+                    mat3 = anstext.get('1.0', 'end-1c') #Usage history statement
+                    uStatement = str('The division of' + '\n' + mat1 + '\n' + 'and' + '\n' + str(div) + '\n' + 'is' + '\n' + mat3)
+                    uHist.append(uStatement)
+                
+                elif matdivfield.get() == 'Divisor' or '': #This is for dividing matrices by each-other
+                    anstext.delete('1.0', 'end') #Remove existing quantity in anstext
+
+                    mat1 = mattext1.get('1.0', 'end-1c') #Turn user input into list
+                    list1 = list(map(float, mat1.split())) 
+                    i=0
+                    col1 = int(matcolfield1.get()) #Make nested list divided based on user input of column count
+                    mat1nl=[]
+                    while i<len(list1):
+                        mat1nl.append(list1[i : i + col1])
+                        i += col1
+                    arr1 = np.array(mat1nl) #Convert nested list into numpy array
+
+                    mat2 = mattext2.get('1.0', 'end-1c') #Same but for mattext2
+                    list2 = list(map(float, mat2.split()))
+                    j=0
+                    col2 = int(matcolfield2.get())
+                    mat1n2=[]
+                    while j<len(list2):
+                        mat1n2.append(list2[j : j + col2])
+                        j += col2
+                    arr2 = np.array(mat1n2)
+                
+                    ans = np.divide(arr1, arr2).round(decimals = prec) #Calculate division
+                    anslist = ans.tolist() #Display division in same format as user input
+                    for i in anslist:
+                        istr = ' '.join([str(elem) for elem in i]) 
+                        istr = istr + '\n'
+                        anstext.insert(tk.END, istr)
+
+                    mat3 = anstext.get('1.0', 'end-1c') #Usage history statement
+                    uStatement = str('The division of' + '\n' + mat1 + '\n' + 'and' + '\n' + mat2 + '\n' + 'is' + '\n' + mat3)
+                    uHist.append(uStatement)
+            except:
+                anstext.delete('1.0', 'end')
+                anstext.insert(tk.END, "ERROR")
+
+        def matInv(): #This function is for matrix inverse
+            try:
+                global uHist
+                global uStatement
+
+                anstext.delete('1.0', 'end') #Remove existing quantity in anstext
+
+                mat1 = mattext3.get('1.0', 'end-1c') #Turn user input into list
+                list1 = list(map(float, mat1.split())) 
+                i=0
+                col1 = int(matcolfield3.get()) #Make nested list divided based on user input of column count
+                mat1nl=[]
+                while i<len(list1):
+                    mat1nl.append(list1[i : i + col1])
+                    i += col1
+                arr1 = np.array(mat1nl) #Convert nested list into numpy array
+
+                ans = np.linalg.inv(arr1).round(decimals = prec) #Calculate inverse
+                anslist = ans.tolist() #Display inverse in same format as user input
+                for i in anslist:
+                    istr = ' '.join([str(elem) for elem in i]) 
+                    istr = istr + '\n'
+                    anstext.insert(tk.END, istr)
+
+                mat2 = anstext.get('1.0', 'end-1c') #Usage history statement
+                uStatement = str('The inverse of' + '\n' + mat1 + '\n' + 'is' + '\n' + mat2)
+                uHist.append(uStatement)
+            except:
+                anstext.delete('1.0', 'end')
+                anstext.insert(tk.END, "ERROR")      
+
+        def matTrace(): #This function is for matrix trace
+            try:
+                global uHist
+                global uStatement
+
+                anstext.delete('1.0', 'end') #Remove existing quantity in anstext
+
+                mat1 = mattext3.get('1.0', 'end-1c') #Turn user input into list
+                list1 = list(map(float, mat1.split())) 
+                i=0
+                col1 = int(matcolfield3.get()) #Make nested list divided based on user input of column count
+                mat1nl=[]
+                while i<len(list1):
+                    mat1nl.append(list1[i : i + col1])
+                    i += col1
+                arr1 = np.array(mat1nl) #Convert nested list into numpy array
+            
+                ans = round(np.trace(arr1), prec) #Calculate trace
+                anstext.insert(tk.END, ans)
+
+                mat2 = anstext.get('1.0', 'end-1c') #Usage history statement
+                uStatement = str('The trace of' + '\n' + mat1 + '\n' + 'is' + '\n' + mat2 + '\n')
+                uHist.append(uStatement)
+            except:
+                anstext.delete('1.0', 'end')
+                anstext.insert(tk.END, "ERROR")       
+
+        def matDet(): #This function is for matrix determinant
+            try:
+                global uHist
+                global uStatement
+
+                anstext.delete('1.0', 'end') #Remove existing quantity in anstext
+
+                mat1 = mattext3.get('1.0', 'end-1c') #Turn user input into list
+                list1 = list(map(float, mat1.split())) 
+                i=0
+                col1 = int(matcolfield3.get()) #Make nested list divided based on user input of column count
+                mat1nl=[]
+                while i<len(list1):
+                    mat1nl.append(list1[i : i + col1])
+                    i += col1
+                arr1 = np.array(mat1nl) #Convert nested list into numpy array
+            
+                ans = round(np.linalg.det(arr1), prec) #Calculate determinant
+                anstext.insert(tk.END, ans) 
+
+                mat2 = anstext.get('1.0', 'end-1c') #Usage history statement
+                uStatement = str('The determinant of' + '\n' + mat1 + '\n' + 'is' + '\n' + mat2 + '\n')
+                uHist.append(uStatement)
+            except:
+                anstext.delete('1.0', 'end')
+                anstext.insert(tk.END, "ERROR")       
+
+        def matTrans(): #This function is for matrix transpose
+            try:
+                global uHist
+                global uStatement
+
+                anstext.delete('1.0', 'end') #Remove existing quantity in anstext
+
+                mat1 = mattext3.get('1.0', 'end-1c') #Turn user input into list
+                list1 = list(map(float, mat1.split())) 
+                i=0
+                col1 = int(matcolfield3.get()) #Make nested list divided based on user input of column count
+                mat1nl=[]
+                while i<len(list1):
+                    mat1nl.append(list1[i : i + col1])
+                    i += col1
+                arr1 = np.array(mat1nl) #Convert nested list into numpy array
+
+                ans = np.transpose(arr1) #Calculate inverse
+                anslist = ans.tolist() #Display inverse in same format as user input
+                for i in anslist:
+                    istr = ' '.join([str(elem) for elem in i]) 
+                    istr = istr + '\n'
+                    anstext.insert(tk.END, istr)
+
+                mat2 = anstext.get('1.0', 'end-1c') #Usage history statement
+                uStatement = str('The transpose of' + '\n' + mat1 + '\n' + 'is' + '\n' + mat2)
+                uHist.append(uStatement)
+            except:
+                anstext.delete('1.0', 'end')
+                anstext.insert(tk.END, "ERROR")       
+
+        def reset(): #This is to program reset button
+            matcolfield1.delete(0, 'end')
+            mat1var.set('Enter columns')
+            
+            matcolfield2.delete(0, 'end')
+            mat2var.set('Enter columns')
+            
+            matcolfield3.delete(0, 'end')
+            mat3var.set('Columns')
+
+            matdivfield.delete(0, 'end')
+            matdivvar.set('Divisor')
+
+            mattext1.delete('1.0', 'end')
+            mattext2.delete('1.0', 'end')
+            mattext3.delete('1.0', 'end')
+            anstext.delete('1.0', 'end')
+
+        def msclick1(event): #This function is to empty matcolfield1 upon mouse click
+            matcolfield1.delete(0, 'end')
+            return None
+
+        def msclick2(event): #Above function for matcolfield2
+            matcolfield2.delete(0, 'end')
+            return None
+
+        def msclick3(event): #Above function for mattext1
+            mattext1.delete('1.0', 'end')
+            return None
+
+        def msclick4(event): #Above function for mattext2
+            mattext2.delete('1.0', 'end')
+            return None
+
+        def msclick5(event): #Above function for mattext3
+            mattext3.delete('1.0', 'end')
+            return None
+
+        def msclick6(event): #Above function for matcolfield3
+            matcolfield3.delete(0, 'end')
+            return None
+
+        def msclick7(event): #Above function for matdivfield
+            matdivfield.delete(0, 'end')
+            return None
+
+        mat1var = tk.StringVar() #These variables are the text variables for all the Entry fields
+        mat1var.set('Enter columns')
+        mat2var = tk.StringVar()
+        mat2var.set('Enter columns')
+        mat3var = tk.StringVar()
+        mat3var.set('Columns')
+        matdivvar = tk.StringVar()
+        matdivvar.set('Divisor')
+
+        label = tk.Label(self, text = 'Matrices & More', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
+        label.grid(row = 0, column = 1, padx = 0, pady = 10, sticky = 'nsew')
+
+        backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the previous page
+        backbutton.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = 'e')
+
+        histbutton = ttk.Button(self, text = 'History', style = 'btn.TButton', command = lambda: controller.show_frame(HistPage)) #This button takes us to the usage history page
+        histbutton.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = 'w')
+
+        matopslf = tk.LabelFrame(self, text = 'Matrix Operations:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for numpy matrices
+        matopslf.grid(row = 1, column = 0, padx = 10, pady = 10)
+
+        mat1label = tk.Label(matopslf, text = 'Matrix 1:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Matrix 1 label
+        mat1label.grid(row = 0, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+        mat2label = tk.Label(matopslf, text = 'Matrix 2:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Matrix 2 label
+        mat2label.grid(row = 0, column = 1, padx = 10, pady = 5, sticky = 'w')
+
+        mat3label = tk.Label(matopslf, text = 'Other ops:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Matrix 3 label
+        mat3label.grid(row = 0, column = 2, padx = 10, pady = 5, sticky = 'w')
+
+        mat4label = tk.Label(matopslf, text = 'Answers:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Answer matrix label
+        mat4label.grid(row = 0, column = 3, padx = 10, pady = 5, sticky = 'w')
+
+        matcolfield1 = tk.Entry(matopslf, font = LargeFont, width = 12, textvariable = mat1var) #This field takes number of columns of matrix 1 for splitting into nested list
+        matcolfield1.grid(row = 1, column = 0, ipadx = 0.1, ipady = 3, padx = 5, pady = 7.5)
+        matcolfield1.bind('<Button-1>', msclick1)
+
+        matcolfield2 = tk.Entry(matopslf, font = LargeFont, width = 12, textvariable = mat2var) #This field takes number of columns of matrix 2 for splitting into nested list
+        matcolfield2.grid(row = 1, column = 1, ipadx = 0.1, ipady = 3, padx = 5, pady = 7.5)
+        matcolfield2.bind('<Button-1>', msclick2)
+
+        matcolfield3 = tk.Entry(matopslf, width = 8, textvariable = mat3var) #This field takes divisor for division
+        matcolfield3.grid(row = 1, column = 2, ipadx = 0.1, ipady = 5, padx = 10, pady = 7.5, sticky = 'w')
+        matcolfield3.bind('<Button-1>', msclick6)
+
+        matdivfield = tk.Entry(matopslf, width = 8, textvariable = matdivvar) #This field takes divisor for division
+        matdivfield.grid(row = 1, column = 2, ipadx = 0.1, ipady = 5, padx = 10, pady = 7.5, sticky = 'e')
+        matdivfield.bind('<Button-1>', msclick7)
+
+        mattext1 = tk.Text(matopslf, font = LargeFont, height = 7, width = 12) #This field takes input for matrix 1
+        mattext1.grid(row = 2, column = 0, padx = 5, pady = 10)
+        mattext1.bind('<Button-1>', msclick3)
+
+        mattext2 = tk.Text(matopslf, font = LargeFont, height = 7, width = 12) #This field takes input for matrix 2
+        mattext2.grid(row = 2, column = 1, padx = 5, pady = 10)
+        mattext2.bind('<Button-1>', msclick4)
+
+        mattext3 = tk.Text(matopslf, font = LargeFont, height = 7, width = 12) #This field takes input for matrix 3
+        mattext3.grid(row = 2, column = 2, padx = 5, pady = 10)
+        mattext3.bind('<Button-1>', msclick5)
+
+        anstext = tk.Text(matopslf, font = LargeFont, height = 7, width = 12) #This field displays answer matrix
+        anstext.grid(row = 2, column = 3, padx = 5, pady = 10)
+
+        btnmatadd = ttk.Button(matopslf, text = 'Add', style = 'btn.TButton', command = lambda: matAdd()) #These buttons are for the different matrix operations
+        btnmatadd.grid(row = 3, column = 0, padx = 10, pady = 10)
+
+        btnmatsub = ttk.Button(matopslf, text = 'Subtract', style = 'btn.TButton', command = lambda: matSub()) 
+        btnmatsub.grid(row = 3, column = 1, padx = 10, pady = 10)
+
+        btnmatmul = ttk.Button(matopslf, text = 'Multiply', style = 'btn.TButton', command = lambda: matMul()) 
+        btnmatmul.grid(row = 4, column = 0, padx = 10, pady = 10)
+
+        btnmatdiv = ttk.Button(matopslf, text = 'Divide', style = 'btn.TButton', command = lambda: matDiv()) 
+        btnmatdiv.grid(row = 4, column = 1, padx = 10, pady = 10)
+
+        btninv = ttk.Button(matopslf, text = 'Inverse', style = 'btn.TButton', command = lambda: matInv()) 
+        btninv.grid(row = 4, column = 2, padx = 10, pady = 10)
+
+        btntrace = ttk.Button(matopslf, text = 'Trace', style = 'btn.TButton', command = lambda: matTrace()) 
+        btntrace.grid(row = 3, column = 2, padx = 10, pady = 10)
+
+        btndet = ttk.Button(matopslf, text = 'Determinant', style = 'btn.TButton', command = lambda: matDet()) 
+        btndet.grid(row = 3, column = 3, padx = 10, pady = 10)
+
+        btntranspose = ttk.Button(matopslf, text = 'Transpose', style = 'btn.TButton', command = lambda: matTrans()) 
+        btntranspose.grid(row = 4, column = 3, padx = 10, pady = 10)
+
+        resetbtn = ttk.Button(matopslf, text = 'Reset', style = 'btn.TButton', command = lambda: reset()) #This button resets all the fields in matrix label frame
+        resetbtn.grid(row = 1, column = 3, padx = 10, pady = 10)
+
 class HistPage(tk.Frame): #This class is for the History page
 
     def __init__(self, parent, controller):
@@ -457,7 +907,7 @@ class HistPage(tk.Frame): #This class is for the History page
 root = Calculator()
 
 icon = Image.open(r'calcicon.png') #This is to make the calculator icon utilizing PIL's modules
-icon = icon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desi#00adb5 size
+icon = icon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desirable size
 icon = ImageTk.PhotoImage(icon) #Make the icon file readable
 root.iconphoto(False, icon)
 
