@@ -346,7 +346,7 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
         btnclr = ttk.Button(arilf, text = 'Clear', style = 'btn.TButton', command = lambda: clr()) #Button to clear inputfield
         btnclr.grid(row = 0, column = 3, padx = 10, pady = 10)
         
-        modabslf = tk.LabelFrame(self, text = 'Modulus & Absolute:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains everything else
+        modabslf = tk.LabelFrame(self, text = 'Modulus, Absolute and Percentage:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains everything else
         modabslf.grid(row = 1, column = 2, padx = 10, pady = 10)
 
         modlabel = tk.Label(modabslf, text = 'Modulus:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Modulus Label
@@ -742,6 +742,197 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
             mattext3.delete('1.0', 'end')
             anstext.delete('1.0', 'end')
 
+        def trigSin(): #This function is for calculating sin
+            try:
+                global uHist
+                global uStatement
+
+                trigval = str(trigfield.get()) #Acquires trigfield input as string to accomodate fraction inputs
+                trigfinal = float(eval(trigval)) #Evaluates fraction input and converts it to float for math module
+                
+                choice = radiovar.get()
+                if choice == 1:
+                    trigdeg = round(math.radians(trigfinal), prec)
+                    ans = str(round(math.sin(trigdeg), prec)) #Calculates sin rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Sin of ' + trigval + ' degrees is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)                
+                elif choice == 2:
+                    ans = str(round(math.sin(trigfinal), prec)) #Calculates sin rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Sin of ' + trigval + ' radians is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                trigvar.set(ans) #Display answer
+            except:
+                trigvar.set('ERROR')
+
+        def trigCos(): #This function is for calculating cos
+            try:
+                global uHist
+                global uStatement
+
+                trigval = str(trigfield.get()) #Acquires trigfield input as string to accomodate fraction inputs
+                trigfinal = float(eval(trigval)) #Evaluates fraction input and converts it to float for math module
+
+                choice = radiovar.get()
+                if choice == 1:
+                    trigdeg = round(math.radians(trigfinal), prec)
+                    ans = str(round(math.cos(trigdeg), prec)) #Calculates cos rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Cos of ' + trigval + ' degrees is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)                
+                elif choice == 2:
+                    ans = str(round(math.cos(trigfinal), prec)) #Calculates cos rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Cos of ' + trigval + ' radians is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                trigvar.set(ans) #Display answer
+            except:
+                trigvar.set('ERROR')
+
+        def trigTan(): #This function is for calculating tan
+            try:
+                global uHist
+                global uStatement
+
+                trigval = str(trigfield.get()) #Acquires trigfield input as string to accomodate fraction inputs
+                trigfinal = float(eval(trigval)) #Evaluates fraction input and converts it to float for math module
+
+                choice = radiovar.get()
+                if choice == 1:
+                    trigdeg = round(math.radians(trigfinal), prec)
+                    ans = str(round(math.tan(trigdeg), prec)) #Calculates tan rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Tan of ' + trigval + ' degrees is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)                
+                elif choice == 2:
+                    ans = str(round(math.tan(trigfinal), prec)) #Calculates tan rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Tan of ' + trigval + ' radians is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                trigvar.set(ans) #Display answer
+            except:
+                trigvar.set('ERROR')
+
+        def trigArcsin(): #This function is for calculating arcsin
+            try:
+                global uHist
+                global uStatement
+
+                trigval = str(trigfield.get()) #Acquires trigfield input as string to accomodate fraction inputs
+                trigfinal = float(eval(trigval)) #Evaluates fraction input and converts it to float for math module
+                
+                choice = radiovar.get()
+                if choice == 1:
+                    trigdeg = round(math.radians(trigfinal), prec)
+                    ans = str(round(math.asin(trigdeg), prec)) #Calculates arcsin rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Arcsin of ' + trigval + ' degrees is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)                
+                elif choice == 2:
+                    ans = str(round(math.asin(trigfinal), prec)) #Calculates arcsin rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Arcsin of ' + trigval + ' radians is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                trigvar.set(ans) #Display answer
+            except:
+                trigvar.set('ERROR')
+
+        def trigArccos(): #This function is for calculating arccos
+            try:
+                global uHist
+                global uStatement
+
+                trigval = str(trigfield.get()) #Acquires trigvar input as string to accomodate fraction inputs
+                trigfinal = float(eval(trigval)) #Evaluates fraction input and converts it to float for math module
+
+                choice = radiovar.get()
+                if choice == 1:
+                    trigdeg = round(math.radians(trigfinal), prec)
+                    ans = str(round(math.acos(trigdeg), prec)) #Calculates cos rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Arccos of ' + trigval + ' degrees is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)                
+                elif choice == 2:
+                    ans = str(round(math.acos(trigfinal), prec)) #Calculates cos rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Arccos of ' + trigval + ' radians is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                trigvar.set(ans) #Display answer
+            except:
+                trigvar.set('ERROR')
+
+        def trigArctan(): #This function is for calculating arctan
+            try:
+                global uHist
+                global uStatement
+
+                trigval = str(trigfield.get()) #Acquires trigvar input as string to accomodate fraction inputs
+                trigfinal = float(eval(trigval)) #Evaluates fraction input and converts it to float for math module
+
+                choice = radiovar.get()
+                if choice == 1:
+                    trigdeg = round(math.radians(trigfinal), prec)
+                    ans = str(round(math.atan(trigdeg), prec)) #Calculates arctan rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Arctan of ' + trigval + ' degrees is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)                
+                elif choice == 2:
+                    ans = str(round(math.atan(trigfinal), prec)) #Calculates arctan rounded to 2 places, converts it to string for entry widget
+                    uStatement = str('Arctan of ' + trigval + ' radians is ' + ans + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                trigvar.set(ans) #Display answer
+            except:
+                trigvar.set('ERROR')
+
+        def clrtrig(): #This is to program trig clear button
+            trigfield.delete(0, 'end')
+            trigvar.set('Enter angle')
+
+        def loge(): #This function is for calculating natural log
+            try:
+                global uHist
+                global uStatement
+
+                logval = str(logfield.get())#Acquires logfield input as string to accomodate fraction inputs
+                logfinal = float(eval(logval)) #Evaluates fraction input and converts it to float for math module
+
+                ans = str(round(math.log(logfinal), prec)) #Calculates ln rounded to 2 places, converts it to string for entry widget
+                uStatement = str('Natural log of ' + logval + ' is ' + ans + '\n') #Usage history statement
+                uHist.append(uStatement)
+                logvar.set(ans) #Display answer
+            except:
+                logvar.set('ERROR')
+
+        def log10(): #This function is for calculating natural log
+            try:
+                global uHist
+                global uStatement
+
+                logval = str(logfield.get())#Acquires logfield input as string to accomodate fraction inputs
+                logfinal = float(eval(logval)) #Evaluates fraction input and converts it to float for math module
+
+                ans = str(round(math.log10(logfinal), prec)) #Calculates log base 10 rounded to 2 places, converts it to string for entry widget
+                uStatement = str('Log base 10 of ' + logval + ' is ' + ans + '\n') #Usage history statement
+                uHist.append(uStatement)
+                logvar.set(ans) #Display answer
+            except:
+                logvar.set('ERROR')
+
+        def antilog(): #This function is for calculating natural log
+            try:
+                global uHist
+                global uStatement
+
+                logval = str(logfield.get())#Acquires logfield input as string to accomodate fraction inputs
+                logfinal = float(eval(logval)) #Evaluates fraction input and converts it to float for math module
+
+                ans = str(round(np.exp(logfinal), prec)) #Calculates antilog base e rounded to 2 places, converts it to string for entry widget
+                uStatement = str('Antilog of ' + logval + ' is ' + ans + '\n') #Usage history statement
+                uHist.append(uStatement)
+                logvar.set(ans) #Display answer
+            except:
+                logvar.set('ERROR')
+
+        def clrlog(): #This is to program log clear button
+            logfield.delete(0, 'end')
+            logvar.set('Enter value')
+
         def msclick1(event): #This function is to empty matcolfield1 upon mouse click
             matcolfield1.delete(0, 'end')
             return None
@@ -770,6 +961,14 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
             matdivfield.delete(0, 'end')
             return None
 
+        def msclick8(event): #Above function for trigfield
+            trigfield.delete(0, 'end')
+            return None
+
+        def msclick9(event): #Above function for logfield
+            logfield.delete(0, 'end')
+            return None
+
         mat1var = tk.StringVar() #These variables are the text variables for all the Entry fields
         mat1var.set('Enter columns')
         mat2var = tk.StringVar()
@@ -778,6 +977,12 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
         mat3var.set('Columns')
         matdivvar = tk.StringVar()
         matdivvar.set('Divisor')
+        trigvar = tk.StringVar()
+        trigvar.set('Enter angle')
+        logvar = tk.StringVar()
+        logvar.set('Enter value')
+        radiovar = tk.IntVar()
+        radiovar.set(1)
 
         label = tk.Label(self, text = 'Matrices & More', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
         label.grid(row = 0, column = 1, padx = 0, pady = 10, sticky = 'nsew')
@@ -861,6 +1066,67 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
         resetbtn = ttk.Button(matopslf, text = 'Reset', style = 'btn.TButton', command = lambda: reset()) #This button resets all the fields in matrix label frame
         resetbtn.grid(row = 1, column = 3, padx = 10, pady = 10)
 
+        otheropslf = tk.LabelFrame(self, text = 'Trigonometry and Logarithms:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains everything for trig and logs
+        otheropslf.grid(row = 1, column = 2, padx = 10, pady = 10)
+
+        triglabel = tk.Label(otheropslf, text = 'Trigonometry:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Algebra Label
+        triglabel.grid(row = 0, column = 0, padx = 2, pady = 10)
+
+        trigfield = tk.Entry(otheropslf, width = 10, font = LargeFont, textvariable = trigvar) #This field takes input for trigonometric operation
+        trigfield.grid(row = 1, column = 0, ipadx = 0.1, ipady = 3, padx = 2, pady = 7.5)
+        trigfield.bind('<Button-1>', msclick8)
+
+        clrtrigbutton = ttk.Button(otheropslf, text = 'Clear', style = 'btn.TButton', command = lambda: clrtrig()) #This button clears trigfield
+        clrtrigbutton.grid(row = 1, column = 2, padx = 2, pady = 10)
+
+        s = ttk.Style()
+        s.theme_use('alt')
+        s.configure('btn.TRadiobutton', font = ('Arial', 12, 'bold'), foreground = '#00adb5', background = '#222831', indicatorrelief = tk.FLAT, indicatormargin =- 1, indicatordiameter =- 1, relief = tk.RAISED, focusthickness = 0, highlightthickness = 0, padding = 5)
+        s.map('btn.TRadiobutton', background=[('selected', '#222831'), ('active', '#222831')])
+
+        degradio = ttk.Radiobutton(otheropslf, text = 'Degree', style = 'btn.TRadiobutton', variable = radiovar, value = 1)
+        degradio.grid(row = 0, column = 1, padx = 2, pady = 10)
+
+        radradio = ttk.Radiobutton(otheropslf, text = 'Radian', style = 'btn.TRadiobutton', variable = radiovar, value = 2)
+        radradio.grid(row = 0, column = 2, padx = 2, pady = 10)
+
+        btnsin = ttk.Button(otheropslf, text = 'Sin', style = 'btn.TButton', command = lambda: trigSin()) #These buttons are for different trig operations
+        btnsin.grid(row = 2, column = 0, padx = 0, pady = 10)           
+
+        btncos = ttk.Button(otheropslf, text = 'Cos', style = 'btn.TButton', command = lambda: trigCos())
+        btncos.grid(row = 2, column = 1, padx = 0, pady = 10)
+
+        btntan = ttk.Button(otheropslf, text = 'Tan', style = 'btn.TButton', command = lambda: trigTan())
+        btntan.grid(row = 2, column = 2, padx = 7, pady = 10)
+
+        btnarcsin = ttk.Button(otheropslf, text = 'Sin (-1)', style = 'btn.TButton', command = lambda: trigArcsin())
+        btnarcsin.grid(row = 3, column = 0, padx = 0, pady = 10)           
+
+        btnarccos = ttk.Button(otheropslf, text = 'Cos (-1)', style = 'btn.TButton', command = lambda: trigArccos())
+        btnarccos.grid(row = 3, column = 1, padx = 0, pady = 10)
+
+        btnarctan = ttk.Button(otheropslf, text = 'Tan (-1)', style = 'btn.TButton', command = lambda: trigArctan())
+        btnarctan.grid(row = 3, column = 2, padx = 7, pady = 10)
+
+        loglabel = tk.Label(otheropslf, text = 'Logarithms:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Log Label
+        loglabel.grid(row = 4, column = 0, padx = 2, pady = 7.5)
+
+        logfield = tk.Entry(otheropslf, width = 10, font = LargeFont, textvariable = logvar) #This field takes input for logarithmic operation
+        logfield.grid(row = 5, column = 0, ipadx = 0.1, ipady = 3, padx = 2, pady = 7.5)
+        logfield.bind('<Button-1>', msclick9)
+
+        clrlogbutton = ttk.Button(otheropslf, text = 'Clear', style = 'btn.TButton', command = lambda: clrlog()) #This button clears logfield
+        clrlogbutton.grid(row = 5, column = 2, padx = 2, pady = 7.5)
+
+        btnlog = ttk.Button(otheropslf, text = 'Log (e)', style = 'btn.TButton', command = lambda: loge()) #These buttons are for different log operations
+        btnlog.grid(row = 6, column = 0, padx = 0, pady = 10)           
+
+        btnlog10 = ttk.Button(otheropslf, text = 'Log (10)', style = 'btn.TButton', command = lambda: log10())
+        btnlog10.grid(row = 6, column = 1, padx = 0, pady = 10)
+
+        btnantilog = ttk.Button(otheropslf, text = 'Antilog', style = 'btn.TButton', command = lambda: antilog())
+        btnantilog.grid(row = 6, column = 2, padx = 7, pady = 10)
+        
 class HistPage(tk.Frame): #This class is for the History page
 
     def __init__(self, parent, controller):
