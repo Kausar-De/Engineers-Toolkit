@@ -1177,4 +1177,84 @@ icon = icon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desirable size
 icon = ImageTk.PhotoImage(icon) #Make the icon file readable
 root.iconphoto(False, icon)
 
+menubar = tk.Menu(root)
+root.config(menu = menubar)
+
+def ariHelp(): #This function defines the help menu for arithmetic page
+    arihelpmenu = tk.Toplevel(root, bg = '#222831')
+    arihelpmenu.title('Arithmetic Help')
+    arihelpmenu.geometry('1000x600')
+    
+    label = tk.Label(arihelpmenu, text = 'How to use Arithmetic Page', font = TitleFont, fg = '#00adb5', bg = '#222831')
+    label.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    helplabel1 = tk.Label(arihelpmenu, text = '- The Arithmetic Page is divided into 2 sections, the traditional calculator and the special calculator.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel1.grid(row = 1, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel2 = tk.Label(arihelpmenu, text = '- On the left side, you can use the traditional calculator by using the buttons to input values, much like every other calculator.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel2.grid(row = 2, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel3 = tk.Label(arihelpmenu, text = '- On the right side, the special calculator deals with modulus, absolute and percentage calculation.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel3.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel4 = tk.Label(arihelpmenu, text = '- You can enter the values in the respective fields, and then pressing the respective buttons.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel4.grid(row = 4, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel5 = tk.Label(arihelpmenu, text = '- The answers will be displayed in the respective answer fields.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    ariimg = Image.open(r'ariss.png') #This is to process ariss utilizing PIL's modules
+    ariimg = ariimg.resize((1000, 360), Image.ANTIALIAS)
+    ariimg = ImageTk.PhotoImage(ariimg)
+    
+    panel = tk.Label(arihelpmenu, image = ariimg) #This is to display processed ariss as a label
+    panel.photo = ariimg
+    panel.grid(row = 6) 
+
+    helpicon = Image.open(r'helpicon.png') #This is to make the help icon utilizing PIL's modules
+    helpicon = helpicon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desirable size
+    helpicon = ImageTk.PhotoImage(helpicon) #Make the icon file readable
+    arihelpmenu.iconphoto(False, helpicon)
+
+def numpyHelp(): #This function defines the help menu for matrices page
+    numpyhelpmenu = tk.Toplevel(root, bg = '#222831')
+    numpyhelpmenu.title('Matrices & More Help')
+    numpyhelpmenu.geometry('1000x600')
+    
+    label = tk.Label(numpyhelpmenu, text = 'How to use Matrices & More Page', font = TitleFont, fg = '#00adb5', bg = '#222831')
+    label.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    helplabel1 = tk.Label(numpyhelpmenu, text = '- The Matrices & More Page is divided into 2 sections, matrix operations and trig + log section.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel1.grid(row = 1, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel2 = tk.Label(numpyhelpmenu, text = '- On the left side, the matrix operations are present.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel2.grid(row = 2, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel3 = tk.Label(numpyhelpmenu, text = '- Instructions for how to use it are provided in screenshot.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel3.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel4 = tk.Label(numpyhelpmenu, text = '- On the right side, there is trig and log section. For trig you can select degree or radian with radio buttons.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel4.grid(row = 4, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel5 = tk.Label(numpyhelpmenu, text = '- Enter inputs in respective fields and press button for operation. Answer will show in field.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    numpyimg = Image.open(r'numpyss.png') #This is to process numpyss utilizing PIL's modules
+    numpyimg = numpyimg.resize((1000, 360), Image.ANTIALIAS)
+    numpyimg = ImageTk.PhotoImage(numpyimg)
+    
+    panel = tk.Label(numpyhelpmenu, image = numpyimg) 
+    panel.photo = numpyimg
+    panel.grid(row = 6)
+
+    helpicon = Image.open(r'helpicon.png') #This is to make the help icon utilizing PIL's modules
+    helpicon = helpicon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desirable size
+    helpicon = ImageTk.PhotoImage(helpicon) #Make the icon file readable
+    numpyhelpmenu.iconphoto(False, helpicon)
+
+helpmenu = tk.Menu(menubar, tearoff = 0)
+menubar.add_cascade(label = 'Help', menu = helpmenu)
+helpmenu.add_command(label = 'Arithmetic', command = lambda: ariHelp())
+helpmenu.add_command(label = 'Matrices & More', command = lambda: numpyHelp())
+
 root.mainloop()
