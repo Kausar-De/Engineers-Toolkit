@@ -3,6 +3,11 @@ import tkinter.ttk as ttk #For styling
 from PIL import ImageTk, Image #For image processing
 import numpy as np #For matrix operations
 import math #For math expressions
+import matplotlib #For graph operations
+import matplotlib.pyplot as plt #For pyplot
+matplotlib.use('TkAgg') #Makes TkAgg the backend
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk #For canvas and nav toolbar
+from matplotlib.figure import Figure
 
 LargeFont = ('Verdana', 12) #Standard large font to be used throughout
 TitleFont = ('Times New Roman', 20, 'bold') #Standard font to be used for headline text
@@ -32,7 +37,7 @@ class Calculator(tk.Tk): #Main program class w/ container
 
         self.frames = {} #Code for accomodating different frames in which code will run
 
-        for F in (StartPage, ChoicePage, ArithPage, NumpyPage, HistPage): #Iterates through the different pages. Different page names will be added here as they are created
+        for F in (StartPage, ChoicePage, ArithPage, NumpyPage, MatPlotLibPage, HistPage): #Iterates through the different pages. Different page names will be added here as they are created
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky = 'nsew')
@@ -118,7 +123,7 @@ class ChoicePage(tk.Frame): #This class is for the second page, where user can c
         numpybutton = ttk.Button(choiceslf, text = 'Matrices & More', style = 'btn.TButton', command = lambda: controller.show_frame(NumpyPage)) #Button to take us to numpy operations
         numpybutton.grid(row = 0, column = 1, padx = 10, pady = 20)
 
-        graphbutton = ttk.Button(choiceslf, text = 'Graphs', style = 'btn.TButton') #Button to take us to matplotlib operations (PLANNED)
+        graphbutton = ttk.Button(choiceslf, text = 'Graphs', style = 'btn.TButton', command = lambda: controller.show_frame(MatPlotLibPage)) #Button to take us to matplotlib operations
         graphbutton.grid(row = 1, column = 0, padx = 10, pady = 20)
 
         docsbutton = ttk.Button(choiceslf, text = 'Useful Formulae', style = 'btn.TButton') #Button to take us to documentations page (PLANNED)
@@ -1169,6 +1174,270 @@ class HistPage(tk.Frame): #This class is for the History page
 
         choicebutton = ttk.Button(self, text = 'Choices', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the choices page
         choicebutton.grid(row = 0, column = 2, padx = 10, sticky = 'e')
+
+class MatPlotLibPage(tk.Frame): #This class is for Graph page
+
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent, bg = '#222831')
+
+        def plotLG(): #This function is for plotting line graph
+            try:
+                global uHist
+                global uStatement                
+
+                X = graphtext1.get('1.0', 'end-1c') #Turn user input into list
+                Xlist = list(map(float, X.split()))                
+                Xlist = [round(i, prec) for i in Xlist]
+
+                Y = graphtext2.get('1.0', 'end-1c') #Turn user input into list
+                Ylist = list(map(float, Y.split()))
+                Ylist = [round(i, prec) for i in Ylist]
+
+                f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                a = f.add_subplot(111)
+                a.plot(Xlist, Ylist, color = '#00adb5') #Plots the graph
+                
+                a.set_facecolor('#222831') #Graph colours
+                f.patch.set_facecolor('#222831')
+                a.tick_params(axis='x', colors='#00adb5', which = 'both')
+                a.tick_params(axis='y', colors='#00adb5', which = 'both')
+                a.spines['bottom'].set_color('#eeeeee')
+                a.spines['left'].set_color('#eeeeee')
+                a.spines['top'].set_visible(False) #Hides top and right axis
+                a.spines['right'].set_visible(False)
+
+                uStatement = str('You plotted a line graph with coordinates ' + X + ', ' + Y + '\n') #Usage history statement
+                uHist.append(uStatement)
+
+                canvas = FigureCanvasTkAgg(f, plotlf) #Draws graph for viewing
+                canvas.draw()
+                canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)
+            except:
+                graphtext1.delete('1.0', 'end')
+                graphtext1.insert(tk.END, 'ERROR')
+                graphtext2.delete('1.0', 'end')
+                graphtext2.insert(tk.END, 'ERROR')                
+
+        def plotBG(): #This function is for plotting bar graph
+            try:
+                global uHist
+                global uStatement                
+                
+                X = graphtext1.get('1.0', 'end-1c') #Turn user input into list
+                Xlist = list(map(float, X.split()))                
+                Xlist = [round(i, prec) for i in Xlist]
+
+                Y = graphtext2.get('1.0', 'end-1c') #Turn user input into list
+                Ylist = list(map(float, Y.split()))
+                Ylist = [round(i, prec) for i in Ylist]
+
+                f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                a = f.add_subplot(111)
+                a.bar(Xlist, Ylist, color = '#00adb5') #Plots the graph
+                
+                a.set_facecolor('#222831') #Graph colours
+                f.patch.set_facecolor('#222831')
+                a.tick_params(axis='x', colors='#00adb5', which = 'both')
+                a.tick_params(axis='y', colors='#00adb5', which = 'both')
+                a.spines['bottom'].set_color('#eeeeee')
+                a.spines['left'].set_color('#eeeeee')
+                a.spines['top'].set_visible(False) #Hides top and right axis
+                a.spines['right'].set_visible(False)
+
+                uStatement = str('You plotted a bar graph with coordinates ' + X + ', ' + Y + '\n') #Usage history statement
+                uHist.append(uStatement)
+
+                canvas = FigureCanvasTkAgg(f, plotlf) #Draws graph for viewing
+                canvas.draw()
+                canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)
+            except:
+                graphtext1.delete('1.0', 'end')
+                graphtext1.insert(tk.END, 'ERROR')
+                graphtext2.delete('1.0', 'end')
+                graphtext2.insert(tk.END, 'ERROR')
+
+        def plotSC(): #This function is for plotting scatter plot                
+            try:
+                global uHist
+                global uStatement
+
+                X = graphtext1.get('1.0', 'end-1c') #Turn user input into list
+                Xlist = list(map(float, X.split()))                
+                Xlist = [round(i, prec) for i in Xlist]
+
+                Y = graphtext2.get('1.0', 'end-1c') #Turn user input into list
+                Ylist = list(map(float, Y.split()))
+                Ylist = [round(i, prec) for i in Ylist]
+
+                f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                a = f.add_subplot(111)
+                a.scatter(Xlist, Ylist, color = '#00adb5') #Plots the graph
+                
+                a.set_facecolor('#222831') #Graph colours
+                f.patch.set_facecolor('#222831')
+                a.tick_params(axis='x', colors='#00adb5', which = 'both')
+                a.tick_params(axis='y', colors='#00adb5', which = 'both')
+                a.spines['bottom'].set_color('#eeeeee')
+                a.spines['left'].set_color('#eeeeee')
+                a.spines['top'].set_visible(False) #Hides top and right axis
+                a.spines['right'].set_visible(False)
+
+                uStatement = str('You plotted a scatter plot with coordinates ' + X + ', ' + Y + '\n') #Usage history statement
+                uHist.append(uStatement)
+
+                canvas = FigureCanvasTkAgg(f, plotlf) #Draws graph for viewing
+                canvas.draw()
+                canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)
+            except:
+                graphtext1.delete('1.0', 'end')
+                graphtext1.insert(tk.END, 'ERROR')
+                graphtext2.delete('1.0', 'end')
+                graphtext2.insert(tk.END, 'ERROR')
+
+        def plotHG(): #This function is for plotting histogram             
+            try:
+                global uHist
+                global uStatement
+
+                X = graphtext1.get('1.0', 'end-1c') #Turn user input into list
+                Xlist = list(map(float, X.split()))                
+                Xlist = [round(i, prec) for i in Xlist]
+
+                Y = graphtext2.get('1.0', 'end-1c') #Turn user input into list
+                Ylist = list(map(float, Y.split()))
+                Ylist = [round(i, prec) for i in Ylist]
+
+                f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                a = f.add_subplot(111)
+                a.hist(Xlist, Ylist, color = '#00adb5') #Plots the graph
+                
+                a.set_facecolor('#222831') #Graph colours
+                f.patch.set_facecolor('#222831')
+                a.tick_params(axis='x', colors='#00adb5', which = 'both')
+                a.tick_params(axis='y', colors='#00adb5', which = 'both')
+                a.spines['bottom'].set_color('#eeeeee')
+                a.spines['left'].set_color('#eeeeee')
+                a.spines['top'].set_visible(False) #Hides top and right axis
+                a.spines['right'].set_visible(False)
+
+                uStatement = str('You plotted a histogram with coordinates ' + X + ', ' + Y + '\n') #Usage history statement
+                uHist.append(uStatement)
+
+                canvas = FigureCanvasTkAgg(f, plotlf) #Draws graph for viewing
+                canvas.draw()
+                canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)
+            except:
+                graphtext1.delete('1.0', 'end')
+                graphtext1.insert(tk.END, 'ERROR')
+                graphtext2.delete('1.0', 'end')
+                graphtext2.insert(tk.END, 'ERROR')
+
+        def reset(): #This function is for resetting all input text fields         
+            graphtext1.delete('1.0', 'end')
+            graphtext1.insert(tk.END, 'Enter X Coordinates')
+            graphtext2.delete('1.0', 'end')
+            graphtext2.insert(tk.END, 'Enter Y Coordinates')
+
+        def resetGraph(): #This function is for resetting the graph
+            try:
+                f = Figure(figsize = (7.55, 3.3), dpi = 100)
+                a = f.add_subplot(111)
+                a.plot([0], [0])
+
+                a.set_facecolor('#222831') #Graph colours
+                f.patch.set_facecolor('#222831')
+                a.tick_params(axis='x', colors='#00adb5', which = 'both')
+                a.tick_params(axis='y', colors='#00adb5', which = 'both')
+                a.spines['bottom'].set_color('#eeeeee')
+                a.spines['left'].set_color('#eeeeee')
+                a.spines['top'].set_visible(False) #Hides top and right axis
+                a.spines['right'].set_visible(False)
+ 
+                canvas = FigureCanvasTkAgg(f, plotlf)
+                canvas.draw()
+                canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)                
+            except:
+                graphtext1.delete('1.0', 'end')
+                graphtext1.insert(tk.END, 'ERROR')
+                graphtext2.delete('1.0', 'end')
+                graphtext2.insert(tk.END, 'ERROR')
+
+        def msclick1(event): #This function is to empty graphtext1 upon mouse click
+            graphtext1.delete('1.0', 'end')
+            return None
+
+        def msclick2(event): #Above function for graphtext2
+            graphtext2.delete('1.0', 'end')
+            return None
+
+        backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the previous page
+        backbutton.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = 'e')
+
+        label = tk.Label(self, text = 'Graphs', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title Label
+        label.grid(row = 0, column = 1, padx = 10, pady = 10)
+
+        histbutton = ttk.Button(self, text = 'History', style = 'btn.TButton', command = lambda: controller.show_frame(HistPage)) #This button takes us to the usage history page
+        histbutton.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = 'w')
+
+        graphopslf = tk.LabelFrame(self, text = 'Graph Operations:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
+        graphopslf.grid(row = 1, column = 0, padx = 10, pady = 10)
+
+        graphlabel1 = tk.Label(graphopslf, text = 'Graph 1:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for line plot
+        graphlabel1.grid(row = 0, column = 0, padx = 5, pady = 5, sticky = 'w')
+
+        graphtext1 = tk.Text(graphopslf, font = LargeFont, height = 1.3, width = 18) #This field takes input for X axis
+        graphtext1.grid(row = 1, column = 0, ipady = 1, padx = 5, pady = 7)
+        graphtext1.insert(tk.END, 'Enter X Coordinates')
+        graphtext1.bind('<Button-1>', msclick1)
+
+        graphtext2 = tk.Text(graphopslf, font = LargeFont, height = 1.3, width = 18) #This field takes input for Y axis
+        graphtext2.grid(row = 2, column = 0, ipady = 1, padx = 5, pady = 7)     
+        graphtext2.insert(tk.END, 'Enter Y Coordinates')
+        graphtext2.bind('<Button-1>', msclick2)       
+
+        plotbtn = ttk.Button(graphopslf, text = 'Line Plot', style = 'btn.TButton', command = lambda: plotLG()) #This button plots line graph
+        plotbtn.grid(row = 3, column = 0, padx = 5, pady = 6, sticky = 'w')
+        plotbtn.config(width = 8)
+
+        scatterbtn = ttk.Button(graphopslf, text = 'Scatter', style = 'btn.TButton', command = lambda: plotSC()) #This button plots scatter plot
+        scatterbtn.grid(row = 3, column = 0, padx = 5, pady = 6, sticky = 'e')
+        scatterbtn.config(width = 8)
+
+        barbtn = ttk.Button(graphopslf, text = 'Bar Plot', style = 'btn.TButton', command = lambda: plotBG()) #This button plots bar graph
+        barbtn.grid(row = 4, column = 0, padx = 5, pady = 6, sticky = 'e')
+        barbtn.config(width = 8)
+
+        histobtn = ttk.Button(graphopslf, text = 'Histogram', style = 'btn.TButton', command = lambda: plotHG()) #This button plots histogram
+        histobtn.grid(row = 4, column = 0, padx = 5, pady = 6, sticky = 'w')
+        histobtn.config(width = 8)
+
+        resetbtn = ttk.Button(graphopslf, text = 'Reset', style = 'btn.TButton', command = lambda: reset()) #This button resets all the fields in graphopslf label frame
+        resetbtn.grid(row = 0, column = 0, padx = 5, pady = 4, sticky = 'e')
+        resetbtn.config(width = 6)
+
+        graphresetbtn = ttk.Button(self, text = 'Reset Graph', style = 'btn.TButton', command = lambda: resetGraph()) #This button resets the graph
+        graphresetbtn.grid(row = 1, column = 2, padx = 10, pady = 10)
+
+        plotlf = tk.LabelFrame(self, text = 'Graph:', font = LabelFont, fg = '#00adb5', bg = '#393e46', width = 120, height = 50) #This label frame contains the plotted graph
+        plotlf.grid(row = 1, column = 1, padx = 10, pady = 10)
+
+        f = Figure(figsize = (7.55, 3.3), dpi = 100) #This is default graph when graph page is opened or reset
+        a = f.add_subplot(111)
+        a.plot([0], [0])
+        
+        a.set_facecolor('#222831') #Graph colours
+        f.patch.set_facecolor('#222831')
+        a.tick_params(axis='x', colors='#00adb5', which = 'both')
+        a.tick_params(axis='y', colors='#00adb5', which = 'both')
+        a.spines['bottom'].set_color('#eeeeee')
+        a.spines['left'].set_color('#eeeeee')
+        a.spines['top'].set_visible(False) #Hides top and right axis
+        a.spines['right'].set_visible(False)
+
+        canvas = FigureCanvasTkAgg(f, plotlf)
+        canvas.draw()
+        canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)
 
 root = Calculator()
 
