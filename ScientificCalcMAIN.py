@@ -1333,11 +1333,137 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 graphtext2.delete('1.0', 'end')
                 graphtext2.insert(tk.END, 'ERROR')
 
+        def plotPC(): #This function is for plotting pie chart
+            try:
+                global uHist
+                global uStatement                
+
+                X = graphtext3.get('1.0', 'end-1c') #Turn user input into list
+                Xlist = list(map(str, X.split()))                
+
+                Y = graphtext4.get('1.0', 'end-1c') #Turn user input into list
+                Ylist = list(map(float, Y.split()))
+                Ylist = [round(i, prec) for i in Ylist]
+
+                wp = {'linewidth' : 1, 'edgecolor' : '#00adb5'} #For wedge properties
+                f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                a = f.add_subplot(111)
+                a.pie(Ylist, labels =  Xlist, shadow = True, startangle = 90, wedgeprops = wp, textprops = dict(color = '#00adb5')) #Plots the graph
+                
+                a.set_facecolor('#222831') #Graph colours
+                f.patch.set_facecolor('#222831')
+                a.tick_params(axis = 'x', colors = '#00adb5', which = 'both')
+                a.tick_params(axis = 'y', colors = '#00adb5', which = 'both')
+                a.spines['bottom'].set_color('#eeeeee')
+                a.spines['left'].set_color('#eeeeee')
+                a.spines['top'].set_visible(False) #Hides top and right axis
+                a.spines['right'].set_visible(False)
+
+                uStatement = str('You plotted a pie chart with labels ' + X + ' and data ' + Y + '\n') #Usage history statement
+                uHist.append(uStatement)
+
+                canvas = FigureCanvasTkAgg(f, plotlf) #Draws graph for viewing
+                canvas.draw()
+                canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)
+            except:
+                graphtext3.delete('1.0', 'end')
+                graphtext3.insert(tk.END, 'ERROR')
+                graphtext4.delete('1.0', 'end')
+                graphtext4.insert(tk.END, 'ERROR')
+
+        def plotAUTC(): #This function is for plotting area bounded by 2 curves
+            try:
+                global uHist
+                global uStatement                
+
+                choice = xyvar.get()
+                if choice == 1:
+                    X = graphtext1.get('1.0', 'end-1c') #Turn user input into list
+                    Xlist = list(map(float, X.split()))                
+                    Xlist = [round(i, prec) for i in Xlist]
+                    
+                    Y1 = graphtext3.get('1.0', 'end-1c') #Turn user input into list
+                    Y1list = list(map(float, Y1.split()))                
+                    Y1list = [round(i, prec) for i in Y1list]
+
+                    Y2 = graphtext4.get('1.0', 'end-1c') #Turn user input into list
+                    Y2list = list(map(float, Y2.split()))
+                    Y2list = [round(i, prec) for i in Y2list]
+
+                    f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                    a = f.add_subplot(111)
+                    a.plot(Xlist, Y1list, color = '#00adb5') #Plots the graph
+                    a.plot(Xlist, Y2list, color = '#00adb5')
+                    a.fill_between(Xlist, Y1list, Y2list, color = '#393e46')
+
+                    a.set_facecolor('#222831') #Graph colours
+                    f.patch.set_facecolor('#222831')
+                    a.tick_params(axis = 'x', colors='#00adb5', which = 'both')
+                    a.tick_params(axis = 'y', colors='#00adb5', which = 'both')
+                    a.spines['bottom'].set_color('#eeeeee')
+                    a.spines['left'].set_color('#eeeeee')
+                    a.spines['top'].set_visible(False) #Hides top and right axis
+                    a.spines['right'].set_visible(False)
+
+                    uStatement = str('You plotted AUTC with X coordinates ' + X + '\nand Y coordinates ' + Y1 + ', ' + Y2 + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                    canvas = FigureCanvasTkAgg(f, plotlf) #Draws graph for viewing
+                    canvas.draw()
+                    canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)
+                elif choice == 2:
+                    Y = graphtext2.get('1.0', 'end-1c') #Turn user input into list
+                    Ylist = list(map(float, Y.split()))                
+                    Ylist = [round(i, prec) for i in Ylist]
+                    
+                    X1 = graphtext3.get('1.0', 'end-1c') #Turn user input into list
+                    X1list = list(map(float, X1.split()))                
+                    X1list = [round(i, prec) for i in X1list]
+
+                    X2 = graphtext4.get('1.0', 'end-1c') #Turn user input into list
+                    X2list = list(map(float, X2.split()))
+                    X2list = [round(i, prec) for i in X2list]
+
+                    f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                    a = f.add_subplot(111)
+                    a.plot(X1list, Ylist, color = '#00adb5') #Plots the graph
+                    a.plot(X2list, Ylist, color = '#00adb5')
+                    a.fill_betweenx(Ylist, X1list, X2list, color = '#393e46')
+
+                    a.set_facecolor('#222831') #Graph colours
+                    f.patch.set_facecolor('#222831')
+                    a.tick_params(axis = 'x', colors='#00adb5', which = 'both')
+                    a.tick_params(axis = 'y', colors='#00adb5', which = 'both')
+                    a.spines['bottom'].set_color('#eeeeee')
+                    a.spines['left'].set_color('#eeeeee')
+                    a.spines['top'].set_visible(False) #Hides top and right axis
+                    a.spines['right'].set_visible(False)
+
+                    uStatement = str('You plotted AUTC with Y coordinates ' + Y + '\nand X coordinates ' + X1 + ', ' + X2 + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                    canvas = FigureCanvasTkAgg(f, plotlf) #Draws graph for viewing
+                    canvas.draw()
+                    canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)
+            except:
+                graphtext1.delete('1.0', 'end')
+                graphtext1.insert(tk.END, 'ERROR')
+                graphtext2.delete('1.0', 'end')
+                graphtext2.insert(tk.END, 'ERROR')
+                graphtext3.delete('1.0', 'end')
+                graphtext3.insert(tk.END, 'ERROR')
+                graphtext4.delete('1.0', 'end')
+                graphtext4.insert(tk.END, 'ERROR')  
+
         def reset(): #This function is for resetting all input text fields         
             graphtext1.delete('1.0', 'end')
             graphtext1.insert(tk.END, 'Enter X Coordinates')
             graphtext2.delete('1.0', 'end')
             graphtext2.insert(tk.END, 'Enter Y Coordinates')
+            graphtext3.delete('1.0', 'end')
+            graphtext3.insert(tk.END, 'Enter Data')
+            graphtext4.delete('1.0', 'end')
+            graphtext4.insert(tk.END, 'Enter Data')
 
         def resetGraph(): #This function is for resetting the graph
             try:
@@ -1370,6 +1496,17 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
         def msclick2(event): #Above function for graphtext2
             graphtext2.delete('1.0', 'end')
             return None
+
+        def msclick3(event): #Above function for graphtext3
+            graphtext3.delete('1.0', 'end')
+            return None
+
+        def msclick4(event): #Above function for graphtext4
+            graphtext4.delete('1.0', 'end')
+            return None
+
+        xyvar = tk.IntVar() #This variable is for radio button value
+        xyvar.set(1)
 
         backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the previous page
         backbutton.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = 'e')
@@ -1415,6 +1552,33 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
         resetbtn = ttk.Button(graphopslf, text = 'Reset', style = 'btn.TButton', command = lambda: reset()) #This button resets all the fields in graphopslf label frame
         resetbtn.grid(row = 0, column = 0, padx = 5, pady = 4, sticky = 'e')
         resetbtn.config(width = 6)
+
+        graphlabel2 = tk.Label(graphopslf, text = 'Graph 2:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for second input field
+        graphlabel2.grid(row = 5, column = 0, padx = 5, pady = 5)
+
+        graphtext3 = tk.Text(graphopslf, font = LargeFont, height = 1.3, width = 18) #This field takes input for pie chart and AUTC
+        graphtext3.grid(row = 6, column = 0, ipady = 1, padx = 5, pady = 7)
+        graphtext3.insert(tk.END, 'Enter Data')
+        graphtext3.bind('<Button-1>', msclick3)
+
+        graphtext4 = tk.Text(graphopslf, font = LargeFont, height = 1.3, width = 18) #This field takes input for pie chart and AUTC
+        graphtext4.grid(row = 7, column = 0, ipady = 1, padx = 5, pady = 7)     
+        graphtext4.insert(tk.END, 'Enter Data')
+        graphtext4.bind('<Button-1>', msclick4)
+
+        xradio = ttk.Radiobutton(graphopslf, text = 'X', style = 'btn.TRadiobutton', variable = xyvar, value = 1) #This radio button plots AUTC from X axis
+        xradio.grid(row = 5, column = 0, padx = 5, pady = 4, sticky = 'w')
+
+        yradio = ttk.Radiobutton(graphopslf, text = 'Y', style = 'btn.TRadiobutton', variable = xyvar, value = 2) #This radio button plots AUTC from Y axis
+        yradio.grid(row = 5, column = 0, padx = 5, pady = 4, sticky = 'e')
+
+        autcbtn = ttk.Button(graphopslf, text = 'AUTC', style = 'btn.TButton', command = lambda: plotAUTC()) #This button plots AUTC
+        autcbtn.grid(row = 8, column = 0, padx = 5, pady = 6, sticky = 'e')
+        autcbtn.config(width = 8)
+
+        piebtn = ttk.Button(graphopslf, text = 'Pie Chart', style = 'btn.TButton', command = lambda: plotPC()) #This button plots pie chart
+        piebtn.grid(row = 8, column = 0, padx = 5, pady = 6, sticky = 'w')
+        piebtn.config(width = 8)
 
         graphresetbtn = ttk.Button(self, text = 'Reset Graph', style = 'btn.TButton', command = lambda: resetGraph()) #This button resets the graph
         graphresetbtn.grid(row = 1, column = 2, padx = 10, pady = 10)
