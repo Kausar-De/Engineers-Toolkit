@@ -37,7 +37,7 @@ class Calculator(tk.Tk): #Main program class w/ container
 
         self.frames = {} #Code for accomodating different frames in which code will run
 
-        for F in (StartPage, ChoicePage, ArithPage, NumpyPage, MatPlotLibPage, HistPage): #Iterates through the different pages. Different page names will be added here as they are created
+        for F in (StartPage, ChoicePage, ArithPage, NumpyPage, MatPlotLibPage, HistPage): #Iterates through the different pages
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky = 'nsew')
@@ -103,8 +103,8 @@ class StartPage(tk.Frame): #This class is for the starting page, which will be d
         precifield.bind('<Button-1>', msclick)
 
         precibutton = ttk.Button(precilf, text = 'SET', style = 'btn.TButton', command = lambda: setPreci())
-        precibutton.grid(row = 2, column = 0, padx = 10, pady = 10)
-                                
+        precibutton.grid(row = 2, column = 0, padx = 10, pady = 10)        
+        
 class ChoicePage(tk.Frame): #This class is for the second page, where user can choose which part of calculator to use
 
     def __init__(self, parent, controller):
@@ -117,13 +117,13 @@ class ChoicePage(tk.Frame): #This class is for the second page, where user can c
         label = tk.Label(self, text = 'So, what are we doing?', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
         label.grid(row = 0, column = 0, padx = 150, pady = 10, sticky = 'nsew') 
 
-        arithbutton = ttk.Button(choiceslf, text = 'Arithmetic', style = 'btn.TButton', command = lambda: controller.show_frame(ArithPage)) #Button to take us to arithmetic operations (PLANNED)
+        arithbutton = ttk.Button(choiceslf, text = 'Arithmetic', style = 'btn.TButton', command = lambda: controller.show_frame(ArithPage)) #Button to take us to arithmetic operations
         arithbutton.grid(row = 0, column = 0, padx = 10, pady = 20)
 
         numpybutton = ttk.Button(choiceslf, text = 'Matrices & More', style = 'btn.TButton', command = lambda: controller.show_frame(NumpyPage)) #Button to take us to numpy operations
         numpybutton.grid(row = 0, column = 1, padx = 10, pady = 20)
 
-        graphbutton = ttk.Button(choiceslf, text = 'Graphs', style = 'btn.TButton', command = lambda: controller.show_frame(MatPlotLibPage)) #Button to take us to matplotlib operations
+        graphbutton = ttk.Button(choiceslf, text = 'Graphs', style = 'btn.TButton', command = lambda: controller.show_frame(MatPlotLibPage)) #Button to take us to matplotlib operations (PLANNED)
         graphbutton.grid(row = 1, column = 0, padx = 10, pady = 20)
 
         docsbutton = ttk.Button(choiceslf, text = 'Useful Formulae', style = 'btn.TButton') #Button to take us to documentations page (PLANNED)
@@ -132,9 +132,9 @@ class ChoicePage(tk.Frame): #This class is for the second page, where user can c
         backbutton = ttk.Button(choiceslf, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(StartPage)) #This button takes us to the previous page
         backbutton.grid(row = 0, column = 2, padx = 10, pady = 20)
 
-        histbutton = ttk.Button(choiceslf, text = 'History', style = 'btn.TButton', command = lambda: controller.show_frame(HistPage)) #This button takes us to the usage history page (PLANNED)
+        histbutton = ttk.Button(choiceslf, text = 'History', style = 'btn.TButton', command = lambda: controller.show_frame(HistPage)) #This button takes us to the usage history page
         histbutton.grid(row = 1, column = 2, padx = 10, pady = 10)
-
+        
 class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
 
     def __init__(self, parent, controller):
@@ -731,10 +731,10 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
 
         def reset(): #This is to program reset button
             matcolfield1.delete(0, 'end')
-            mat1var.set('Enter columns')
+            mat1var.set('Enter Columns')
             
             matcolfield2.delete(0, 'end')
-            mat2var.set('Enter columns')
+            mat2var.set('Enter Columns')
             
             matcolfield3.delete(0, 'end')
             mat3var.set('Columns')
@@ -975,9 +975,9 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
             return None
 
         mat1var = tk.StringVar() #These variables are the text variables for all the Entry fields
-        mat1var.set('Enter columns')
+        mat1var.set('Enter Columns')
         mat2var = tk.StringVar()
-        mat2var.set('Enter columns')
+        mat2var.set('Enter Columns')
         mat3var = tk.StringVar()
         mat3var.set('Columns')
         matdivvar = tk.StringVar()
@@ -1131,49 +1131,6 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
 
         btnantilog = ttk.Button(otheropslf, text = 'Antilog', style = 'btn.TButton', command = lambda: antilog())
         btnantilog.grid(row = 6, column = 2, padx = 7, pady = 10)
-        
-class HistPage(tk.Frame): #This class is for the History page
-
-    def __init__(self, parent, controller):
-
-        tk.Frame.__init__(self, parent, bg = '#222831')
-
-        label = tk.Label(self, text = 'Usage History', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
-        label.grid(row = 0, column = 1, padx = 350, pady = 10, sticky = 'nsew')
-
-        def showHist(): #This function is to print usage history in text field
-            try:
-                global uHist
-                
-                n = len(uHist)
-                element = ''
-                for i in reversed(range(n)):
-                    element = str(element + uHist[i] + '\n')
-                history.insert(tk.END, element)            
-            except:
-                print("\nSomething went wrong!")
-
-        def clrpage(): #This function is to clear the contents on usage history text field
-            history.delete('1.0', 'end')
-
-        def clrhist(): #This function is to delete the usage history
-            global uHist
-            uHist.clear()
-
-        history = tk.Text(self, font = LargeFont, fg = '#00adb5', bg = '#393e46', height = 20, width = 80)
-        history.grid(row = 1, column = 1, padx = 40, pady = 10)
-
-        dispbutton = ttk.Button(self, text = 'Show', style = 'btn.TButton', command = lambda: showHist()) #This button displays usage history
-        dispbutton.grid(row = 0, column = 0, padx = 10, sticky = 'w')
-
-        clrtextbtn = ttk.Button(self, text = 'Clear Page', style = 'btn.TButton', command = lambda: clrpage()) #This button clears the history page
-        clrtextbtn.grid(row = 1, column = 2, padx = 10, sticky = 'e')
-
-        clrhistbtn = ttk.Button(self, text = 'Clear History', style = 'btn.TButton', command = lambda: clrhist()) #This button deletes usage history
-        clrhistbtn.grid(row = 1, column = 2, padx = 10, sticky = 'ne')
-
-        choicebutton = ttk.Button(self, text = 'Choices', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the choices page
-        choicebutton.grid(row = 0, column = 2, padx = 10, sticky = 'e')
 
 class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
@@ -1453,7 +1410,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 graphtext3.delete('1.0', 'end')
                 graphtext3.insert(tk.END, 'ERROR')
                 graphtext4.delete('1.0', 'end')
-                graphtext4.insert(tk.END, 'ERROR')  
+                graphtext4.insert(tk.END, 'ERROR')                            
 
         def reset(): #This function is for resetting all input text fields         
             graphtext1.delete('1.0', 'end')
@@ -1488,6 +1445,10 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 graphtext1.insert(tk.END, 'ERROR')
                 graphtext2.delete('1.0', 'end')
                 graphtext2.insert(tk.END, 'ERROR')
+                graphtext3.delete('1.0', 'end')
+                graphtext3.insert(tk.END, 'ERROR')
+                graphtext4.delete('1.0', 'end')
+                graphtext4.insert(tk.END, 'ERROR') 
 
         def msclick1(event): #This function is to empty graphtext1 upon mouse click
             graphtext1.delete('1.0', 'end')
@@ -1520,7 +1481,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
         graphopslf = tk.LabelFrame(self, text = 'Graph Operations:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
         graphopslf.grid(row = 1, column = 0, padx = 10, pady = 10)
 
-        graphlabel1 = tk.Label(graphopslf, text = 'Graph 1:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for line plot
+        graphlabel1 = tk.Label(graphopslf, text = 'Graph 1:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for first input field
         graphlabel1.grid(row = 0, column = 0, padx = 5, pady = 5, sticky = 'w')
 
         graphtext1 = tk.Text(graphopslf, font = LargeFont, height = 1.3, width = 18) #This field takes input for X axis
@@ -1603,6 +1564,49 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
         canvas.draw()
         canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)
 
+class HistPage(tk.Frame): #This class is for the History page
+
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent, bg = '#222831')
+
+        label = tk.Label(self, text = 'Usage History', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
+        label.grid(row = 0, column = 1, padx = 350, pady = 10, sticky = 'nsew')
+
+        def showHist(): #This function is to print usage history in text field
+            try:
+                global uHist
+                
+                n = len(uHist)
+                element = ''
+                for i in reversed(range(n)):
+                    element = str(element + uHist[i] + '\n')
+                history.insert(tk.END, element)            
+            except:
+                print("\nSomething went wrong!")
+
+        def clrpage(): #This function is to clear the contents on usage history text field
+            history.delete('1.0', 'end')
+
+        def clrhist(): #This function is to delete the usage history
+            global uHist
+            uHist.clear()
+
+        history = tk.Text(self, font = LargeFont, fg = '#00adb5', bg = '#393e46', height = 20, width = 80)
+        history.grid(row = 1, column = 1, padx = 40, pady = 10)
+
+        dispbutton = ttk.Button(self, text = 'Show', style = 'btn.TButton', command = lambda: showHist()) #This button displays usage history
+        dispbutton.grid(row = 0, column = 0, padx = 10, sticky = 'w')
+
+        clrtextbtn = ttk.Button(self, text = 'Clear Page', style = 'btn.TButton', command = lambda: clrpage()) #This button clears the history page
+        clrtextbtn.grid(row = 1, column = 2, padx = 10, sticky = 'e')
+
+        clrhistbtn = ttk.Button(self, text = 'Clear History', style = 'btn.TButton', command = lambda: clrhist()) #This button deletes usage history
+        clrhistbtn.grid(row = 1, column = 2, padx = 10, sticky = 'ne')
+
+        choicebutton = ttk.Button(self, text = 'Choices', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the choices page
+        choicebutton.grid(row = 0, column = 2, padx = 10, sticky = 'e')        
+                        
 root = Calculator()
 
 icon = Image.open(r'calcicon.png') #This is to make the calculator icon utilizing PIL's modules
@@ -1616,9 +1620,9 @@ root.config(menu = menubar)
 def ariHelp(): #This function defines the help menu for arithmetic page
     arihelpmenu = tk.Toplevel(root, bg = '#222831')
     arihelpmenu.title('Arithmetic Help')
-    arihelpmenu.geometry('1000x600')
+    arihelpmenu.geometry('1000x700')
     
-    label = tk.Label(arihelpmenu, text = 'How to use Arithmetic Page', font = TitleFont, fg = '#00adb5', bg = '#222831')
+    label = tk.Label(arihelpmenu, text = 'How to use Arithmetic Page', font = TitleFont, fg = '#00adb5', bg = '#222831') #Text to be displayed in the page
     label.grid(row = 0, column = 0, padx = 10, pady = 10)
 
     helplabel1 = tk.Label(arihelpmenu, text = '- The Arithmetic Page is divided into 2 sections, the traditional calculator and the special calculator.', font = LabelFont, fg = '#00adb5', bg = '#222831')
@@ -1637,7 +1641,7 @@ def ariHelp(): #This function defines the help menu for arithmetic page
     helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
 
     ariimg = Image.open(r'ariss.png') #This is to process ariss utilizing PIL's modules
-    ariimg = ariimg.resize((1000, 360), Image.ANTIALIAS)
+    ariimg = ariimg.resize((1000, 460), Image.ANTIALIAS)
     ariimg = ImageTk.PhotoImage(ariimg)
     
     panel = tk.Label(arihelpmenu, image = ariimg) #This is to display processed ariss as a label
@@ -1652,9 +1656,9 @@ def ariHelp(): #This function defines the help menu for arithmetic page
 def numpyHelp(): #This function defines the help menu for matrices page
     numpyhelpmenu = tk.Toplevel(root, bg = '#222831')
     numpyhelpmenu.title('Matrices & More Help')
-    numpyhelpmenu.geometry('1000x600')
+    numpyhelpmenu.geometry('1000x700')
     
-    label = tk.Label(numpyhelpmenu, text = 'How to use Matrices & More Page', font = TitleFont, fg = '#00adb5', bg = '#222831')
+    label = tk.Label(numpyhelpmenu, text = 'How to use Matrices & More Page', font = TitleFont, fg = '#00adb5', bg = '#222831') #Text to be displayed in the page
     label.grid(row = 0, column = 0, padx = 10, pady = 10)
 
     helplabel1 = tk.Label(numpyhelpmenu, text = '- The Matrices & More Page is divided into 2 sections, matrix operations and trig + log section.', font = LabelFont, fg = '#00adb5', bg = '#222831')
@@ -1673,7 +1677,7 @@ def numpyHelp(): #This function defines the help menu for matrices page
     helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
 
     numpyimg = Image.open(r'numpyss.png') #This is to process numpyss utilizing PIL's modules
-    numpyimg = numpyimg.resize((1000, 360), Image.ANTIALIAS)
+    numpyimg = numpyimg.resize((1000, 460), Image.ANTIALIAS)
     numpyimg = ImageTk.PhotoImage(numpyimg)
     
     panel = tk.Label(numpyhelpmenu, image = numpyimg) 
@@ -1685,9 +1689,48 @@ def numpyHelp(): #This function defines the help menu for matrices page
     helpicon = ImageTk.PhotoImage(helpicon) #Make the icon file readable
     numpyhelpmenu.iconphoto(False, helpicon)
 
+def matplotlibHelp(): #This function defines the help menu for graphs page
+    matplotlibhelpmenu = tk.Toplevel(root, bg = '#222831')
+    matplotlibhelpmenu.title('Graphs Help')
+    matplotlibhelpmenu.geometry('1000x700')
+    
+    label = tk.Label(matplotlibhelpmenu, text = 'How to use Graphs Page', font = TitleFont, fg = '#00adb5', bg = '#222831') #Text to be displayed in the page
+    label.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    helplabel1 = tk.Label(matplotlibhelpmenu, text = '- The Graphs page takes input on the left side and plots the graph in the middle.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel1.grid(row = 1, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel2 = tk.Label(matplotlibhelpmenu, text = '- The first two input fields take input for line, bar, histogram and scatter plots.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel2.grid(row = 2, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel3 = tk.Label(matplotlibhelpmenu, text = '- Enter all X and Y coordinates sequentially with a space in the respective fields.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel3.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel4 = tk.Label(matplotlibhelpmenu, text = '- The other 2 fields are for pie chart. Enter labels in first field and data in second field with spaces.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel4.grid(row = 4, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel5 = tk.Label(matplotlibhelpmenu, text = '- Instructions for AUTC are provided in screenshot.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    matplotlibimg = Image.open(r'matplotlibss.png') #This is to process matplotlibss utilizing PIL's modules
+    matplotlibimg = matplotlibimg.resize((1000, 460), Image.ANTIALIAS)
+    matplotlibimg = ImageTk.PhotoImage(matplotlibimg)
+    
+    panel = tk.Label(matplotlibhelpmenu, image = matplotlibimg) 
+    panel.photo = matplotlibimg
+    panel.grid(row = 6)
+
+    helpicon = Image.open(r'helpicon.png') #This is to make the help icon utilizing PIL's modules
+    helpicon = helpicon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desirable size
+    helpicon = ImageTk.PhotoImage(helpicon) #Make the icon file readable
+    matplotlibhelpmenu.iconphoto(False, helpicon)
+
 helpmenu = tk.Menu(menubar, tearoff = 0)
 menubar.add_cascade(label = 'Help', menu = helpmenu)
 helpmenu.add_command(label = 'Arithmetic', command = lambda: ariHelp())
 helpmenu.add_command(label = 'Matrices & More', command = lambda: numpyHelp())
+helpmenu.add_command(label = 'Graphs', command = lambda: matplotlibHelp())
+helpmenu.add_separator()
+helpmenu.add_command(label = 'About')
 
 root.mainloop()
