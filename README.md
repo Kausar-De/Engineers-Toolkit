@@ -33,7 +33,7 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 
 -Imperial-Metric converter  
 -More constants    
--Cheat-sheet of useful math formulas, identities, etc.  
+-Cheat-sheet of useful math formulae, identities, etc.  
 
 ## Planned features:
 
