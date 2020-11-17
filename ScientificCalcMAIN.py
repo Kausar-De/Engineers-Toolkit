@@ -1609,7 +1609,7 @@ class HistPage(tk.Frame): #This class is for the History page
                         
 root = Calculator()
 
-icon = Image.open(r'calcicon.png') #This is to make the calculator icon utilizing PIL's modules
+icon = Image.open(r'Images\calcicon.png') #This is to make the calculator icon utilizing PIL's modules
 icon = icon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desirable size
 icon = ImageTk.PhotoImage(icon) #Make the icon file readable
 root.iconphoto(False, icon)
@@ -1640,7 +1640,7 @@ def ariHelp(): #This function defines the help menu for arithmetic page
     helplabel5 = tk.Label(arihelpmenu, text = '- The answers will be displayed in the respective answer fields.', font = LabelFont, fg = '#00adb5', bg = '#222831')
     helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
 
-    ariimg = Image.open(r'ariss.png') #This is to process ariss utilizing PIL's modules
+    ariimg = Image.open(r'Images\ariss.png') #This is to process ariss utilizing PIL's modules
     ariimg = ariimg.resize((1000, 460), Image.ANTIALIAS)
     ariimg = ImageTk.PhotoImage(ariimg)
     
@@ -1648,7 +1648,7 @@ def ariHelp(): #This function defines the help menu for arithmetic page
     panel.photo = ariimg
     panel.grid(row = 6) 
 
-    helpicon = Image.open(r'helpicon.png') #This is to make the help icon utilizing PIL's modules
+    helpicon = Image.open(r'Images\helpicon.png') #This is to make the help icon utilizing PIL's modules
     helpicon = helpicon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desirable size
     helpicon = ImageTk.PhotoImage(helpicon) #Make the icon file readable
     arihelpmenu.iconphoto(False, helpicon)
@@ -1676,7 +1676,7 @@ def numpyHelp(): #This function defines the help menu for matrices page
     helplabel5 = tk.Label(numpyhelpmenu, text = '- Enter inputs in respective fields and press button for operation. Answer will show in field.', font = LabelFont, fg = '#00adb5', bg = '#222831')
     helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
 
-    numpyimg = Image.open(r'numpyss.png') #This is to process numpyss utilizing PIL's modules
+    numpyimg = Image.open(r'Images\numpyss.png') #This is to process numpyss utilizing PIL's modules
     numpyimg = numpyimg.resize((1000, 460), Image.ANTIALIAS)
     numpyimg = ImageTk.PhotoImage(numpyimg)
     
@@ -1684,7 +1684,7 @@ def numpyHelp(): #This function defines the help menu for matrices page
     panel.photo = numpyimg
     panel.grid(row = 6)
 
-    helpicon = Image.open(r'helpicon.png') #This is to make the help icon utilizing PIL's modules
+    helpicon = Image.open(r'Images\helpicon.png') #This is to make the help icon utilizing PIL's modules
     helpicon = helpicon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desirable size
     helpicon = ImageTk.PhotoImage(helpicon) #Make the icon file readable
     numpyhelpmenu.iconphoto(False, helpicon)
@@ -1712,7 +1712,7 @@ def matplotlibHelp(): #This function defines the help menu for graphs page
     helplabel5 = tk.Label(matplotlibhelpmenu, text = '- Instructions for AUTC are provided in screenshot.', font = LabelFont, fg = '#00adb5', bg = '#222831')
     helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
 
-    matplotlibimg = Image.open(r'matplotlibss.png') #This is to process matplotlibss utilizing PIL's modules
+    matplotlibimg = Image.open(r'Images\matplotlibss.png') #This is to process matplotlibss utilizing PIL's modules
     matplotlibimg = matplotlibimg.resize((1000, 460), Image.ANTIALIAS)
     matplotlibimg = ImageTk.PhotoImage(matplotlibimg)
     
@@ -1720,7 +1720,7 @@ def matplotlibHelp(): #This function defines the help menu for graphs page
     panel.photo = matplotlibimg
     panel.grid(row = 6)
 
-    helpicon = Image.open(r'helpicon.png') #This is to make the help icon utilizing PIL's modules
+    helpicon = Image.open(r'Images\helpicon.png') #This is to make the help icon utilizing PIL's modules
     helpicon = helpicon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desirable size
     helpicon = ImageTk.PhotoImage(helpicon) #Make the icon file readable
     matplotlibhelpmenu.iconphoto(False, helpicon)
