@@ -37,7 +37,7 @@ class Calculator(tk.Tk): #Main program class w/ container
 
         self.frames = {} #Code for accomodating different frames in which code will run
 
-        for F in (StartPage, ChoicePage, ArithPage, NumpyPage, MatPlotLibPage, HistPage): #Iterates through the different pages
+        for F in (StartPage, ChoicePage, ArithPage, NumpyPage, MatPlotLibPage, ConverterPage, HistPage): #Iterates through the different pages
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky = 'nsew')
@@ -111,11 +111,14 @@ class ChoicePage(tk.Frame): #This class is for the second page, where user can c
 
         tk.Frame.__init__(self, parent, bg = '#222831')
 
-        choiceslf = tk.LabelFrame(self, bg = '#222831', borderwidth = 0, highlightthickness = 0) #This label enables positioning buttons centrally
-        choiceslf.grid(row = 1, column = 0, padx = 360, pady = 100)
-
         label = tk.Label(self, text = 'So, what are we doing?', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
-        label.grid(row = 0, column = 0, padx = 150, pady = 10, sticky = 'nsew') 
+        label.grid(row = 0, column = 0, padx = 435, sticky = 'nsew') 
+
+        backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(StartPage)) #This button takes us to the previous page
+        backbutton.grid(row = 0, column = 0, padx = 10, pady = 20, sticky = 'e')
+
+        choiceslf = tk.LabelFrame(self, bg = '#222831', borderwidth = 0, highlightthickness = 0) #This label enables positioning buttons centrally
+        choiceslf.grid(row = 1, column = 0, padx = 10, pady = 90)
 
         arithbutton = ttk.Button(choiceslf, text = 'Arithmetic', style = 'btn.TButton', command = lambda: controller.show_frame(ArithPage)) #Button to take us to arithmetic operations
         arithbutton.grid(row = 0, column = 0, padx = 10, pady = 20)
@@ -123,18 +126,18 @@ class ChoicePage(tk.Frame): #This class is for the second page, where user can c
         numpybutton = ttk.Button(choiceslf, text = 'Matrices & More', style = 'btn.TButton', command = lambda: controller.show_frame(NumpyPage)) #Button to take us to numpy operations
         numpybutton.grid(row = 0, column = 1, padx = 10, pady = 20)
 
+        convbutton = ttk.Button(choiceslf, text = 'Converter', style = 'btn.TButton', command = lambda: controller.show_frame(ConverterPage)) #Button to take us to converter page 
+        convbutton.grid(row = 0, column = 2, padx = 10, pady = 20)
+
         graphbutton = ttk.Button(choiceslf, text = 'Graphs', style = 'btn.TButton', command = lambda: controller.show_frame(MatPlotLibPage)) #Button to take us to matplotlib operations (PLANNED)
         graphbutton.grid(row = 1, column = 0, padx = 10, pady = 20)
 
         docsbutton = ttk.Button(choiceslf, text = 'Useful Formulae', style = 'btn.TButton') #Button to take us to documentations page (PLANNED)
         docsbutton.grid(row = 1, column = 1, padx = 10, pady = 20)
 
-        backbutton = ttk.Button(choiceslf, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(StartPage)) #This button takes us to the previous page
-        backbutton.grid(row = 0, column = 2, padx = 10, pady = 20)
-
         histbutton = ttk.Button(choiceslf, text = 'History', style = 'btn.TButton', command = lambda: controller.show_frame(HistPage)) #This button takes us to the usage history page
         histbutton.grid(row = 1, column = 2, padx = 10, pady = 10)
-        
+
 class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
 
     def __init__(self, parent, controller):
@@ -885,7 +888,7 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
             except:
                 trigvar.set('ERROR')
 
-        def clrtrig(): #This is to program trig clear button
+        def clrTrig(): #This is to program trig clear button
             trigfield.delete(0, 'end')
             trigvar.set('Enter angle')
 
@@ -934,7 +937,7 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
             except:
                 logvar.set('ERROR')
 
-        def clrlog(): #This is to program log clear button
+        def clrLog(): #This is to program log clear button
             logfield.delete(0, 'end')
             logvar.set('Enter value')
 
@@ -1081,7 +1084,7 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
         trigfield.grid(row = 1, column = 0, ipadx = 0.1, ipady = 3, padx = 2, pady = 7.5)
         trigfield.bind('<Button-1>', msclick8)
 
-        clrtrigbutton = ttk.Button(otheropslf, text = 'Clear', style = 'btn.TButton', command = lambda: clrtrig()) #This button clears trigfield
+        clrtrigbutton = ttk.Button(otheropslf, text = 'Clear', style = 'btn.TButton', command = lambda: clrTrig()) #This button clears trigfield
         clrtrigbutton.grid(row = 1, column = 2, padx = 2, pady = 10)
 
         s = ttk.Style()
@@ -1120,7 +1123,7 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
         logfield.grid(row = 5, column = 0, ipadx = 0.1, ipady = 3, padx = 2, pady = 7.5)
         logfield.bind('<Button-1>', msclick9)
 
-        clrlogbutton = ttk.Button(otheropslf, text = 'Clear', style = 'btn.TButton', command = lambda: clrlog()) #This button clears logfield
+        clrlogbutton = ttk.Button(otheropslf, text = 'Clear', style = 'btn.TButton', command = lambda: clrLog()) #This button clears logfield
         clrlogbutton.grid(row = 5, column = 2, padx = 2, pady = 7.5)
 
         btnlog = ttk.Button(otheropslf, text = 'Log (e)', style = 'btn.TButton', command = lambda: loge()) #These buttons are for different log operations
@@ -1564,6 +1567,134 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
         canvas.draw()
         canvas.get_tk_widget().grid(row = 0, column = 0, padx = 10, pady = 10)
 
+class ConverterPage(tk.Frame): #This class is for Converter page
+
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent, bg = '#222831')
+
+        def convertMass(): #This function is for mass conversion
+            try:
+                global uHist
+                global uStatement
+
+                massqty = float(massvar.get()) #Acquisition of required values and parameters
+                cnvfrom = masscombo1.get()
+                cnvto = masscombo2.get()
+
+                if cnvfrom == 'Kilograms': #Conversions happen in this loop nest                    
+                    if cnvto == 'Kilograms':
+                        massansvar.set(round((massqty), prec))                    
+                    elif cnvto == 'Grams':
+                        massansvar.set(round((massqty * 1000), prec))
+                    elif cnvto == 'Pounds':
+                        massansvar.set(round((massqty * 2.20462), prec))
+                    elif cnvto == 'Ounces':
+                        massansvar.set(round((massqty * 35.274), prec))
+
+                elif cnvfrom == 'Grams':                    
+                    if cnvto == 'Kilograms':
+                        massansvar.set(round((massqty / 1000), prec))                    
+                    elif cnvto == 'Grams':
+                        massansvar.set(round((massqty), prec))
+                    elif cnvto == 'Pounds':
+                        massansvar.set(round((massqty * 0.00220462), prec))
+                    elif cnvto == 'Ounces':
+                        massansvar.set(round((massqty * 0.035274), prec))
+
+                elif cnvfrom == 'Pounds':                    
+                    if cnvto == 'Kilograms':
+                        massansvar.set(round((massqty * 0.453592), prec))                    
+                    elif cnvto == 'Grams':
+                        massansvar.set(round((massqty * 453.592), prec))
+                    elif cnvto == 'Pounds':
+                        massansvar.set(round((massqty), prec))
+                    elif cnvto == 'Ounces':
+                        massansvar.set(round((massqty * 16), prec))
+
+                elif cnvfrom == 'Ounces':                    
+                    if cnvto == 'Kilograms':
+                        massansvar.set(round((massqty * 0.0283495), prec))                    
+                    elif cnvto == 'Grams':
+                        massansvar.set(round((massqty * 28.3495), prec))
+                    elif cnvto == 'Pounds':
+                        massansvar.set(round((massqty / 16), prec))
+                    elif cnvto == 'Ounces':
+                        massansvar.set(round((massqty), prec))
+
+                uStatement = str('You converted ' + str(massqty) + ' ' + str(cnvfrom) + ' to ' + massansvar.get() + ' ' + str(cnvto) + '\n') #Usage history statement
+                uHist.append(uStatement)
+
+            except:
+                massvar.set('ERROR')
+                massansvar.set('ERROR')
+                masscombo1.current(0)
+                masscombo2.current(0)
+
+        def msclick1(event): #This function is to empty massfield upon mouse click
+            massfield.delete(0, 'end')
+            return None
+
+        def resetMass():
+            massfield.delete(0, 'end')
+            massvar.set('Enter Mass')
+            massansfield.delete(0, 'end')
+            massansvar.set('Answer Here')
+            masscombo1.current(0)
+            masscombo2.current(0)
+
+        massvar = tk.StringVar()
+        massvar.set('Enter Mass')
+        massansvar = tk.StringVar()
+        massansvar.set('Answer Here')
+
+        backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the previous page
+        backbutton.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = 'e')
+
+        histbutton = ttk.Button(self, text = 'History', style = 'btn.TButton', command = lambda: controller.show_frame(HistPage)) #This button takes us to the usage history page
+        histbutton.grid(row = 0, column = 0, padx = 10, pady = 20, sticky = 'w')
+
+        label = tk.Label(self, text = 'Converter', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
+        label.grid(row = 0, column = 1, padx = 10, pady = 10)
+
+        leftlf = tk.LabelFrame(self, text = 'Converter:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
+        leftlf.grid(row = 1, column = 0, padx = 10, pady = 10)
+
+        masslabel = tk.Label(leftlf, text = 'Mass:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Title label
+        masslabel.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = 'w')
+
+        massfield = tk.Entry(leftlf, width = 15, textvariable = massvar, font = LargeFont) #This entry field displays user input and output
+        massfield.grid(row = 1, column = 0, ipadx = 1, ipady = 3, padx = 10, pady = 10)
+        massfield.bind('<Button-1>', msclick1)
+
+        s = ttk.Style()
+        s.map('TCombobox', fieldbackground = [('readonly','white')])
+        s.map('TCombobox', selectbackground = [('readonly', 'white')])
+        s.map('TCombobox', selectforeground = [('readonly', 'black')])
+
+        masscombo1 = ttk.Combobox(leftlf, width = 8, font = LargeFont, values = ['From...', 'Kilograms', 'Grams', 'Pounds', 'Ounces'], state = 'readonly') 
+        masscombo1.current(0)        
+        masscombo1.grid(row = 1, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 10) 
+
+        masscombo2 = ttk.Combobox(leftlf, width = 8, font = LargeFont, values = ['To...', 'Kilograms', 'Grams', 'Pounds', 'Ounces'], state = 'readonly') 
+        masscombo2.current(0)        
+        masscombo2.grid(row = 1, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 10)
+
+        massansfield = tk.Entry(leftlf, width = 15, textvariable = massansvar, font = LargeFont, state = 'disabled') 
+        massansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 10, pady = 10)
+
+        resetmassbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetMass())
+        resetmassbtn.grid(row = 1, column = 3, padx = 6, pady = 10)
+
+        massbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertMass())
+        massbtn.grid(row = 2, column = 3, padx = 6, pady = 10)
+
+        rightlf = tk.LabelFrame(self, text = 'PLACEHOLDER', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
+        rightlf.grid(row = 1, column = 2, padx = 10, pady = 10)
+
+        label1 = tk.Label(rightlf, text = 'PLACEHOLDER', font = LabelFont, fg = '#00adb5', bg = '#222831') #Title label
+        label1.grid(row = 0, column = 0, padx = 10, pady = 10)        
+
 class HistPage(tk.Frame): #This class is for the History page
 
     def __init__(self, parent, controller):
@@ -1730,7 +1861,6 @@ menubar.add_cascade(label = 'Help', menu = helpmenu)
 helpmenu.add_command(label = 'Arithmetic', command = lambda: ariHelp())
 helpmenu.add_command(label = 'Matrices & More', command = lambda: numpyHelp())
 helpmenu.add_command(label = 'Graphs', command = lambda: matplotlibHelp())
-helpmenu.add_separator()
-helpmenu.add_command(label = 'About')
 
 root.mainloop()
+
