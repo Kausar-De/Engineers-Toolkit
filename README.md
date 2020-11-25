@@ -18,6 +18,7 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 -Operations on matrices  
 -Trigonometric and Logarithmic calculators  
 -Plotting bar graphs, histograms, line and scatter plots, pie charts and area bounded by 2 curves  
+-Converter  
 -Global precision setting  
 -Usage history  
 -Help menus to make sense of it all
@@ -40,7 +41,7 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 
 ## Upcoming features:
 
--Imperial-Metric converter  
+-Imperial-Metric converter (WORK STARTED)    
 -More constants    
 -Cheat-sheet of useful math formulae, identities, etc.  
 
