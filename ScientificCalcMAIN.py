@@ -1631,11 +1631,109 @@ class ConverterPage(tk.Frame): #This class is for Converter page
                 masscombo1.current(0)
                 masscombo2.current(0)
 
-        def msclick1(event): #This function is to empty massfield upon mouse click
-            massfield.delete(0, 'end')
-            return None
+        def convertLen(): #This function is for length conversion
+            try:
+                global uHist
+                global uStatement
 
-        def resetMass():
+                lenqty = float(lenvar.get()) #Acquisition of required values and parameters
+                cnvfrom = lencombo1.get()
+                cnvto = lencombo2.get()
+
+                if cnvfrom == 'Kilometres': #Conversions happen in this loop nest                    
+                    if cnvto == 'Kilometres':
+                        lenansvar.set(round((lenqty), prec))                    
+                    elif cnvto == 'Metres':
+                        lenansvar.set(round((lenqty * 1000), prec))
+                    elif cnvto == 'Miles':
+                        lenansvar.set(round((lenqty * 0.621371), prec))
+                    elif cnvto == 'Yards':
+                        lenansvar.set(round((lenqty * 1093.61), prec))
+                    elif cnvto == 'Feet':
+                        lenansvar.set(round((lenqty * 3280.84), prec))
+                    elif cnvto == 'Inches':
+                        lenansvar.set(round((lenqty * 39370.1), prec))
+                
+                elif cnvfrom == 'Metres':                     
+                    if cnvto == 'Kilometres':
+                        lenansvar.set(round((lenqty / 1000), prec))                    
+                    elif cnvto == 'Metres':
+                        lenansvar.set(round((lenqty), prec))
+                    elif cnvto == 'Miles':
+                        lenansvar.set(round((lenqty * 0.000621371), prec))
+                    elif cnvto == 'Yards':
+                        lenansvar.set(round((lenqty * 1.09361), prec))
+                    elif cnvto == 'Feet':
+                        lenansvar.set(round((lenqty * 3.28084), prec))
+                    elif cnvto == 'Inches':
+                        lenansvar.set(round((lenqty * 39.3701), prec))
+
+                elif cnvfrom == 'Miles':                     
+                    if cnvto == 'Kilometres':
+                        lenansvar.set(round((lenqty * 1.60934), prec))                    
+                    elif cnvto == 'Metres':
+                        lenansvar.set(round((lenqty), prec))
+                    elif cnvto == 'Miles':
+                        lenansvar.set(round((lenqty * 1609.34), prec))
+                    elif cnvto == 'Yards':
+                        lenansvar.set(round((lenqty * 1760), prec))
+                    elif cnvto == 'Feet':
+                        lenansvar.set(round((lenqty * 5280), prec))
+                    elif cnvto == 'Inches':
+                        lenansvar.set(round((lenqty * 63360), prec))     
+
+                elif cnvfrom == 'Yards':                     
+                    if cnvto == 'Kilometres':
+                        lenansvar.set(round((lenqty * 0.0009144), prec))                    
+                    elif cnvto == 'Metres':
+                        lenansvar.set(round((lenqty * 0.9144), prec))
+                    elif cnvto == 'Miles':
+                        lenansvar.set(round((lenqty / 1760), prec))
+                    elif cnvto == 'Yards':
+                        lenansvar.set(round((lenqty), prec))
+                    elif cnvto == 'Feet':
+                        lenansvar.set(round((lenqty * 3), prec))
+                    elif cnvto == 'Inches':
+                        lenansvar.set(round((lenqty * 36), prec))
+
+                elif cnvfrom == 'Feet':                     
+                    if cnvto == 'Kilometres':
+                        lenansvar.set(round((lenqty * 0.0003048), prec))                    
+                    elif cnvto == 'Metres':
+                        lenansvar.set(round((lenqty * 0.3048), prec))
+                    elif cnvto == 'Miles':
+                        lenansvar.set(round((lenqty * 0.000189394), prec))
+                    elif cnvto == 'Yards':
+                        lenansvar.set(round((lenqty / 3), prec))
+                    elif cnvto == 'Feet':
+                        lenansvar.set(round((lenqty), prec))
+                    elif cnvto == 'Inches':
+                        lenansvar.set(round((lenqty * 12), prec))
+
+                elif cnvfrom == 'Inches':                     
+                    if cnvto == 'Kilometres':
+                        lenansvar.set(round((lenqty / 39370), prec))                    
+                    elif cnvto == 'Metres':
+                        lenansvar.set(round((lenqty * 0.0254), prec))
+                    elif cnvto == 'Miles':
+                        lenansvar.set(round((lenqty / 63360), prec))
+                    elif cnvto == 'Yards':
+                        lenansvar.set(round((lenqty / 36), prec))
+                    elif cnvto == 'Feet':
+                        lenansvar.set(round((lenqty / 12), prec))
+                    elif cnvto == 'Inches':
+                        lenansvar.set(round((lenqty), prec))
+
+                uStatement = str('You converted ' + str(lenqty) + ' ' + str(cnvfrom) + ' to ' + lenansvar.get() + ' ' + str(cnvto) + '\n') #Usage history statement
+                uHist.append(uStatement)
+
+            except:
+                lenvar.set('ERROR')
+                lenansvar.set('ERROR')
+                lencombo1.current(0)
+                lencombo2.current(0)
+
+        def resetMass(): #This function resets mass converter
             massfield.delete(0, 'end')
             massvar.set('Enter Mass')
             massansfield.delete(0, 'end')
@@ -1643,10 +1741,30 @@ class ConverterPage(tk.Frame): #This class is for Converter page
             masscombo1.current(0)
             masscombo2.current(0)
 
+        def resetLen(): #This function resets length converter
+            lenfield.delete(0, 'end')
+            lenvar.set('Enter Length')
+            lenansfield.delete(0, 'end')
+            lenansvar.set('Answer Here')
+            lencombo1.current(0)
+            lencombo2.current(0)
+
+        def msclick1(event): #This function is to empty massfield upon mouse click
+            massfield.delete(0, 'end')
+            return None
+
+        def msclick2(event): #Above function for lenfield
+            lenfield.delete(0, 'end')
+            return None
+
         massvar = tk.StringVar()
         massvar.set('Enter Mass')
         massansvar = tk.StringVar()
         massansvar.set('Answer Here')
+        lenvar = tk.StringVar()
+        lenvar.set('Enter Length')
+        lenansvar = tk.StringVar()
+        lenansvar.set('Answer Here')
 
         backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the previous page
         backbutton.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = 'e')
@@ -1655,16 +1773,16 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         histbutton.grid(row = 0, column = 0, padx = 10, pady = 20, sticky = 'w')
 
         label = tk.Label(self, text = 'Converter', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
-        label.grid(row = 0, column = 1, padx = 10, pady = 10)
+        label.grid(row = 0, column = 1, pady = 10)
 
-        leftlf = tk.LabelFrame(self, text = 'Converter:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
+        leftlf = tk.LabelFrame(self, text = 'Fundamental Units:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
         leftlf.grid(row = 1, column = 0, padx = 10, pady = 10)
 
         masslabel = tk.Label(leftlf, text = 'Mass:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Title label
-        masslabel.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = 'w')
+        masslabel.grid(row = 0, column = 0, padx = 10, pady = 5, sticky = 'w')
 
-        massfield = tk.Entry(leftlf, width = 15, textvariable = massvar, font = LargeFont) #This entry field displays user input and output
-        massfield.grid(row = 1, column = 0, ipadx = 1, ipady = 3, padx = 10, pady = 10)
+        massfield = tk.Entry(leftlf, width = 15, textvariable = massvar, font = LargeFont) #This entry field takes mass input
+        massfield.grid(row = 1, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
         massfield.bind('<Button-1>', msclick1)
 
         s = ttk.Style()
@@ -1672,23 +1790,47 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         s.map('TCombobox', selectbackground = [('readonly', 'white')])
         s.map('TCombobox', selectforeground = [('readonly', 'black')])
 
-        masscombo1 = ttk.Combobox(leftlf, width = 8, font = LargeFont, values = ['From...', 'Kilograms', 'Grams', 'Pounds', 'Ounces'], state = 'readonly') 
+        masscombo1 = ttk.Combobox(leftlf, width = 9, font = LargeFont, values = ['From...', 'Kilograms', 'Grams', 'Pounds', 'Ounces'], state = 'readonly') 
         masscombo1.current(0)        
-        masscombo1.grid(row = 1, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 10) 
+        masscombo1.grid(row = 1, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 5) 
 
-        masscombo2 = ttk.Combobox(leftlf, width = 8, font = LargeFont, values = ['To...', 'Kilograms', 'Grams', 'Pounds', 'Ounces'], state = 'readonly') 
+        masscombo2 = ttk.Combobox(leftlf, width = 9, font = LargeFont, values = ['To...', 'Kilograms', 'Grams', 'Pounds', 'Ounces'], state = 'readonly') 
         masscombo2.current(0)        
-        masscombo2.grid(row = 1, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 10)
+        masscombo2.grid(row = 1, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
         massansfield = tk.Entry(leftlf, width = 15, textvariable = massansvar, font = LargeFont, state = 'disabled') 
-        massansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 10, pady = 10)
+        massansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
         resetmassbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetMass())
-        resetmassbtn.grid(row = 1, column = 3, padx = 6, pady = 10)
+        resetmassbtn.grid(row = 1, column = 3, padx = 5, pady = 5)
 
         massbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertMass())
-        massbtn.grid(row = 2, column = 3, padx = 6, pady = 10)
+        massbtn.grid(row = 2, column = 3, padx = 5, pady = 5)
 
+        lenlabel = tk.Label(leftlf, text = 'Length:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Title label
+        lenlabel.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+        lenfield = tk.Entry(leftlf, width = 15, textvariable = lenvar, font = LargeFont) #This entry field takes length input
+        lenfield.grid(row = 4, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+        lenfield.bind('<Button-1>', msclick2)
+
+        lencombo1 = ttk.Combobox(leftlf, width = 9, font = LargeFont, values = ['From...', 'Kilometres', 'Metres', 'Miles', 'Yards', 'Feet', 'Inches'], state = 'readonly') 
+        lencombo1.current(0)        
+        lencombo1.grid(row = 4, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 5) 
+
+        lencombo2 = ttk.Combobox(leftlf, width = 9, font = LargeFont, values = ['To...', 'Kilometres', 'Metres', 'Miles', 'Yards', 'Feet', 'Inches'], state = 'readonly') 
+        lencombo2.current(0)        
+        lencombo2.grid(row = 4, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+
+        lenansfield = tk.Entry(leftlf, width = 15, textvariable = lenansvar, font = LargeFont, state = 'disabled') 
+        lenansfield.grid(row = 5, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+
+        resetlenbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetLen())
+        resetlenbtn.grid(row = 4, column = 3, padx = 5, pady = 5)
+
+        lenbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertLen())
+        lenbtn.grid(row = 5, column = 3, padx = 5, pady = 5)      
+        
         rightlf = tk.LabelFrame(self, text = 'PLACEHOLDER', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
         rightlf.grid(row = 1, column = 2, padx = 10, pady = 10)
 
