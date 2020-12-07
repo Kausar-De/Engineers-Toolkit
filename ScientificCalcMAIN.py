@@ -1733,6 +1733,48 @@ class ConverterPage(tk.Frame): #This class is for Converter page
                 lencombo1.current(0)
                 lencombo2.current(0)
 
+        def convertTemp(): #This function is for temperature conversion
+            try:
+                global uHist
+                global uStatement
+
+                tempqty = float(tempvar.get()) #Acquisition of required values and parameters
+                cnvfrom = tempcombo1.get()
+                cnvto = tempcombo2.get()
+
+                if cnvfrom == 'Celsius': #Conversions happen in this loop nest                    
+                    if cnvto == 'Celsius':
+                        tempansvar.set(round((tempqty), prec))                    
+                    elif cnvto == 'Fahrenheit':
+                        tempansvar.set(round(((tempqty * (9 / 5)) + 32), prec))
+                    elif cnvto == 'Kelvin':
+                        tempansvar.set(round((tempqty + 273.15), prec))
+                
+                elif cnvfrom == 'Fahrenheit':                     
+                    if cnvto == 'Celsius':
+                        tempansvar.set(round(((tempqty - 32) * (5 / 9)), prec))                    
+                    elif cnvto == 'Fahrenheit':
+                        tempansvar.set(round((tempqty), prec))
+                    elif cnvto == 'Kelvin':
+                        tempansvar.set(round((((tempqty - 32) * (5 / 9) + 273.15)), prec))
+
+                elif cnvfrom == 'Kelvin':                     
+                    if cnvto == 'Celsius':
+                        tempansvar.set(round((tempqty - 273.15), prec))                    
+                    elif cnvto == 'Fahrenheit':
+                        tempansvar.set(round((((tempqty - 273.15) * (9 / 5)) + 32), prec))
+                    elif cnvto == 'Kelvin':
+                        tempansvar.set(round((tempqty), prec))    
+
+                uStatement = str('You converted ' + str(tempqty) + ' ' + str(cnvfrom) + ' to ' + tempansvar.get() + ' ' + str(cnvto) + '\n') #Usage history statement
+                uHist.append(uStatement)
+
+            except:
+                tempvar.set('ERROR')
+                tempansvar.set('ERROR')
+                tempcombo1.current(0)
+                tempcombo2.current(0)
+
         def resetMass(): #This function resets mass converter
             massfield.delete(0, 'end')
             massvar.set('Enter Mass')
@@ -1749,6 +1791,14 @@ class ConverterPage(tk.Frame): #This class is for Converter page
             lencombo1.current(0)
             lencombo2.current(0)
 
+        def resetTemp(): #This function resets temperature converter
+            tempfield.delete(0, 'end')
+            tempvar.set('Enter Temperature')
+            tempansfield.delete(0, 'end')
+            tempansvar.set('Answer Here')
+            tempcombo1.current(0)
+            tempcombo2.current(0)
+
         def msclick1(event): #This function is to empty massfield upon mouse click
             massfield.delete(0, 'end')
             return None
@@ -1757,7 +1807,11 @@ class ConverterPage(tk.Frame): #This class is for Converter page
             lenfield.delete(0, 'end')
             return None
 
-        massvar = tk.StringVar()
+        def msclick3(event): #Above function for tempfield
+            tempfield.delete(0, 'end')
+            return None
+
+        massvar = tk.StringVar() #These variables are the text variables for all the Entry fields
         massvar.set('Enter Mass')
         massansvar = tk.StringVar()
         massansvar.set('Answer Here')
@@ -1765,6 +1819,10 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         lenvar.set('Enter Length')
         lenansvar = tk.StringVar()
         lenansvar.set('Answer Here')
+        tempvar = tk.StringVar()
+        tempvar.set('Enter Temperature')
+        tempansvar = tk.StringVar()
+        tempansvar.set('Answer Here')
 
         backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the previous page
         backbutton.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = 'e')
@@ -1775,22 +1833,22 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         label = tk.Label(self, text = 'Converter', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
         label.grid(row = 0, column = 1, pady = 10)
 
-        leftlf = tk.LabelFrame(self, text = 'Fundamental Units:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
+        leftlf = tk.LabelFrame(self, text = 'Mass, Length & Temperature:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
         leftlf.grid(row = 1, column = 0, padx = 10, pady = 10)
 
-        masslabel = tk.Label(leftlf, text = 'Mass:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Title label
+        masslabel = tk.Label(leftlf, text = 'Mass:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Mass label
         masslabel.grid(row = 0, column = 0, padx = 10, pady = 5, sticky = 'w')
 
         massfield = tk.Entry(leftlf, width = 15, textvariable = massvar, font = LargeFont) #This entry field takes mass input
         massfield.grid(row = 1, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
         massfield.bind('<Button-1>', msclick1)
 
-        s = ttk.Style()
+        s = ttk.Style() #Style for combo boxes
         s.map('TCombobox', fieldbackground = [('readonly','white')])
         s.map('TCombobox', selectbackground = [('readonly', 'white')])
         s.map('TCombobox', selectforeground = [('readonly', 'black')])
 
-        masscombo1 = ttk.Combobox(leftlf, width = 9, font = LargeFont, values = ['From...', 'Kilograms', 'Grams', 'Pounds', 'Ounces'], state = 'readonly') 
+        masscombo1 = ttk.Combobox(leftlf, width = 9, font = LargeFont, values = ['From...', 'Kilograms', 'Grams', 'Pounds', 'Ounces'], state = 'readonly') #Mass combo boxes
         masscombo1.current(0)        
         masscombo1.grid(row = 1, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 5) 
 
@@ -1798,23 +1856,23 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         masscombo2.current(0)        
         masscombo2.grid(row = 1, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        massansfield = tk.Entry(leftlf, width = 15, textvariable = massansvar, font = LargeFont, state = 'disabled') 
+        massansfield = tk.Entry(leftlf, width = 15, textvariable = massansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
         massansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        resetmassbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetMass())
+        resetmassbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetMass()) #This button resets mass
         resetmassbtn.grid(row = 1, column = 3, padx = 5, pady = 5)
 
-        massbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertMass())
+        massbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertMass()) #This button converts mass
         massbtn.grid(row = 2, column = 3, padx = 5, pady = 5)
 
-        lenlabel = tk.Label(leftlf, text = 'Length:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Title label
+        lenlabel = tk.Label(leftlf, text = 'Length:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Length label
         lenlabel.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')
 
         lenfield = tk.Entry(leftlf, width = 15, textvariable = lenvar, font = LargeFont) #This entry field takes length input
         lenfield.grid(row = 4, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
         lenfield.bind('<Button-1>', msclick2)
 
-        lencombo1 = ttk.Combobox(leftlf, width = 9, font = LargeFont, values = ['From...', 'Kilometres', 'Metres', 'Miles', 'Yards', 'Feet', 'Inches'], state = 'readonly') 
+        lencombo1 = ttk.Combobox(leftlf, width = 9, font = LargeFont, values = ['From...', 'Kilometres', 'Metres', 'Miles', 'Yards', 'Feet', 'Inches'], state = 'readonly') #Length combo boxes
         lencombo1.current(0)        
         lencombo1.grid(row = 4, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 5) 
 
@@ -1822,19 +1880,43 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         lencombo2.current(0)        
         lencombo2.grid(row = 4, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        lenansfield = tk.Entry(leftlf, width = 15, textvariable = lenansvar, font = LargeFont, state = 'disabled') 
+        lenansfield = tk.Entry(leftlf, width = 15, textvariable = lenansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
         lenansfield.grid(row = 5, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        resetlenbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetLen())
+        resetlenbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetLen()) #This button resets length
         resetlenbtn.grid(row = 4, column = 3, padx = 5, pady = 5)
 
-        lenbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertLen())
+        lenbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertLen()) #This button converts length
         lenbtn.grid(row = 5, column = 3, padx = 5, pady = 5)      
-        
-        rightlf = tk.LabelFrame(self, text = 'PLACEHOLDER', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
+
+        templabel = tk.Label(leftlf, text = 'Temperature:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Temperature label
+        templabel.grid(row = 6, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+        tempfield = tk.Entry(leftlf, width = 15, textvariable = tempvar, font = LargeFont) #This entry field takes temperature input
+        tempfield.grid(row = 7, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+        tempfield.bind('<Button-1>', msclick3)
+
+        tempcombo1 = ttk.Combobox(leftlf, width = 9, font = LargeFont, values = ['From...', 'Celsius', 'Fahrenheit', 'Kelvin'], state = 'readonly') #Temperature combo boxes
+        tempcombo1.current(0)        
+        tempcombo1.grid(row = 7, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 5) 
+
+        tempcombo2 = ttk.Combobox(leftlf, width = 9, font = LargeFont, values = ['To...', 'Celsius', 'Fahrenheit', 'Kelvin'], state = 'readonly') 
+        tempcombo2.current(0)        
+        tempcombo2.grid(row = 7, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+
+        tempansfield = tk.Entry(leftlf, width = 15, textvariable = tempansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
+        tempansfield.grid(row = 8, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+
+        resettempbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetTemp()) #This button resets temperature
+        resettempbtn.grid(row = 7, column = 3, padx = 5, pady = 5)
+
+        tempbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertTemp()) #This button converts temperature
+        tempbtn.grid(row = 8, column = 3, padx = 5, pady = 5)
+
+        rightlf = tk.LabelFrame(self, text = 'PLACEHOLDER', font = LabelFont, fg = '#00adb5', bg = '#393e46') #Placeholder label
         rightlf.grid(row = 1, column = 2, padx = 10, pady = 10)
 
-        label1 = tk.Label(rightlf, text = 'PLACEHOLDER', font = LabelFont, fg = '#00adb5', bg = '#222831') #Title label
+        label1 = tk.Label(rightlf, text = 'PLACEHOLDER', font = LabelFont, fg = '#00adb5', bg = '#222831') #Placeholder label
         label1.grid(row = 0, column = 0, padx = 10, pady = 10)        
 
 class HistPage(tk.Frame): #This class is for the History page
