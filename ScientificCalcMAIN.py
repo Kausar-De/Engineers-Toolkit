@@ -1775,6 +1775,108 @@ class ConverterPage(tk.Frame): #This class is for Converter page
                 tempcombo1.current(0)
                 tempcombo2.current(0)
 
+        def convertFluid(): #This function is for fluid volume conversion
+            try:
+                global uHist
+                global uStatement
+
+                fluidqty = float(fluidvar.get()) #Acquisition of required values and parameters
+                cnvfrom = fluidcombo1.get()
+                cnvto = fluidcombo2.get()
+
+                if cnvfrom == 'Litres': #Conversions happen in this loop nest                    
+                    if cnvto == 'Litres':
+                        fluidansvar.set(round((fluidqty), prec))                    
+                    elif cnvto == 'Mililitres':
+                        fluidansvar.set(round((fluidqty * 1000), prec))
+                    elif cnvto == 'US Gallons':
+                        fluidansvar.set(round((fluidqty * 0.264172), prec))
+                    elif cnvto == 'US Fl. Oz':
+                        fluidansvar.set(round((fluidqty * 33.814), prec))
+                    elif cnvto == 'IMP Gallons':
+                        fluidansvar.set(round((fluidqty * 0.219969), prec))
+                    elif cnvto == 'IMP Fl. Oz':
+                        fluidansvar.set(round((fluidqty * 35.1951), prec))
+                
+                elif cnvfrom == 'Mililitres':                     
+                    if cnvto == 'Litres':
+                        fluidansvar.set(round((fluidqty / 1000), prec))                    
+                    elif cnvto == 'Mililitres':
+                        fluidansvar.set(round((fluidqty), prec))
+                    elif cnvto == 'US Gallons':
+                        fluidansvar.set(round((fluidqty * 0.000264172), prec))
+                    elif cnvto == 'US Fl. Oz':
+                        fluidansvar.set(round((fluidqty * 0.033814), prec))
+                    elif cnvto == 'IMP Gallons':
+                        fluidansvar.set(round((fluidqty * 0.000219969), prec))
+                    elif cnvto == 'IMP Fl. Oz':
+                        fluidansvar.set(round((fluidqty * 0.0351951), prec))
+
+                elif cnvfrom == 'US Gallons':                     
+                    if cnvto == 'Litres':
+                        fluidansvar.set(round((fluidqty * 3.78541), prec))                    
+                    elif cnvto == 'Mililitres':
+                        fluidansvar.set(round((fluidqty * 3785.41), prec))
+                    elif cnvto == 'US Gallons':
+                        fluidansvar.set(round((fluidqty), prec))
+                    elif cnvto == 'US Fl. Oz':
+                        fluidansvar.set(round((fluidqty * 128), prec))
+                    elif cnvto == 'IMP Gallons':
+                        fluidansvar.set(round((fluidqty * 0.832674), prec))
+                    elif cnvto == 'IMP Fl. Oz':
+                        fluidansvar.set(round((fluidqty * 133.228), prec))    
+
+                elif cnvfrom == 'US Fl. Oz':                     
+                    if cnvto == 'Litres':
+                        fluidansvar.set(round((fluidqty * 0.0295735), prec))                    
+                    elif cnvto == 'Mililitres':
+                        fluidansvar.set(round((fluidqty * 29.5735), prec))
+                    elif cnvto == 'US Gallons':
+                        fluidansvar.set(round((fluidqty / 128), prec))
+                    elif cnvto == 'US Fl. Oz':
+                        fluidansvar.set(round((fluidqty), prec))
+                    elif cnvto == 'IMP Gallons':
+                        fluidansvar.set(round((fluidqty / 153.722), prec))
+                    elif cnvto == 'IMP Fl. Oz':
+                        fluidansvar.set(round((fluidqty * 1.04084), prec))
+
+                elif cnvfrom == 'IMP Gallons':                     
+                    if cnvto == 'Litres':
+                        fluidansvar.set(round((fluidqty * 4.54609), prec))                    
+                    elif cnvto == 'Mililitres':
+                        fluidansvar.set(round((fluidqty * 4546.09), prec))
+                    elif cnvto == 'US Gallons':
+                        fluidansvar.set(round((fluidqty * 1.20095), prec))
+                    elif cnvto == 'US Fl. Oz':
+                        fluidansvar.set(round((fluidqty * 153.722), prec))
+                    elif cnvto == 'IMP Gallons':
+                        fluidansvar.set(round((fluidqty), prec))
+                    elif cnvto == 'IMP Fl. Oz':
+                        fluidansvar.set(round((fluidqty * 160), prec))
+
+                elif cnvfrom == 'IMP Fl. Oz':                     
+                    if cnvto == 'Litres':
+                        fluidansvar.set(round((fluidqty * 0.0284131), prec))                    
+                    elif cnvto == 'Mililitres':
+                        fluidansvar.set(round((fluidqty * 28.41310000012815), prec))
+                    elif cnvto == 'US Gallons':
+                        fluidansvar.set(round((fluidqty / 133), prec))
+                    elif cnvto == 'US Fl. Oz':
+                        fluidansvar.set(round((fluidqty * 0.96076120843406853655), prec))
+                    elif cnvto == 'IMP Gallons':
+                        fluidansvar.set(round((fluidqty / 160), prec))
+                    elif cnvto == 'IMP Fl. Oz':
+                        fluidansvar.set(round((fluidqty), prec))
+
+                uStatement = str('You converted ' + str(fluidqty) + ' ' + str(cnvfrom) + ' to ' + fluidansvar.get() + ' ' + str(cnvto) + '\n') #Usage history statement
+                uHist.append(uStatement)
+
+            except:
+                fluidvar.set('ERROR')
+                fluidansvar.set('ERROR')
+                fluidcombo1.current(0)
+                fluidcombo2.current(0)
+
         def resetMass(): #This function resets mass converter
             massfield.delete(0, 'end')
             massvar.set('Enter Mass')
@@ -1799,6 +1901,14 @@ class ConverterPage(tk.Frame): #This class is for Converter page
             tempcombo1.current(0)
             tempcombo2.current(0)
 
+        def resetFluid(): #This function resets fluid volume converter
+            fluidfield.delete(0, 'end')
+            fluidvar.set('Enter Volume')
+            fluidansfield.delete(0, 'end')
+            fluidansvar.set('Answer Here')
+            fluidcombo1.current(0)
+            fluidcombo2.current(0)
+
         def msclick1(event): #This function is to empty massfield upon mouse click
             massfield.delete(0, 'end')
             return None
@@ -1809,6 +1919,10 @@ class ConverterPage(tk.Frame): #This class is for Converter page
 
         def msclick3(event): #Above function for tempfield
             tempfield.delete(0, 'end')
+            return None
+
+        def msclick4(event): #Above function for fluidfield
+            fluidfield.delete(0, 'end')
             return None
 
         massvar = tk.StringVar() #These variables are the text variables for all the Entry fields
@@ -1823,6 +1937,10 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         tempvar.set('Enter Temperature')
         tempansvar = tk.StringVar()
         tempansvar.set('Answer Here')
+        fluidvar = tk.StringVar()
+        fluidvar.set('Enter Volume')
+        fluidansvar = tk.StringVar()
+        fluidansvar.set('Answer Here')
 
         backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the previous page
         backbutton.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = 'e')
@@ -1839,7 +1957,7 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         masslabel = tk.Label(leftlf, text = 'Mass:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Mass label
         masslabel.grid(row = 0, column = 0, padx = 10, pady = 5, sticky = 'w')
 
-        massfield = tk.Entry(leftlf, width = 15, textvariable = massvar, font = LargeFont) #This entry field takes mass input
+        massfield = tk.Entry(leftlf, width = 14, textvariable = massvar, font = LargeFont) #This entry field takes mass input
         massfield.grid(row = 1, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
         massfield.bind('<Button-1>', msclick1)
 
@@ -1856,19 +1974,21 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         masscombo2.current(0)        
         masscombo2.grid(row = 1, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        massansfield = tk.Entry(leftlf, width = 15, textvariable = massansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
+        massansfield = tk.Entry(leftlf, width = 14, textvariable = massansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
         massansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
         resetmassbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetMass()) #This button resets mass
         resetmassbtn.grid(row = 1, column = 3, padx = 5, pady = 5)
+        resetmassbtn.config(width = 7)
 
         massbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertMass()) #This button converts mass
         massbtn.grid(row = 2, column = 3, padx = 5, pady = 5)
+        massbtn.config(width = 7)
 
         lenlabel = tk.Label(leftlf, text = 'Length:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Length label
         lenlabel.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')
 
-        lenfield = tk.Entry(leftlf, width = 15, textvariable = lenvar, font = LargeFont) #This entry field takes length input
+        lenfield = tk.Entry(leftlf, width = 14, textvariable = lenvar, font = LargeFont) #This entry field takes length input
         lenfield.grid(row = 4, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
         lenfield.bind('<Button-1>', msclick2)
 
@@ -1880,19 +2000,21 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         lencombo2.current(0)        
         lencombo2.grid(row = 4, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        lenansfield = tk.Entry(leftlf, width = 15, textvariable = lenansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
+        lenansfield = tk.Entry(leftlf, width = 14, textvariable = lenansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
         lenansfield.grid(row = 5, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
         resetlenbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetLen()) #This button resets length
         resetlenbtn.grid(row = 4, column = 3, padx = 5, pady = 5)
+        resetlenbtn.config(width = 7)
 
         lenbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertLen()) #This button converts length
-        lenbtn.grid(row = 5, column = 3, padx = 5, pady = 5)      
+        lenbtn.grid(row = 5, column = 3, padx = 5, pady = 5)
+        lenbtn.config(width = 7)      
 
         templabel = tk.Label(leftlf, text = 'Temperature:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Temperature label
         templabel.grid(row = 6, column = 0, padx = 10, pady = 5, sticky = 'w')
 
-        tempfield = tk.Entry(leftlf, width = 15, textvariable = tempvar, font = LargeFont) #This entry field takes temperature input
+        tempfield = tk.Entry(leftlf, width = 14, textvariable = tempvar, font = LargeFont) #This entry field takes temperature input
         tempfield.grid(row = 7, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
         tempfield.bind('<Button-1>', msclick3)
 
@@ -1904,20 +2026,45 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         tempcombo2.current(0)        
         tempcombo2.grid(row = 7, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        tempansfield = tk.Entry(leftlf, width = 15, textvariable = tempansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
+        tempansfield = tk.Entry(leftlf, width = 14, textvariable = tempansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
         tempansfield.grid(row = 8, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
         resettempbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetTemp()) #This button resets temperature
         resettempbtn.grid(row = 7, column = 3, padx = 5, pady = 5)
+        resettempbtn.config(width = 7)
 
         tempbtn = ttk.Button(leftlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertTemp()) #This button converts temperature
         tempbtn.grid(row = 8, column = 3, padx = 5, pady = 5)
+        tempbtn.config(width = 7)
 
-        rightlf = tk.LabelFrame(self, text = 'PLACEHOLDER', font = LabelFont, fg = '#00adb5', bg = '#393e46') #Placeholder label
+        rightlf = tk.LabelFrame(self, text = 'Fluids', font = LabelFont, fg = '#00adb5', bg = '#393e46') #Placeholder label
         rightlf.grid(row = 1, column = 2, padx = 10, pady = 10)
 
-        label1 = tk.Label(rightlf, text = 'PLACEHOLDER', font = LabelFont, fg = '#00adb5', bg = '#222831') #Placeholder label
-        label1.grid(row = 0, column = 0, padx = 10, pady = 10)        
+        fluidlabel = tk.Label(rightlf, text = 'Fluid Volume:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Fluid label
+        fluidlabel.grid(row = 0, column = 0, padx = 10, pady = 5, sticky = 'w')        
+
+        fluidfield = tk.Entry(rightlf, width = 14, textvariable = fluidvar, font = LargeFont) #This entry field takes fluid input
+        fluidfield.grid(row = 1, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+        fluidfield.bind('<Button-1>', msclick4)
+
+        fluidcombo1 = ttk.Combobox(rightlf, width = 9, font = LargeFont, values = ['From...', 'Litres', 'Mililitres', 'US Gallons', 'US Fl. Oz', 'IMP Gallons', 'IMP Fl. Oz'], state = 'readonly') #Fluid combo boxes
+        fluidcombo1.current(0)        
+        fluidcombo1.grid(row = 1, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 5) 
+
+        fluidcombo2 = ttk.Combobox(rightlf, width = 9, font = LargeFont, values = ['To...', 'Litres', 'Mililitres', 'US Gallons', 'US Fl. Oz', 'IMP Gallons', 'IMP Fl. Oz'], state = 'readonly') 
+        fluidcombo2.current(0)        
+        fluidcombo2.grid(row = 1, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+
+        fluidansfield = tk.Entry(rightlf, width = 14, textvariable = fluidansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
+        fluidansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+
+        resetfluidbtn = ttk.Button(rightlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetFluid()) #This button resets fluid volume
+        resetfluidbtn.grid(row = 1, column = 3, padx = 5, pady = 5)
+        resetfluidbtn.config(width = 7)
+
+        fluidbtn = ttk.Button(rightlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertFluid()) #This button converts fluid volume
+        fluidbtn.grid(row = 2, column = 3, padx = 5, pady = 5)
+        fluidbtn.config(width = 7)
 
 class HistPage(tk.Frame): #This class is for the History page
 
