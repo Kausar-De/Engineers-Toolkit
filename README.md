@@ -18,7 +18,8 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 -Operations on matrices  
 -Trigonometric and Logarithmic calculators  
 -Plotting bar graphs, histograms, line and scatter plots, pie charts and area bounded by 2 curves  
--Converter  
+-Unit Converter  
+-Real-Time Currency Converter (Powered by [Alpha Vantage API](https://www.alphavantage.co/))     
 -Global precision setting  
 -Usage history  
 -Help menus to make sense of it all
@@ -48,8 +49,7 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 ![](Screenshots/ssgraphs.png)
 
 ## Planned features:
-
--API calls to web-based services to enable even more functionality beyond the scope of my current skill  
+  
 -Release as a .exe file  
 
 ## References:
