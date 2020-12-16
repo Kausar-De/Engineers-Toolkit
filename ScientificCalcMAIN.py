@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt #For pyplot
 matplotlib.use('TkAgg') #Makes TkAgg the backend
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk #For canvas and nav toolbar
 from matplotlib.figure import Figure
+import requests, json #For API calls
+import webbrowser #For webpage redirects
 
 LargeFont = ('Verdana', 12) #Standard large font to be used throughout
 TitleFont = ('Times New Roman', 20, 'bold') #Standard font to be used for headline text
@@ -1877,6 +1879,61 @@ class ConverterPage(tk.Frame): #This class is for Converter page
                 fluidcombo1.current(0)
                 fluidcombo2.current(0)
 
+        def convertCurr(): #This function is for currency conversion
+            try:
+                global uHist
+                global uStatement
+
+                currqty = float(currvar.get()) #Acquisition of required values and parameters
+                cnvfrom = currcombo1.get()
+                cnvto = currcombo2.get()
+
+                api_key = apivar.get() #Acquisition of API key
+                
+                if cnvto == 'BTC': #Workaround for invalid call when converting traditional currency to bitcoin
+                    base_url = r"https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE"
+                    main_url = base_url + "&from_currency=" + cnvto + "&to_currency=" + cnvfrom + "&apikey=" + api_key 
+
+                    req_ob = requests.get(main_url)
+                    result = req_ob.json()
+
+                    rate = float(result["Realtime Currency Exchange Rate"] ['5. Exchange Rate'])
+                    curransvar.set(round((currqty / rate), prec))
+                
+                else:
+                    base_url = r"https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE"
+                    main_url = base_url + "&from_currency=" + cnvfrom + "&to_currency=" + cnvto + "&apikey=" + api_key 
+
+                    req_ob = requests.get(main_url)
+                    result = req_ob.json()
+
+                    rate = float(result["Realtime Currency Exchange Rate"] ['5. Exchange Rate'])
+                    curransvar.set(round((currqty * rate), prec))
+
+                uStatement = str('You converted ' + str(currqty) + ' ' + str(cnvfrom) + ' to ' + curransvar.get() + ' ' + str(cnvto) + '\n') #Usage history statement
+                uHist.append(uStatement)                
+
+            except:
+                apivar.set('ERROR')
+                currvar.set('ERROR')
+                curransvar.set('ERROR')
+                currcombo1.current(0)
+                currcombo2.current(0)
+
+        def getKey(): #This function lets user get API key
+            try:
+
+                url = 'https://www.alphavantage.co/support/' 
+
+                webbrowser.open_new(url) #Opens url in new tab
+            
+            except:
+                apivar.set('ERROR')
+                currvar.set('ERROR')
+                curransvar.set('ERROR')
+                currcombo1.current(0)
+                currcombo2.current(0)
+
         def resetMass(): #This function resets mass converter
             massfield.delete(0, 'end')
             massvar.set('Enter Mass')
@@ -1909,6 +1966,16 @@ class ConverterPage(tk.Frame): #This class is for Converter page
             fluidcombo1.current(0)
             fluidcombo2.current(0)
 
+        def resetCurr(): #This function resets currency converter
+            currfield.delete(0, 'end')
+            currvar.set('Enter Amount')
+            apifield.delete(0, 'end')
+            apivar.set('Enter API Key Here')
+            curransfield.delete(0, 'end')
+            curransvar.set('Answer Here')
+            currcombo1.current(0)
+            currcombo2.current(0)
+
         def msclick1(event): #This function is to empty massfield upon mouse click
             massfield.delete(0, 'end')
             return None
@@ -1923,6 +1990,14 @@ class ConverterPage(tk.Frame): #This class is for Converter page
 
         def msclick4(event): #Above function for fluidfield
             fluidfield.delete(0, 'end')
+            return None
+
+        def msclick5(event): #Above function for currfield
+            currfield.delete(0, 'end')
+            return None
+
+        def msclick6(event): #Above function for apifield
+            apifield.delete(0, 'end')
             return None
 
         massvar = tk.StringVar() #These variables are the text variables for all the Entry fields
@@ -1941,6 +2016,12 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         fluidvar.set('Enter Volume')
         fluidansvar = tk.StringVar()
         fluidansvar.set('Answer Here')
+        currvar = tk.StringVar()
+        currvar.set('Enter Amount')
+        apivar = tk.StringVar()
+        apivar.set('Enter API Key Here')
+        curransvar = tk.StringVar()
+        curransvar.set('Answer Here')
 
         backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the previous page
         backbutton.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = 'e')
@@ -2065,6 +2146,40 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         fluidbtn = ttk.Button(rightlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertFluid()) #This button converts fluid volume
         fluidbtn.grid(row = 2, column = 3, padx = 5, pady = 5)
         fluidbtn.config(width = 7)
+
+        currlabel = tk.Label(rightlf, text = 'Currency:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Currency label
+        currlabel.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')        
+
+        currfield = tk.Entry(rightlf, width = 14, textvariable = currvar, font = LargeFont) #This entry field takes currency input
+        currfield.grid(row = 4, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+        currfield.bind('<Button-1>', msclick5)
+
+        apifield = tk.Entry(rightlf, width = 23, textvariable = apivar, font = LargeFont) #This entry field takes API input
+        apifield.grid(row = 3, column = 1, columnspan = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5, sticky = 'e')
+        apifield.bind('<Button-1>', msclick6)
+
+        currcombo1 = ttk.Combobox(rightlf, width = 9, font = LargeFont, values = ['From...', 'USD', 'CAD', 'GBP', 'EUR', 'RUB', 'ZAR', 'INR', 'JPY', 'HKD', 'CNY', 'AUD', 'NZD', 'BTC'], state = 'readonly') #Currency combo boxes
+        currcombo1.current(0)        
+        currcombo1.grid(row = 4, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 5) 
+
+        currcombo2 = ttk.Combobox(rightlf, width = 9, font = LargeFont, values = ['From...', 'USD', 'CAD', 'GBP', 'EUR', 'RUB', 'ZAR', 'INR', 'JPY', 'HKD', 'CNY', 'AUD', 'NZD', 'BTC'], state = 'readonly') 
+        currcombo2.current(0)        
+        currcombo2.grid(row = 4, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+
+        curransfield = tk.Entry(rightlf, width = 14, textvariable = curransvar, font = LargeFont, state = 'disabled') #Answer is displayed here
+        curransfield.grid(row = 5, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+
+        apibtn = ttk.Button(rightlf, text = 'Get Key', style = 'btn.TButton', command = lambda: getKey()) #This button redirects to alpha vantage website to get API key
+        apibtn.grid(row = 3, column = 3, padx = 5, pady = 5)
+        apibtn.config(width = 7)
+
+        resetcurrbtn = ttk.Button(rightlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetCurr()) #This button resets currency
+        resetcurrbtn.grid(row = 4, column = 3, padx = 5, pady = 5)
+        resetcurrbtn.config(width = 7)
+
+        currbtn = ttk.Button(rightlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertCurr()) #This button converts currency
+        currbtn.grid(row = 5, column = 3, padx = 5, pady = 5)
+        currbtn.config(width = 7)
 
 class HistPage(tk.Frame): #This class is for the History page
 
