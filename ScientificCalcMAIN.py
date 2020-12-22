@@ -9,7 +9,7 @@ matplotlib.use('TkAgg') #Makes TkAgg the backend
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk #For canvas and nav toolbar
 from matplotlib.figure import Figure
 import requests, json #For API calls
-import webbrowser #For webpage redirects
+import webbrowser #For opening web browser with tkinter button
 
 LargeFont = ('Verdana', 12) #Standard large font to be used throughout
 TitleFont = ('Times New Roman', 20, 'bold') #Standard font to be used for headline text
@@ -278,7 +278,7 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
         arilf = tk.LabelFrame(self, text = 'Arithmetic:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff for simple arithmetic
         arilf.grid(row = 1, column = 0, padx = 10, pady = 10)
 
-        inputfield = tk.Entry(arilf, textvariable = equation, font = LargeFont, state = 'disabled') #This entry field displays user input and output
+        inputfield = tk.Entry(arilf, textvariable = equation, font = LargeFont, state = 'readonly') #This entry field displays user input and output
         inputfield.grid(columnspan = 4, ipadx = 20, ipady = 3, pady = 15)
 
         btn1 = ttk.Button(arilf, text = '1', style = 'btn.TButton', command = lambda: click(1)) #Calculator buttons
@@ -376,7 +376,7 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
         modfield2.grid(row = 1, column = 1, ipadx = 1, ipady = 3, padx = 10, pady = 7.5)
         modfield2.bind('<Button-1>', msclick2)
 
-        modansfield = tk.Entry(modabslf, textvariable = modansvar, state = 'disabled') #This entry field is for displaying modulus answer
+        modansfield = tk.Entry(modabslf, textvariable = modansvar, state = 'readonly') #This entry field is for displaying modulus answer
         modansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 10, pady = 7.5)
 
         percfield1 = tk.Entry(modabslf, textvariable = perc1var) #This entry field is for part in percentage
@@ -387,14 +387,14 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
         percfield2.grid(row = 6, column = 1, ipadx = 1, ipady = 3, padx = 10, pady = 7.5)
         percfield2.bind('<Button-1>', msclick5)
 
-        percansfield = tk.Entry(modabslf, textvariable = percansvar, state = 'disabled') #This entry field is for displaying percentage answer
+        percansfield = tk.Entry(modabslf, textvariable = percansvar, state = 'readonly') #This entry field is for displaying percentage answer
         percansfield.grid(row = 7, column = 0, ipadx = 1, ipady = 3, padx = 10, pady = 7.5)
 
         absfield = tk.Entry(modabslf, textvariable = absvar) #This entry field is for absolute value
         absfield.grid(row = 4, column = 0, ipadx = 1, padx = 10, ipady = 3, pady = 7.5)
         absfield.bind('<Button-1>', msclick3)
 
-        absansfield = tk.Entry(modabslf, textvariable = absansvar, state = 'disabled') #This entry field is for displaying absolute answer
+        absansfield = tk.Entry(modabslf, textvariable = absansvar, state = 'readonly') #This entry field is for displaying absolute answer
         absansfield.grid(row = 4, column = 1, ipadx = 1, padx = 10, ipady = 3, pady = 7.5)
 
         btnmod = ttk.Button(modabslf, text = 'Modulus', style = 'btn.TButton', command = lambda: modsolve()) #Button for calculating modulus
@@ -1879,6 +1879,84 @@ class ConverterPage(tk.Frame): #This class is for Converter page
                 fluidcombo1.current(0)
                 fluidcombo2.current(0)
 
+        def convertEnergy(): #This function is for energy conversion
+            try:
+                global uHist
+                global uStatement
+
+                energyqty = float(energyvar.get()) #Acquisition of required values and parameters
+                cnvfrom = energycombo1.get()
+                cnvto = energycombo2.get()
+
+                if cnvfrom == 'Joules': #Conversions happen in this loop nest                    
+                    if cnvto == 'Joules':
+                        energyansvar.set(round((energyqty), prec))                    
+                    elif cnvto == 'Calories':
+                        energyansvar.set(round((energyqty * 0.239006), prec))
+                    elif cnvto == 'E. Volts':
+                        energyansvar.set(round((energyqty / (1.6 * (10 ** -19))), prec))
+                    elif cnvto == 'BTUs':
+                        energyansvar.set(round((energyqty * 0.000947817), prec))
+                    elif cnvto == 'Ft. Pounds':
+                        energyansvar.set(round((energyqty * 0.737562), prec))
+                
+                elif cnvfrom == 'Calories':                   
+                    if cnvto == 'Joules':
+                        energyansvar.set(round((energyqty * 4.184), prec))                    
+                    elif cnvto == 'Calories':
+                        energyansvar.set(round((energyqty), prec))
+                    elif cnvto == 'E. Volts':
+                        energyansvar.set(round(((energyqty * 4.184) / (1.6 * (10 ** -19))), prec))
+                    elif cnvto == 'BTUs':
+                        energyansvar.set(round((energyqty * 0.00396567), prec))
+                    elif cnvto == 'Ft. Pounds':
+                        energyansvar.set(round((energyqty * 3.08596), prec))
+
+                elif cnvfrom == 'E. Volts':                   
+                    if cnvto == 'Joules':
+                        energyansvar.set(round((energyqty * (1.6 * (10 ** -19))), prec))                    
+                    elif cnvto == 'Calories':
+                        energyansvar.set(round(((energyqty * (1.6 * (10 ** -19))) * 0.239006), prec))
+                    elif cnvto == 'E. Volts':
+                        energyansvar.set(round((energyqty), prec))
+                    elif cnvto == 'BTUs':
+                        energyansvar.set(round(((energyqty * (1.6 * (10 ** -19))) * 0.000947817), prec))
+                    elif cnvto == 'Ft. Pounds':
+                        energyansvar.set(round(((energyqty * (1.6 * (10 ** -19))) * 0.737562), prec))
+
+                elif cnvfrom == 'BTUs':                   
+                    if cnvto == 'Joules':
+                        energyansvar.set(round((energyqty * 1055.06), prec))                    
+                    elif cnvto == 'Calories':
+                        energyansvar.set(round((energyqty * 252.164), prec))
+                    elif cnvto == 'E. Volts':
+                        energyansvar.set(round(((energyqty * 1055.06) / (1.6 * (10 ** -19))), prec))
+                    elif cnvto == 'BTUs':
+                        energyansvar.set(round((energyqty), prec))
+                    elif cnvto == 'Ft. Pounds':
+                        energyansvar.set(round((energyqty * 778.169), prec))
+
+                elif cnvfrom == 'Ft. Pounds':                   
+                    if cnvto == 'Joules':
+                        energyansvar.set(round((energyqty * 1.35582), prec))                    
+                    elif cnvto == 'Calories':
+                        energyansvar.set(round((energyqty * 0.324048), prec))
+                    elif cnvto == 'E. Volts':
+                        energyansvar.set(round(((energyqty * 1.35582) / (1.6 * (10 ** -19))) , prec))
+                    elif cnvto == 'BTUs':
+                        energyansvar.set(round((energyqty * 0.00128507), prec))
+                    elif cnvto == 'Ft. Pounds':
+                        energyansvar.set(round((energyqty), prec))
+
+                uStatement = str('You converted ' + str(energyqty) + ' ' + str(cnvfrom) + ' to ' + energyansvar.get() + ' ' + str(cnvto) + '\n') #Usage history statement
+                uHist.append(uStatement)
+
+            except:
+                energyvar.set('ERROR')
+                energyansvar.set('ERROR')
+                energycombo1.current(0)
+                energycombo2.current(0)
+
         def convertCurr(): #This function is for currency conversion
             try:
                 global uHist
@@ -1966,11 +2044,17 @@ class ConverterPage(tk.Frame): #This class is for Converter page
             fluidcombo1.current(0)
             fluidcombo2.current(0)
 
+        def resetEnergy(): #This function resets energy converter
+            energyfield.delete(0, 'end')
+            energyvar.set('Enter Energy')
+            energyansfield.delete(0, 'end')
+            energyansvar.set('Answer Here')
+            energycombo1.current(0)
+            energycombo2.current(0)
+
         def resetCurr(): #This function resets currency converter
             currfield.delete(0, 'end')
             currvar.set('Enter Amount')
-            apifield.delete(0, 'end')
-            apivar.set('Enter API Key Here')
             curransfield.delete(0, 'end')
             curransvar.set('Answer Here')
             currcombo1.current(0)
@@ -1992,12 +2076,16 @@ class ConverterPage(tk.Frame): #This class is for Converter page
             fluidfield.delete(0, 'end')
             return None
 
-        def msclick5(event): #Above function for currfield
-            currfield.delete(0, 'end')
+        def msclick5(event): #Above function for energyfield
+            energyfield.delete(0, 'end')
             return None
 
         def msclick6(event): #Above function for apifield
             apifield.delete(0, 'end')
+            return None
+
+        def msclick7(event): #Above function for currfield
+            currfield.delete(0, 'end')
             return None
 
         massvar = tk.StringVar() #These variables are the text variables for all the Entry fields
@@ -2016,10 +2104,14 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         fluidvar.set('Enter Volume')
         fluidansvar = tk.StringVar()
         fluidansvar.set('Answer Here')
-        currvar = tk.StringVar()
-        currvar.set('Enter Amount')
+        energyvar = tk.StringVar()
+        energyvar.set('Enter Energy')
+        energyansvar = tk.StringVar()
+        energyansvar.set('Answer Here')
         apivar = tk.StringVar()
         apivar.set('Enter API Key Here')
+        currvar = tk.StringVar()
+        currvar.set('Enter Amount')
         curransvar = tk.StringVar()
         curransvar.set('Answer Here')
 
@@ -2055,7 +2147,7 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         masscombo2.current(0)        
         masscombo2.grid(row = 1, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        massansfield = tk.Entry(leftlf, width = 14, textvariable = massansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
+        massansfield = tk.Entry(leftlf, width = 14, textvariable = massansvar, font = LargeFont, state = 'readonly') #Answer is displayed here
         massansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
         resetmassbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetMass()) #This button resets mass
@@ -2081,7 +2173,7 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         lencombo2.current(0)        
         lencombo2.grid(row = 4, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        lenansfield = tk.Entry(leftlf, width = 14, textvariable = lenansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
+        lenansfield = tk.Entry(leftlf, width = 14, textvariable = lenansvar, font = LargeFont, state = 'readonly') #Answer is displayed here
         lenansfield.grid(row = 5, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
         resetlenbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetLen()) #This button resets length
@@ -2107,7 +2199,7 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         tempcombo2.current(0)        
         tempcombo2.grid(row = 7, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        tempansfield = tk.Entry(leftlf, width = 14, textvariable = tempansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
+        tempansfield = tk.Entry(leftlf, width = 14, textvariable = tempansvar, font = LargeFont, state = 'readonly') #Answer is displayed here
         tempansfield.grid(row = 8, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
         resettempbtn = ttk.Button(leftlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetTemp()) #This button resets temperature
@@ -2118,7 +2210,7 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         tempbtn.grid(row = 8, column = 3, padx = 5, pady = 5)
         tempbtn.config(width = 7)
 
-        rightlf = tk.LabelFrame(self, text = 'Fluids', font = LabelFont, fg = '#00adb5', bg = '#393e46') #Placeholder label
+        rightlf = tk.LabelFrame(self, text = 'Fluids, Energy & Currency:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #Placeholder label
         rightlf.grid(row = 1, column = 2, padx = 10, pady = 10)
 
         fluidlabel = tk.Label(rightlf, text = 'Fluid Volume:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Fluid label
@@ -2136,7 +2228,7 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         fluidcombo2.current(0)        
         fluidcombo2.grid(row = 1, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        fluidansfield = tk.Entry(rightlf, width = 14, textvariable = fluidansvar, font = LargeFont, state = 'disabled') #Answer is displayed here
+        fluidansfield = tk.Entry(rightlf, width = 14, textvariable = fluidansvar, font = LargeFont, state = 'readonly') #Answer is displayed here
         fluidansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
         resetfluidbtn = ttk.Button(rightlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetFluid()) #This button resets fluid volume
@@ -2147,38 +2239,64 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         fluidbtn.grid(row = 2, column = 3, padx = 5, pady = 5)
         fluidbtn.config(width = 7)
 
-        currlabel = tk.Label(rightlf, text = 'Currency:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Currency label
-        currlabel.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')        
+        energylabel = tk.Label(rightlf, text = 'Energy:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Energy label
+        energylabel.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')        
 
-        currfield = tk.Entry(rightlf, width = 14, textvariable = currvar, font = LargeFont) #This entry field takes currency input
-        currfield.grid(row = 4, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
-        currfield.bind('<Button-1>', msclick5)
+        energyfield = tk.Entry(rightlf, width = 14, textvariable = energyvar, font = LargeFont) #This entry field takes energy input
+        energyfield.grid(row = 4, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+        energyfield.bind('<Button-1>', msclick5)
+
+        energycombo1 = ttk.Combobox(rightlf, width = 9, font = LargeFont, values = ['From...', 'Joules', 'Calories', 'E. Volts', 'BTUs', 'Ft. Pounds'], state = 'readonly') #Energy combo boxes
+        energycombo1.current(0)        
+        energycombo1.grid(row = 4, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 5) 
+
+        energycombo2 = ttk.Combobox(rightlf, width = 9, font = LargeFont, values = ['To...', 'Joules', 'Calories', 'E. Volts', 'BTUs', 'Ft. Pounds'], state = 'readonly') 
+        energycombo2.current(0)        
+        energycombo2.grid(row = 4, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+
+        energyansfield = tk.Entry(rightlf, width = 14, textvariable = energyansvar, font = LargeFont, state = 'readonly') #Answer is displayed here
+        energyansfield.grid(row = 5, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+
+        resetenergybtn = ttk.Button(rightlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetEnergy()) #This button resets energy
+        resetenergybtn.grid(row = 4, column = 3, padx = 5, pady = 5)
+        resetenergybtn.config(width = 7)
+
+        energybtn = ttk.Button(rightlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertEnergy()) #This button converts energy
+        energybtn.grid(row = 5, column = 3, padx = 5, pady = 5)
+        energybtn.config(width = 7)
+
+        currlabel = tk.Label(rightlf, text = 'Currency:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Currency label
+        currlabel.grid(row = 6, column = 0, padx = 10, pady = 5, sticky = 'w')        
 
         apifield = tk.Entry(rightlf, width = 23, textvariable = apivar, font = LargeFont) #This entry field takes API input
-        apifield.grid(row = 3, column = 1, columnspan = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5, sticky = 'e')
+        apifield.grid(row = 6, column = 1, columnspan = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5, sticky = 'e')
         apifield.bind('<Button-1>', msclick6)
+
+        currfield = tk.Entry(rightlf, width = 14, textvariable = currvar, font = LargeFont) #This entry field takes currency input
+        currfield.grid(row = 7, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+        currfield.bind('<Button-1>', msclick7)
 
         currcombo1 = ttk.Combobox(rightlf, width = 9, font = LargeFont, values = ['From...', 'USD', 'CAD', 'GBP', 'EUR', 'RUB', 'ZAR', 'INR', 'JPY', 'HKD', 'CNY', 'AUD', 'NZD', 'BTC'], state = 'readonly') #Currency combo boxes
         currcombo1.current(0)        
-        currcombo1.grid(row = 4, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 5) 
+        currcombo1.grid(row = 7, column = 1, ipadx = 1, ipady = 3, padx = 5, pady = 5) 
 
-        currcombo2 = ttk.Combobox(rightlf, width = 9, font = LargeFont, values = ['From...', 'USD', 'CAD', 'GBP', 'EUR', 'RUB', 'ZAR', 'INR', 'JPY', 'HKD', 'CNY', 'AUD', 'NZD', 'BTC'], state = 'readonly') 
+        currcombo2 = ttk.Combobox(rightlf, width = 9, font = LargeFont, values = ['To...', 'USD', 'CAD', 'GBP', 'EUR', 'RUB', 'ZAR', 'INR', 'JPY', 'HKD', 'CNY', 'AUD', 'NZD', 'BTC'], state = 'readonly') 
         currcombo2.current(0)        
-        currcombo2.grid(row = 4, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+        currcombo2.grid(row = 7, column = 2, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
-        curransfield = tk.Entry(rightlf, width = 14, textvariable = curransvar, font = LargeFont, state = 'disabled') #Answer is displayed here
-        curransfield.grid(row = 5, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
+        curransfield = tk.Entry(rightlf, width = 14, textvariable = curransvar, font = LargeFont, state = 'readonly') #Answer is displayed here
+        curransfield.grid(row = 8, column = 0, ipadx = 1, ipady = 3, padx = 5, pady = 5)
 
         apibtn = ttk.Button(rightlf, text = 'Get Key', style = 'btn.TButton', command = lambda: getKey()) #This button redirects to alpha vantage website to get API key
-        apibtn.grid(row = 3, column = 3, padx = 5, pady = 5)
+        apibtn.grid(row = 6, column = 3, padx = 5, pady = 5)
         apibtn.config(width = 7)
 
         resetcurrbtn = ttk.Button(rightlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetCurr()) #This button resets currency
-        resetcurrbtn.grid(row = 4, column = 3, padx = 5, pady = 5)
+        resetcurrbtn.grid(row = 7, column = 3, padx = 5, pady = 5)
         resetcurrbtn.config(width = 7)
 
         currbtn = ttk.Button(rightlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertCurr()) #This button converts currency
-        currbtn.grid(row = 5, column = 3, padx = 5, pady = 5)
+        currbtn.grid(row = 8, column = 3, padx = 5, pady = 5)
         currbtn.config(width = 7)
 
 class HistPage(tk.Frame): #This class is for the History page
