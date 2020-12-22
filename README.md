@@ -18,7 +18,7 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 -Operations on matrices  
 -Trigonometric and Logarithmic calculators  
 -Plotting bar graphs, histograms, line and scatter plots, pie charts and area bounded by 2 curves  
--Unit Converter  
+-Unit Converter(US Imperial, UK Imperial and Metric)    
 -Real-Time Currency Converter (Powered by [Alpha Vantage API](https://www.alphavantage.co/))     
 -Global precision setting  
 -Usage history  
@@ -41,8 +41,7 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 ![](Screenshots/ssmat.png)
 
 ## Upcoming features:
-
--Imperial-Metric converter (WORK STARTED)    
+    
 -More constants    
 -Cheat-sheet of useful math formulae, identities, etc.  
 
