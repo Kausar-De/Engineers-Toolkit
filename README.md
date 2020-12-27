@@ -42,7 +42,7 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 
 ## Upcoming features:
     
--More constants    
+-More constants (WORK STARTED)      
 -Cheat-sheet of useful math formulae, identities, etc.  
 
 ![](Screenshots/ssgraphs.png)
