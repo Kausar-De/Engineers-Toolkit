@@ -169,6 +169,20 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
                 equation.set('ERROR')
                 expression = ''
 
+        def changeConst(): #These functions allow us to change the buttons in the arithmetic calculator
+            try:
+                btnconst["text"] = "Revert"
+                btnconst["command"] = revertConst
+            except:
+                raise
+
+        def revertConst():
+            try:
+                btnconst["text"] = "Constants"
+                btnconst["command"] = changeConst
+            except:
+                raise
+
         def clr(): #This function is for behaviour of CLEAR button for arithmetic
             global expression
             expression = ''
@@ -177,16 +191,16 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
         def clrmod(): #This function is for behaviour of CLEAR button for modulus
             mod1var.set('Enter Dividend')
             mod2var.set('Enter Divisor')
-            modansvar.set('Answer shows here')
+            modansvar.set('Answer Here')
 
         def clrabs(): #This function is for behaviour of CLEAR button for absolute value
             absvar.set('Enter your input')
-            absansvar.set('Answer shows here')
+            absansvar.set('Answer Here')
 
         def clrperc(): #This function is for behaviour of CLEAR button for percentage
             perc1var.set('Enter Part')
             perc2var.set('Enter Whole')
-            percansvar.set('Answer shows here')
+            percansvar.set('Answer Here')
             
         def msclick1(event): #This function is to empty modfield1 upon mouse click
             modfield1.delete(0, 'end')
@@ -262,15 +276,15 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
         absvar = tk.StringVar()
         absvar.set('Enter Number')
         modansvar = tk.StringVar()
-        modansvar.set('Answer shows here')
+        modansvar.set('Answer Here')
         absansvar = tk.StringVar()
-        absansvar.set('Answer shows here')
+        absansvar.set('Answer Here')
         perc1var = tk.StringVar()
         perc1var.set('Enter Part')
         perc2var = tk.StringVar()
         perc2var.set('Enter Whole')
         percansvar = tk.StringVar()
-        percansvar.set('Answer shows here')        
+        percansvar.set('Answer Here')        
 
         label = tk.Label(self, text = 'Arithmetic', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title Label
         label.grid(row = 0, column = 1, padx = 10, pady = 10)
@@ -347,8 +361,8 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
         btnflrdiv = ttk.Button(arilf, text = '//', style = 'btn.TButton', command = lambda: click('//'))
         btnflrdiv.grid(row = 2, column = 3, padx = 10, pady = 10)
 
-        btng = ttk.Button(arilf, text = 'g', style = 'btn.TButton', command = lambda: click(9.8))
-        btng.grid(row = 2, column = 0, padx = 10, pady = 10)
+        btnconst = ttk.Button(arilf, text = 'Constants', style = 'btn.TButton', command = lambda: changeConst())
+        btnconst.grid(row = 2, column = 0, padx = 10, pady = 10)
 
         btnphi = ttk.Button(arilf, text = '\u03C6', style = 'btn.TButton', command = lambda: click(round(phivar, prec)))
         btnphi.grid(row = 1, column = 1, padx = 10, pady = 10)
@@ -368,33 +382,33 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
         abslabel = tk.Label(modabslf, text = 'Absolute value:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Absolute Value Label
         abslabel.grid(row = 3, column = 0, padx = 10, pady = 7.5, sticky = 'w')
 
-        modfield1 = tk.Entry(modabslf, textvariable = mod1var) #This entry field is for dividend in modulus
+        modfield1 = tk.Entry(modabslf, font = LargeFont, width = 12, textvariable = mod1var) #This entry field is for dividend in modulus
         modfield1.grid(row = 1, column = 0, ipadx = 1, ipady = 3, padx = 10, pady = 7.5)
         modfield1.bind('<Button-1>', msclick1)
 
-        modfield2 = tk.Entry(modabslf, textvariable = mod2var) #This entry field is for divisor in modulus
+        modfield2 = tk.Entry(modabslf, font = LargeFont, width = 12, textvariable = mod2var) #This entry field is for divisor in modulus
         modfield2.grid(row = 1, column = 1, ipadx = 1, ipady = 3, padx = 10, pady = 7.5)
         modfield2.bind('<Button-1>', msclick2)
 
-        modansfield = tk.Entry(modabslf, textvariable = modansvar, state = 'readonly') #This entry field is for displaying modulus answer
+        modansfield = tk.Entry(modabslf, font = LargeFont, width = 12, textvariable = modansvar, state = 'readonly') #This entry field is for displaying modulus answer
         modansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 10, pady = 7.5)
 
-        percfield1 = tk.Entry(modabslf, textvariable = perc1var) #This entry field is for part in percentage
+        percfield1 = tk.Entry(modabslf, font = LargeFont, width = 12, textvariable = perc1var) #This entry field is for part in percentage
         percfield1.grid(row = 6, column = 0, ipadx = 1, ipady = 3, padx = 10, pady = 7.5)
         percfield1.bind('<Button-1>', msclick4)
 
-        percfield2 = tk.Entry(modabslf, textvariable = perc2var) #This entry field is for whole in percentage
+        percfield2 = tk.Entry(modabslf, font = LargeFont, width = 12, textvariable = perc2var) #This entry field is for whole in percentage
         percfield2.grid(row = 6, column = 1, ipadx = 1, ipady = 3, padx = 10, pady = 7.5)
         percfield2.bind('<Button-1>', msclick5)
 
-        percansfield = tk.Entry(modabslf, textvariable = percansvar, state = 'readonly') #This entry field is for displaying percentage answer
+        percansfield = tk.Entry(modabslf, font = LargeFont, width = 12, textvariable = percansvar, state = 'readonly') #This entry field is for displaying percentage answer
         percansfield.grid(row = 7, column = 0, ipadx = 1, ipady = 3, padx = 10, pady = 7.5)
 
-        absfield = tk.Entry(modabslf, textvariable = absvar) #This entry field is for absolute value
+        absfield = tk.Entry(modabslf, font = LargeFont, width = 12, textvariable = absvar) #This entry field is for absolute value
         absfield.grid(row = 4, column = 0, ipadx = 1, padx = 10, ipady = 3, pady = 7.5)
         absfield.bind('<Button-1>', msclick3)
 
-        absansfield = tk.Entry(modabslf, textvariable = absansvar, state = 'readonly') #This entry field is for displaying absolute answer
+        absansfield = tk.Entry(modabslf, font = LargeFont, width = 12, textvariable = absansvar, state = 'readonly') #This entry field is for displaying absolute answer
         absansfield.grid(row = 4, column = 1, ipadx = 1, padx = 10, ipady = 3, pady = 7.5)
 
         btnmod = ttk.Button(modabslf, text = 'Modulus', style = 'btn.TButton', command = lambda: modsolve()) #Button for calculating modulus
