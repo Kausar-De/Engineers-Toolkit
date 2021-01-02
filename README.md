@@ -40,10 +40,10 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 
 ![](Screenshots/ssmat.png)
 
-## Upcoming features:
-    
--More constants (WORK STARTED)      
+## Upcoming features:  
+         
 -Cheat-sheet of useful math formulae, identities, etc.  
+-Complex number operations  
 
 ![](Screenshots/ssgraphs.png)
 
@@ -55,4 +55,4 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 
 -Colour palette by [Color Hunt](https://colorhunt.co/palette/2763)  
 -Numerous articles and answers on [GeeksForGeeks](https://www.geeksforgeeks.org/) and [StackOverflow](https://stackoverflow.com/)  
--Tkinter resources by [sentdex](https://www.youtube.com/playlist?list=PLQVvvaa0QuDclKx-QpC9wntnURXVJqLyk), [freeCodeCamp](https://youtu.be/YXPyB4XeYLA) and [Codemy.com](https://youtu.be/BSfbjrqIw20) on [YouTube](https://www.youtube.com/)
+-Tkinter resources by [sentdex](https://www.youtube.com/playlist?list=PLQVvvaa0QuDclKx-QpC9wntnURXVJqLyk), [freeCodeCamp](https://youtu.be/YXPyB4XeYLA), [Essential Engineering](https://www.youtube.com/watch?v=XO9pqYTTIOA) and [Codemy.com](https://youtu.be/BSfbjrqIw20) on [YouTube](https://www.youtube.com/)
