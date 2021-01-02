@@ -73,7 +73,7 @@ class StartPage(tk.Frame): #This class is for the starting page, which will be d
             return None
 
         precvar = tk.StringVar()
-        precvar.set('Enter Precision')
+        precvar.set('Enter Precision (Default 2)')
 
         label1 = tk.Label(self, text = 'Welcome to the Calculator!', font = TitleFont, fg = '#00adb5', bg = '#222831') #These labels are for displaying the title text
         label1.grid(row = 0, column = 1, padx = 250, pady = 10) #To position label
@@ -100,7 +100,7 @@ class StartPage(tk.Frame): #This class is for the starting page, which will be d
         precilabel = tk.Label(precilf, text = 'Set global precision:', font = LabelFont, fg = '#00adb5', bg = '#222831')
         precilabel.grid(row = 0, column = 0, padx = 10, pady = 10)
 
-        precifield = tk.Entry(precilf, textvariable = precvar, font = LargeFont) #This entry field displays user input and output
+        precifield = tk.Entry(precilf, textvariable = precvar, width = 22, font = LargeFont) #This entry field displays user input and output
         precifield.grid(row = 1, column = 0, ipadx = 0.1, ipady = 3, padx = 10, pady = 10)
         precifield.bind('<Button-1>', msclick)
 
@@ -169,17 +169,41 @@ class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
                 equation.set('ERROR')
                 expression = ''
 
-        def changeConst(): #These functions allow us to change the buttons in the arithmetic calculator
+        def changeConst(): #This function replaces the buttons mentioned with constants
             try:
-                btnconst["text"] = "Revert"
-                btnconst["command"] = revertConst
+                btnconst['text'] = 'Revert'
+                btnconst['command'] = revertConst
+                btne['text'] = 'eV'
+                btne['command'] = lambda: click(round((1.602 * 10**-19), prec))
+                btnexp['text'] = 'h'
+                btnexp['command'] = lambda: click(round((6.62607004 * 10**-34), prec))                                
+                btnpi['text'] = 'G'
+                btnpi["command"] = lambda: click(round((6.67408 * 10**-11), prec))
+                btnphi['text'] = 'N(A)'
+                btnphi['command'] = lambda: click(round((6.02214 * 10**23), prec))
+                btnlbr['text'] = 'k'
+                btnlbr['command'] = lambda: click(round((1.38064852 * 10**-23), prec))               
+                btnrbr['text'] = 'c'
+                btnrbr['command'] = lambda: click(round((299792458), prec))
             except:
                 raise
 
-        def revertConst():
+        def revertConst(): #This function reverts everything back to normal
             try:
-                btnconst["text"] = "Constants"
-                btnconst["command"] = changeConst
+                btnconst['text'] = 'Constants'
+                btnconst['command'] = changeConst
+                btne['text'] = 'e'
+                btne['command'] = lambda: click(round(evar, prec))
+                btnexp['text'] = '**'
+                btnexp['command'] = lambda: click('**')
+                btnpi['text'] = '\u03C0'
+                btnpi['command'] = lambda: click(round(pivar, prec))
+                btnphi['text'] = '\u03C6'
+                btnphi['command'] = lambda: click(round(phivar, prec))
+                btnlbr['text'] = '('
+                btnlbr['command'] = lambda: click('(')              
+                btnrbr['text'] = ')'
+                btnrbr['command'] = lambda: click(')')
             except:
                 raise
 
