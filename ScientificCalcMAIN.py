@@ -1194,8 +1194,24 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 Ylist = list(map(float, Y.split()))
                 Ylist = [round(i, prec) for i in Ylist]
 
-                f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                XLim = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                XLimlist = list(map(float, XLim.split()))                
+                XLimlist = [round(i, prec) for i in XLimlist] 
+
+                YLim = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                YLimlist = list(map(float, YLim.split()))                
+                YLimlist = [round(i, prec) for i in YLimlist]
+
+                XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
+
+                YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user                              
+
+                f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
+                plt.xlim(XLimlist)
+                plt.ylim(YLimlist)
+                a.set_xlabel(XLbl)
+                a.set_ylabel(YLbl)
                 a.plot(Xlist, Ylist, color = '#00adb5') #Plots the graph
                 
                 a.set_facecolor('#222831') #Graph colours
@@ -1204,6 +1220,9 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 a.tick_params(axis='y', colors='#00adb5', which = 'both')
                 a.spines['bottom'].set_color('#eeeeee')
                 a.spines['left'].set_color('#eeeeee')
+                a.xaxis.label.set_color('#00adb5')
+                a.xaxis.set_label_coords(0.5, -0.087)
+                a.yaxis.label.set_color('#00adb5')
                 a.spines['top'].set_visible(False) #Hides top and right axis
                 a.spines['right'].set_visible(False)
 
@@ -1232,8 +1251,24 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 Ylist = list(map(float, Y.split()))
                 Ylist = [round(i, prec) for i in Ylist]
 
-                f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                XLim = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                XLimlist = list(map(float, XLim.split()))                
+                XLimlist = [round(i, prec) for i in XLimlist] 
+
+                YLim = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                YLimlist = list(map(float, YLim.split()))                
+                YLimlist = [round(i, prec) for i in YLimlist]
+
+                XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
+
+                YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user                              
+
+                f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
+                plt.xlim(XLimlist)
+                plt.ylim(YLimlist)
+                a.set_xlabel(XLbl)
+                a.set_ylabel(YLbl)
                 a.bar(Xlist, Ylist, color = '#00adb5') #Plots the graph
                 
                 a.set_facecolor('#222831') #Graph colours
@@ -1242,6 +1277,9 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 a.tick_params(axis='y', colors='#00adb5', which = 'both')
                 a.spines['bottom'].set_color('#eeeeee')
                 a.spines['left'].set_color('#eeeeee')
+                a.xaxis.label.set_color('#00adb5')
+                a.xaxis.set_label_coords(0.5, -0.087)
+                a.yaxis.label.set_color('#00adb5')
                 a.spines['top'].set_visible(False) #Hides top and right axis
                 a.spines['right'].set_visible(False)
 
@@ -1270,8 +1308,24 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 Ylist = list(map(float, Y.split()))
                 Ylist = [round(i, prec) for i in Ylist]
 
-                f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                XLim = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                XLimlist = list(map(float, XLim.split()))                
+                XLimlist = [round(i, prec) for i in XLimlist] 
+
+                YLim = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                YLimlist = list(map(float, YLim.split()))                
+                YLimlist = [round(i, prec) for i in YLimlist]
+
+                XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
+
+                YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user                              
+
+                f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
+                plt.xlim(XLimlist)
+                plt.ylim(YLimlist)
+                a.set_xlabel(XLbl)
+                a.set_ylabel(YLbl)
                 a.scatter(Xlist, Ylist, color = '#00adb5') #Plots the graph
                 
                 a.set_facecolor('#222831') #Graph colours
@@ -1280,6 +1334,9 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 a.tick_params(axis='y', colors='#00adb5', which = 'both')
                 a.spines['bottom'].set_color('#eeeeee')
                 a.spines['left'].set_color('#eeeeee')
+                a.xaxis.label.set_color('#00adb5')
+                a.xaxis.set_label_coords(0.5, -0.087)
+                a.yaxis.label.set_color('#00adb5')
                 a.spines['top'].set_visible(False) #Hides top and right axis
                 a.spines['right'].set_visible(False)
 
@@ -1308,8 +1365,24 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 Ylist = list(map(float, Y.split()))
                 Ylist = [round(i, prec) for i in Ylist]
 
-                f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                XLim = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                XLimlist = list(map(float, XLim.split()))                
+                XLimlist = [round(i, prec) for i in XLimlist] 
+
+                YLim = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                YLimlist = list(map(float, YLim.split()))                
+                YLimlist = [round(i, prec) for i in YLimlist]
+
+                XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
+
+                YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user                              
+
+                f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
+                plt.xlim(XLimlist)
+                plt.ylim(YLimlist)
+                a.set_xlabel(XLbl)
+                a.set_ylabel(YLbl)
                 a.hist(Xlist, Ylist, color = '#00adb5') #Plots the graph
                 
                 a.set_facecolor('#222831') #Graph colours
@@ -1318,6 +1391,9 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 a.tick_params(axis='y', colors='#00adb5', which = 'both')
                 a.spines['bottom'].set_color('#eeeeee')
                 a.spines['left'].set_color('#eeeeee')
+                a.xaxis.label.set_color('#00adb5')
+                a.xaxis.set_label_coords(0.5, -0.087)
+                a.yaxis.label.set_color('#00adb5')
                 a.spines['top'].set_visible(False) #Hides top and right axis
                 a.spines['right'].set_visible(False)
 
@@ -1346,7 +1422,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 Ylist = [round(i, prec) for i in Ylist]
 
                 wp = {'linewidth' : 1, 'edgecolor' : '#00adb5'} #For wedge properties
-                f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
                 a.pie(Ylist, labels =  Xlist, shadow = True, startangle = 90, wedgeprops = wp, textprops = dict(color = '#00adb5')) #Plots the graph
                 
@@ -1390,18 +1466,37 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                     Y2list = list(map(float, Y2.split()))
                     Y2list = [round(i, prec) for i in Y2list]
 
-                    f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
+                    XLim = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                    XLimlist = list(map(float, XLim.split()))                
+                    XLimlist = [round(i, prec) for i in XLimlist] 
+
+                    YLim = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                    YLimlist = list(map(float, YLim.split()))                
+                    YLimlist = [round(i, prec) for i in YLimlist]
+
+                    XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
+
+                    YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user  
+
+                    f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                     a = f.add_subplot(111)
+                    plt.xlim(XLimlist)
+                    plt.ylim(YLimlist)
+                    a.set_xlabel(XLbl)
+                    a.set_ylabel(YLbl)
                     a.plot(Xlist, Y1list, color = '#00adb5') #Plots the graph
                     a.plot(Xlist, Y2list, color = '#00adb5')
                     a.fill_between(Xlist, Y1list, Y2list, color = '#393e46')
 
                     a.set_facecolor('#222831') #Graph colours
                     f.patch.set_facecolor('#222831')
-                    a.tick_params(axis = 'x', colors='#00adb5', which = 'both')
-                    a.tick_params(axis = 'y', colors='#00adb5', which = 'both')
+                    a.tick_params(axis='x', colors='#00adb5', which = 'both')
+                    a.tick_params(axis='y', colors='#00adb5', which = 'both')
                     a.spines['bottom'].set_color('#eeeeee')
                     a.spines['left'].set_color('#eeeeee')
+                    a.xaxis.label.set_color('#00adb5')
+                    a.xaxis.set_label_coords(0.5, -0.087)
+                    a.yaxis.label.set_color('#00adb5')
                     a.spines['top'].set_visible(False) #Hides top and right axis
                     a.spines['right'].set_visible(False)
 
@@ -1426,16 +1521,23 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                     f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
                     a = f.add_subplot(111)
+                    plt.xlim(XLimlist)
+                    plt.ylim(YLimlist)
+                    a.set_xlabel(XLbl)
+                    a.set_ylabel(YLbl)
                     a.plot(X1list, Ylist, color = '#00adb5') #Plots the graph
                     a.plot(X2list, Ylist, color = '#00adb5')
                     a.fill_betweenx(Ylist, X1list, X2list, color = '#393e46')
 
                     a.set_facecolor('#222831') #Graph colours
                     f.patch.set_facecolor('#222831')
-                    a.tick_params(axis = 'x', colors='#00adb5', which = 'both')
-                    a.tick_params(axis = 'y', colors='#00adb5', which = 'both')
+                    a.tick_params(axis='x', colors='#00adb5', which = 'both')
+                    a.tick_params(axis='y', colors='#00adb5', which = 'both')
                     a.spines['bottom'].set_color('#eeeeee')
                     a.spines['left'].set_color('#eeeeee')
+                    a.xaxis.label.set_color('#00adb5')
+                    a.xaxis.set_label_coords(0.5, -0.087)
+                    a.yaxis.label.set_color('#00adb5')
                     a.spines['top'].set_visible(False) #Hides top and right axis
                     a.spines['right'].set_visible(False)
 
@@ -1465,9 +1567,15 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
             graphtext4.delete('1.0', 'end')
             graphtext4.insert(tk.END, 'Enter Data')
 
+        def resetAxis(): #This function is for resetting axis limit text fields         
+            graphtext5.delete('1.0', 'end')
+            graphtext5.insert(tk.END, 'Enter X Axis Limit')
+            graphtext6.delete('1.0', 'end')
+            graphtext6.insert(tk.END, 'Enter Y Axis Limit')
+
         def resetGraph(): #This function is for resetting the graph
             try:
-                f = Figure(figsize = (7.55, 3.3), dpi = 100)
+                f = Figure(figsize = (6.93, 3.3), dpi = 100)
                 a = f.add_subplot(111)
                 a.plot([0], [0])
 
@@ -1509,6 +1617,22 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
             graphtext4.delete('1.0', 'end')
             return None
 
+        def msclick5(event): #Above function for graphtext5
+            graphtext5.delete('1.0', 'end')
+            return None
+
+        def msclick6(event): #Above function for graphtext6
+            graphtext6.delete('1.0', 'end')
+            return None
+
+        def msclick7(event): #Above function for graphtext7
+            graphtext7.delete('1.0', 'end')
+            return None
+
+        def msclick8(event): #Above function for graphtext8
+            graphtext8.delete('1.0', 'end')
+            return None
+
         xyvar = tk.IntVar() #This variable is for radio button value
         xyvar.set(1)
 
@@ -1522,7 +1646,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
         histbutton.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = 'w')
 
         graphopslf = tk.LabelFrame(self, text = 'Graph Operations:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains all the stuff to be used for taking inputs for graphs
-        graphopslf.grid(row = 1, column = 0, padx = 10, pady = 10)
+        graphopslf.grid(row = 1, column = 0, padx = 5, pady = 10)
 
         graphlabel1 = tk.Label(graphopslf, text = 'Graph 1:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for first input field
         graphlabel1.grid(row = 0, column = 0, padx = 5, pady = 5, sticky = 'w')
@@ -1584,13 +1708,46 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
         piebtn.grid(row = 8, column = 0, padx = 5, pady = 6, sticky = 'w')
         piebtn.config(width = 8)
 
-        graphresetbtn = ttk.Button(self, text = 'Reset Graph', style = 'btn.TButton', command = lambda: resetGraph()) #This button resets the graph
-        graphresetbtn.grid(row = 1, column = 2, padx = 10, pady = 10)
+        limitlf = tk.LabelFrame(self, text = 'Axis Customization:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame takes input for customizing axis limits and labels
+        limitlf.grid(row = 1, column = 2, padx = 5, pady = 10)
+
+        graphlabel3 = tk.Label(limitlf, text = 'Axis Limits:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for axis limit input field
+        graphlabel3.grid(row = 0, column = 0, padx = 5, pady = 5, sticky = 'w')
+
+        graphtext5 = tk.Text(limitlf, font = LargeFont, height = 1.3, width = 18) #This field takes input for X axis limit
+        graphtext5.grid(row = 1, column = 0, ipady = 1, padx = 5, pady = 7)
+        graphtext5.insert(tk.END, 'Enter X Axis Limit')
+        graphtext5.bind('<Button-1>', msclick5)
+
+        graphtext6 = tk.Text(limitlf, font = LargeFont, height = 1.3, width = 18) #This field takes input for Y axis limit
+        graphtext6.grid(row = 2, column = 0, ipady = 1, padx = 5, pady = 7)     
+        graphtext6.insert(tk.END, 'Enter Y Axis Limit')
+        graphtext6.bind('<Button-1>', msclick6)       
+
+        graphlabel4 = tk.Label(limitlf, text = 'Axis Labels:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for axis label input field
+        graphlabel4.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = 'w')
+
+        graphtext7 = tk.Text(limitlf, font = LargeFont, height = 1.3, width = 18) #This field takes input for X axis label
+        graphtext7.grid(row = 4, column = 0, ipady = 1, padx = 5, pady = 7)
+        graphtext7.insert(tk.END, 'Enter X Axis Label')
+        graphtext7.bind('<Button-1>', msclick7)
+
+        graphtext8 = tk.Text(limitlf, font = LargeFont, height = 1.3, width = 18) #This field takes input for Y axis label
+        graphtext8.grid(row = 5, column = 0, ipady = 1, padx = 5, pady = 7)     
+        graphtext8.insert(tk.END, 'Enter Y Axis Label')
+        graphtext8.bind('<Button-1>', msclick8)
+
+        resetaxisbtn = ttk.Button(limitlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetAxis()) #This button resets all the fields in limitlf label frame
+        resetaxisbtn.grid(row = 0, column = 0, padx = 5, pady = 4, sticky = 'e')
+        resetaxisbtn.config(width = 6)
+
+        graphresetbtn = ttk.Button(limitlf, text = 'Reset Graph', style = 'btn.TButton', command = lambda: resetGraph()) #This button resets the graph
+        graphresetbtn.grid(row = 6, column = 0, padx = 10, pady = 10)
 
         plotlf = tk.LabelFrame(self, text = 'Graph:', font = LabelFont, fg = '#00adb5', bg = '#393e46', width = 120, height = 50) #This label frame contains the plotted graph
-        plotlf.grid(row = 1, column = 1, padx = 10, pady = 10)
+        plotlf.grid(row = 1, column = 1, padx = 5, pady = 10)
 
-        f = Figure(figsize = (7.55, 3.3), dpi = 100) #This is default graph when graph page is opened or reset
+        f = Figure(figsize = (6.93, 3.3), dpi = 100) #This is default graph when graph page is opened or reset
         a = f.add_subplot(111)
         a.plot([0], [0])
         
