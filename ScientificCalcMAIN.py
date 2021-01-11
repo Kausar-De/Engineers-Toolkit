@@ -1204,7 +1204,9 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                 XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
 
-                YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user                              
+                YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user  
+
+                GraphTitle = graphtext9.get('1.0', 'end-1c') #Takes graph title from user                            
 
                 f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
@@ -1212,6 +1214,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 plt.ylim(YLimlist)
                 a.set_xlabel(XLbl)
                 a.set_ylabel(YLbl)
+                a.set_title(GraphTitle)
                 a.plot(Xlist, Ylist, color = '#00adb5') #Plots the graph
                 
                 a.set_facecolor('#222831') #Graph colours
@@ -1223,6 +1226,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 a.xaxis.label.set_color('#00adb5')
                 a.xaxis.set_label_coords(0.5, -0.087)
                 a.yaxis.label.set_color('#00adb5')
+                a.title.set_color('#00adb5')
                 a.spines['top'].set_visible(False) #Hides top and right axis
                 a.spines['right'].set_visible(False)
 
@@ -1263,12 +1267,15 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                 YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user                              
 
+                GraphTitle = graphtext9.get('1.0', 'end-1c') #Takes graph title from user 
+
                 f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
                 plt.xlim(XLimlist)
                 plt.ylim(YLimlist)
                 a.set_xlabel(XLbl)
                 a.set_ylabel(YLbl)
+                a.set_title(GraphTitle)
                 a.bar(Xlist, Ylist, color = '#00adb5') #Plots the graph
                 
                 a.set_facecolor('#222831') #Graph colours
@@ -1280,6 +1287,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 a.xaxis.label.set_color('#00adb5')
                 a.xaxis.set_label_coords(0.5, -0.087)
                 a.yaxis.label.set_color('#00adb5')
+                a.title.set_color('#00adb5')
                 a.spines['top'].set_visible(False) #Hides top and right axis
                 a.spines['right'].set_visible(False)
 
@@ -1320,12 +1328,15 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                 YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user                              
 
+                GraphTitle = graphtext9.get('1.0', 'end-1c') #Takes graph title from user 
+
                 f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
                 plt.xlim(XLimlist)
                 plt.ylim(YLimlist)
                 a.set_xlabel(XLbl)
                 a.set_ylabel(YLbl)
+                a.set_title(GraphTitle)
                 a.scatter(Xlist, Ylist, color = '#00adb5') #Plots the graph
                 
                 a.set_facecolor('#222831') #Graph colours
@@ -1337,6 +1348,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 a.xaxis.label.set_color('#00adb5')
                 a.xaxis.set_label_coords(0.5, -0.087)
                 a.yaxis.label.set_color('#00adb5')
+                a.title.set_color('#00adb5')
                 a.spines['top'].set_visible(False) #Hides top and right axis
                 a.spines['right'].set_visible(False)
 
@@ -1377,12 +1389,15 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                 YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user                              
 
+                GraphTitle = graphtext9.get('1.0', 'end-1c') #Takes graph title from user 
+
                 f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
                 plt.xlim(XLimlist)
                 plt.ylim(YLimlist)
                 a.set_xlabel(XLbl)
                 a.set_ylabel(YLbl)
+                a.set_title(GraphTitle)
                 a.hist(Xlist, Ylist, color = '#00adb5') #Plots the graph
                 
                 a.set_facecolor('#222831') #Graph colours
@@ -1394,6 +1409,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 a.xaxis.label.set_color('#00adb5')
                 a.xaxis.set_label_coords(0.5, -0.087)
                 a.yaxis.label.set_color('#00adb5')
+                a.title.set_color('#00adb5')
                 a.spines['top'].set_visible(False) #Hides top and right axis
                 a.spines['right'].set_visible(False)
 
@@ -1421,9 +1437,12 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 Ylist = list(map(float, Y.split()))
                 Ylist = [round(i, prec) for i in Ylist]
 
+                GraphTitle = graphtext9.get('1.0', 'end-1c') #Takes graph title from user 
+
                 wp = {'linewidth' : 1, 'edgecolor' : '#00adb5'} #For wedge properties
                 f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
+                a.set_title(GraphTitle)
                 a.pie(Ylist, labels =  Xlist, shadow = True, startangle = 90, wedgeprops = wp, textprops = dict(color = '#00adb5')) #Plots the graph
                 
                 a.set_facecolor('#222831') #Graph colours
@@ -1434,6 +1453,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 a.spines['left'].set_color('#eeeeee')
                 a.spines['top'].set_visible(False) #Hides top and right axis
                 a.spines['right'].set_visible(False)
+                a.title.set_color('#00adb5')
 
                 uStatement = str('You plotted a pie chart with labels ' + X + ' and data ' + Y + '\n') #Usage history statement
                 uHist.append(uStatement)
@@ -1478,6 +1498,8 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                     YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user  
 
+                    GraphTitle = graphtext9.get('1.0', 'end-1c') #Takes graph title from user 
+
                     f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                     a = f.add_subplot(111)
                     plt.xlim(XLimlist)
@@ -1486,6 +1508,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                     a.set_ylabel(YLbl)
                     a.plot(Xlist, Y1list, color = '#00adb5') #Plots the graph
                     a.plot(Xlist, Y2list, color = '#00adb5')
+                    a.set_title(GraphTitle)
                     a.fill_between(Xlist, Y1list, Y2list, color = '#393e46')
 
                     a.set_facecolor('#222831') #Graph colours
@@ -1497,6 +1520,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                     a.xaxis.label.set_color('#00adb5')
                     a.xaxis.set_label_coords(0.5, -0.087)
                     a.yaxis.label.set_color('#00adb5')
+                    a.title.set_color('#00adb5')
                     a.spines['top'].set_visible(False) #Hides top and right axis
                     a.spines['right'].set_visible(False)
 
@@ -1519,6 +1543,8 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                     X2list = list(map(float, X2.split()))
                     X2list = [round(i, prec) for i in X2list]
 
+                    GraphTitle = graphtext9.get('1.0', 'end-1c') #Takes graph title from user 
+
                     f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
                     a = f.add_subplot(111)
                     plt.xlim(XLimlist)
@@ -1527,6 +1553,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                     a.set_ylabel(YLbl)
                     a.plot(X1list, Ylist, color = '#00adb5') #Plots the graph
                     a.plot(X2list, Ylist, color = '#00adb5')
+                    a.set_title(GraphTitle)
                     a.fill_betweenx(Ylist, X1list, X2list, color = '#393e46')
 
                     a.set_facecolor('#222831') #Graph colours
@@ -1538,6 +1565,7 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                     a.xaxis.label.set_color('#00adb5')
                     a.xaxis.set_label_coords(0.5, -0.087)
                     a.yaxis.label.set_color('#00adb5')
+                    a.title.set_color('#00adb5')
                     a.spines['top'].set_visible(False) #Hides top and right axis
                     a.spines['right'].set_visible(False)
 
@@ -1631,6 +1659,10 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
         def msclick8(event): #Above function for graphtext8
             graphtext8.delete('1.0', 'end')
+            return None
+
+        def msclick9(event): #Above function for graphtext9
+            graphtext9.delete('1.0', 'end')
             return None
 
         xyvar = tk.IntVar() #This variable is for radio button value
@@ -1737,12 +1769,20 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
         graphtext8.insert(tk.END, 'Enter Y Axis Label')
         graphtext8.bind('<Button-1>', msclick8)
 
+        graphlabel5 = tk.Label(limitlf, text = 'Graph title:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for graph title input field
+        graphlabel5.grid(row = 6, column = 0, padx = 5, pady = 5, sticky = 'w')
+
+        graphtext9 = tk.Text(limitlf, font = LargeFont, height = 1.3, width = 18) #This field takes input for graph title
+        graphtext9.grid(row = 7, column = 0, ipady = 1, padx = 5, pady = 7)     
+        graphtext9.insert(tk.END, 'Enter Graph Title')
+        graphtext9.bind('<Button-1>', msclick9)
+
         resetaxisbtn = ttk.Button(limitlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetAxis()) #This button resets all the fields in limitlf label frame
         resetaxisbtn.grid(row = 0, column = 0, padx = 5, pady = 4, sticky = 'e')
         resetaxisbtn.config(width = 6)
 
         graphresetbtn = ttk.Button(limitlf, text = 'Reset Graph', style = 'btn.TButton', command = lambda: resetGraph()) #This button resets the graph
-        graphresetbtn.grid(row = 6, column = 0, padx = 10, pady = 10)
+        graphresetbtn.grid(row = 8, column = 0, padx = 10, pady = 12)
 
         plotlf = tk.LabelFrame(self, text = 'Graph:', font = LabelFont, fg = '#00adb5', bg = '#393e46', width = 120, height = 50) #This label frame contains the plotted graph
         plotlf.grid(row = 1, column = 1, padx = 5, pady = 10)
@@ -2627,19 +2667,19 @@ def matplotlibHelp(): #This function defines the help menu for graphs page
     label = tk.Label(matplotlibhelpmenu, text = 'How to use Graphs Page', font = TitleFont, fg = '#00adb5', bg = '#222831') #Text to be displayed in the page
     label.grid(row = 0, column = 0, padx = 10, pady = 10)
 
-    helplabel1 = tk.Label(matplotlibhelpmenu, text = '- The Graphs page takes input on the left side and plots the graph in the middle.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel1 = tk.Label(matplotlibhelpmenu, text = '- The Graphs page takes data on the left side, labels and co-ord limits on the right side and plots the graph in the middle.', font = LabelFont, fg = '#00adb5', bg = '#222831')
     helplabel1.grid(row = 1, column = 0, padx = 10, pady = 5, sticky = 'w')
 
-    helplabel2 = tk.Label(matplotlibhelpmenu, text = '- The first two input fields take input for line, bar, histogram and scatter plots.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel2 = tk.Label(matplotlibhelpmenu, text = '- The first two input fields take input for line, bar, histogram and scatter plots. The other 2 fields are for pie chart.', font = LabelFont, fg = '#00adb5', bg = '#222831')
     helplabel2.grid(row = 2, column = 0, padx = 10, pady = 5, sticky = 'w')
 
     helplabel3 = tk.Label(matplotlibhelpmenu, text = '- Enter all X and Y coordinates sequentially with a space in the respective fields.', font = LabelFont, fg = '#00adb5', bg = '#222831')
     helplabel3.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')
 
-    helplabel4 = tk.Label(matplotlibhelpmenu, text = '- The other 2 fields are for pie chart. Enter labels in first field and data in second field with spaces.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel4 = tk.Label(matplotlibhelpmenu, text = '- Enter labels in first field and data in second field with spaces for pie chart. Instructions for AUTC are in screenshot.', font = LabelFont, fg = '#00adb5', bg = '#222831')
     helplabel4.grid(row = 4, column = 0, padx = 10, pady = 5, sticky = 'w')
 
-    helplabel5 = tk.Label(matplotlibhelpmenu, text = '- Instructions for AUTC are provided in screenshot.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel5 = tk.Label(matplotlibhelpmenu, text = '- Enter coordinate limits of each axis, labels and graph title on the right. ', font = LabelFont, fg = '#00adb5', bg = '#222831')
     helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
 
     matplotlibimg = Image.open(r'Images\matplotlibss.png') #This is to process matplotlibss utilizing PIL's modules
