@@ -9,7 +9,7 @@ GUI is made in [Tkinter](https://docs.python.org/3/library/tkinter.html).
 As a new python developer who started coding in the lockdown, I fell in love with python's flexibility, readability and intuitive feel. As I learnt more and more about python's vast repertoire of features and libraries, I wanted to make a project that puts all my newly-acquired skills to the test. Around this time I also discovered tkinter, which, though slightly dated, felt really simple to use and deceptively versatile. Also, tkinter feels like the perfect fit for a calculator type project. I knew I was going to make it open-source, so that people may improve, learn and benefit from this little endeavour of mine.
  Thus motivated and equipped with skills and knowledge of python, I set out to make this calculator.
 
-![](Screenshots/sschoices.png)
+![](Screenshots/ssari.png)
 
 ## Features:
 
@@ -24,7 +24,7 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 -Usage history  
 -Help menus to make sense of it all
 
-![](Screenshots/ssari.png)
+![](Screenshots/ssmat.png)
 
 ## How it all happens:
 
@@ -38,14 +38,14 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 -Global array allows for usage history to be stored till it is cleared or the program is terminated  
 -Numerous python features like functions, list comprehension, nested lists and seamless module importing are the backbone of the whole project
 
-![](Screenshots/ssmat.png)
+![](Screenshots/ssgraphs.png)
 
 ## Upcoming features:  
          
 -Cheat-sheet of useful math formulae, identities, etc.  
 -Complex number operations  
 
-![](Screenshots/ssgraphs.png)
+![](Screenshots/ssconv.png)
 
 ## Planned features:
   
