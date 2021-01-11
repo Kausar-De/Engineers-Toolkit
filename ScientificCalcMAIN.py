@@ -2695,11 +2695,48 @@ def matplotlibHelp(): #This function defines the help menu for graphs page
     helpicon = ImageTk.PhotoImage(helpicon) #Make the icon file readable
     matplotlibhelpmenu.iconphoto(False, helpicon)
 
+def converterHelp(): #This function defines the help menu for converter page
+    converterhelpmenu = tk.Toplevel(root, bg = '#222831')
+    converterhelpmenu.title('Graphs Help')
+    converterhelpmenu.geometry('1000x700')
+    
+    label = tk.Label(converterhelpmenu, text = 'How to use Converter Page', font = TitleFont, fg = '#00adb5', bg = '#222831') #Text to be displayed in the page
+    label.grid(row = 0, column = 0, padx = 10, pady = 10)
+
+    helplabel1 = tk.Label(converterhelpmenu, text = '- The Converter page currently has 6 types of conversions.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel1.grid(row = 1, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel2 = tk.Label(converterhelpmenu, text = '- Enter numerical value of the quantity to be converted in the designated field.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel2.grid(row = 2, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel3 = tk.Label(converterhelpmenu, text = '- Select the original and desired unit using the drop down menu and press "Convert".', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel3.grid(row = 3, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel4 = tk.Label(converterhelpmenu, text = '- Converted value appears in answer field.', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel4.grid(row = 4, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    helplabel5 = tk.Label(converterhelpmenu, text = '- You need to get API Key for live currency converter. Click on "Get API Key" button and follow the webpage instructions. ', font = LabelFont, fg = '#00adb5', bg = '#222831')
+    helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
+
+    converterimg = Image.open(r'Images\converterss.png') #This is to process converterss utilizing PIL's modules
+    converterimg = converterimg.resize((1000, 460), Image.ANTIALIAS)
+    converterimg = ImageTk.PhotoImage(converterimg)
+    
+    panel = tk.Label(converterhelpmenu, image = converterimg) 
+    panel.photo = converterimg
+    panel.grid(row = 6)
+
+    helpicon = Image.open(r'Images\helpicon.png') #This is to make the help icon utilizing PIL's modules
+    helpicon = helpicon.resize((64, 64), Image.ANTIALIAS) #Resize icon to desirable size
+    helpicon = ImageTk.PhotoImage(helpicon) #Make the icon file readable
+    converterhelpmenu.iconphoto(False, helpicon)
+
 helpmenu = tk.Menu(menubar, tearoff = 0)
 menubar.add_cascade(label = 'Help', menu = helpmenu)
 helpmenu.add_command(label = 'Arithmetic', command = lambda: ariHelp())
 helpmenu.add_command(label = 'Matrices & More', command = lambda: numpyHelp())
 helpmenu.add_command(label = 'Graphs', command = lambda: matplotlibHelp())
+helpmenu.add_command(label = 'Converter', command = lambda: converterHelp())
 
 root.mainloop()
 
