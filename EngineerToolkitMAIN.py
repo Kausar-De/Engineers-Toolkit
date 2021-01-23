@@ -30,7 +30,7 @@ class Calculator(tk.Tk): #Main program class w/ container
 
         tk.Tk.__init__(self, *args, **kwargs)
 
-        tk.Tk.wm_title(self, 'Scientific Calculator') #Program title
+        tk.Tk.wm_title(self, "Engineer's Toolkit") #Program title
         
         container = tk.Frame(self) #Code for main container
         container.pack(side = 'top', fill = 'both', expand = True)
@@ -75,7 +75,7 @@ class StartPage(tk.Frame): #This class is for the starting page, which will be d
         precvar = tk.StringVar()
         precvar.set('Enter Precision (Default 2)')
 
-        label1 = tk.Label(self, text = 'Welcome to the Calculator!', font = TitleFont, fg = '#00adb5', bg = '#222831') #These labels are for displaying the title text
+        label1 = tk.Label(self, text = 'Welcome to the Toolkit!', font = TitleFont, fg = '#00adb5', bg = '#222831') #These labels are for displaying the title text
         label1.grid(row = 0, column = 1, padx = 250, pady = 10) #To position label
         label2 = tk.Label(self, text = 'Please press START to continue or QUIT to exit!', font = TitleFont, fg = '#00adb5', bg = '#222831')
         label2.grid(row = 1, column = 1, padx = 150, pady = 10)
@@ -119,26 +119,35 @@ class ChoicePage(tk.Frame): #This class is for the second page, where user can c
         backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(StartPage)) #This button takes us to the previous page
         backbutton.grid(row = 0, column = 0, padx = 10, pady = 20, sticky = 'e')
 
+        histbutton = ttk.Button(self, text = 'History', style = 'btn.TButton', command = lambda: controller.show_frame(HistPage)) #This button takes us to the usage history page
+        histbutton.grid(row = 0, column = 0, padx = 10, pady = 20, sticky = 'w')
+
         choiceslf = tk.LabelFrame(self, bg = '#222831', borderwidth = 0, highlightthickness = 0) #This label enables positioning buttons centrally
         choiceslf.grid(row = 1, column = 0, padx = 10, pady = 90)
 
         arithbutton = ttk.Button(choiceslf, text = 'Arithmetic', style = 'btn.TButton', command = lambda: controller.show_frame(ArithPage)) #Button to take us to arithmetic operations
         arithbutton.grid(row = 0, column = 0, padx = 10, pady = 20)
+        arithbutton.config(width = '17')
 
-        numpybutton = ttk.Button(choiceslf, text = 'Matrices & More', style = 'btn.TButton', command = lambda: controller.show_frame(NumpyPage)) #Button to take us to numpy operations
+        numpybutton = ttk.Button(choiceslf, text = 'Matrices, Trig & Logs', style = 'btn.TButton', command = lambda: controller.show_frame(NumpyPage)) #Button to take us to numpy operations
         numpybutton.grid(row = 0, column = 1, padx = 10, pady = 20)
+        numpybutton.config(width = '17')
 
         convbutton = ttk.Button(choiceslf, text = 'Converter', style = 'btn.TButton', command = lambda: controller.show_frame(ConverterPage)) #Button to take us to converter page 
         convbutton.grid(row = 0, column = 2, padx = 10, pady = 20)
+        convbutton.config(width = '17')
 
-        graphbutton = ttk.Button(choiceslf, text = 'Graphs', style = 'btn.TButton', command = lambda: controller.show_frame(MatPlotLibPage)) #Button to take us to matplotlib operations (PLANNED)
+        graphbutton = ttk.Button(choiceslf, text = 'Graphs', style = 'btn.TButton', command = lambda: controller.show_frame(MatPlotLibPage)) #Button to take us to matplotlib operations 
         graphbutton.grid(row = 1, column = 0, padx = 10, pady = 20)
+        graphbutton.config(width = '17')
 
-        docsbutton = ttk.Button(choiceslf, text = 'Useful Formulae', style = 'btn.TButton') #Button to take us to documentations page (PLANNED)
+        docsbutton = ttk.Button(choiceslf, text = 'Cheat Sheet', style = 'btn.TButton') #Button to take us to documentations page (PLANNED)
         docsbutton.grid(row = 1, column = 1, padx = 10, pady = 20)
+        docsbutton.config(width = '17')
 
-        histbutton = ttk.Button(choiceslf, text = 'History', style = 'btn.TButton', command = lambda: controller.show_frame(HistPage)) #This button takes us to the usage history page
-        histbutton.grid(row = 1, column = 2, padx = 10, pady = 10)
+        complexbutton = ttk.Button(choiceslf, text = 'Complex & Equations', style = 'btn.TButton') #Button to take us to documentations page (PLANNED)
+        complexbutton.grid(row = 1, column = 2, padx = 10, pady = 20)
+        complexbutton.config(width = '17')
 
 class ArithPage(tk.Frame): #This class is for the Arithmetic operations page
 
@@ -2719,6 +2728,7 @@ def converterHelp(): #This function defines the help menu for converter page
     helplabel5.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = 'w')
 
     converterimg = Image.open(r'Images\converterss.png') #This is to process converterss utilizing PIL's modules
+    
     converterimg = converterimg.resize((1000, 460), Image.ANTIALIAS)
     converterimg = ImageTk.PhotoImage(converterimg)
     
