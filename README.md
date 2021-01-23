@@ -1,5 +1,5 @@
-# Scientific-Calculator
-A Scientific Calculator that utilizes several technologies and modules from python such as [Numpy](https://numpy.org/), [PIL](https://pillow.readthedocs.io/en/stable/) and [Matplotlib](https://matplotlib.org/).  
+# Engineer's Toolkit
+An Engineer's Toolkit that utilizes several technologies and modules from python such as [Numpy](https://numpy.org/), [PIL](https://pillow.readthedocs.io/en/stable/) and [Matplotlib](https://matplotlib.org/).  
 GUI is made in [Tkinter](https://docs.python.org/3/library/tkinter.html).
 
 ![](Screenshots/ssstart.png)
