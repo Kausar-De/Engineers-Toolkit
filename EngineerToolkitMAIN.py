@@ -10,6 +10,9 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 import requests, json #For API calls
 import webbrowser #For opening web browser with tkinter button
+import cmath #For complex number operations
+from sympy import Symbol #For equation symbols
+from sympy.solvers import solve #For equation solving
 
 LargeFont = ('Verdana', 12) #Standard large font to be used throughout
 TitleFont = ('Times New Roman', 20, 'bold') #Standard font to be used for headline text
@@ -39,7 +42,7 @@ class Calculator(tk.Tk): #Main program class w/ container
 
         self.frames = {} #Code for accomodating different frames in which code will run
 
-        for F in (StartPage, ChoicePage, ArithPage, NumpyPage, MatPlotLibPage, ConverterPage, HistPage): #Iterates through the different pages
+        for F in (StartPage, ChoicePage, ArithPage, NumpyPage, MatPlotLibPage, ConverterPage, ComplexPage, HistPage): #Iterates through the different pages
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky = 'nsew')
@@ -145,7 +148,7 @@ class ChoicePage(tk.Frame): #This class is for the second page, where user can c
         docsbutton.grid(row = 1, column = 1, padx = 10, pady = 20)
         docsbutton.config(width = '17')
 
-        complexbutton = ttk.Button(choiceslf, text = 'Complex & Equations', style = 'btn.TButton') #Button to take us to documentations page (PLANNED)
+        complexbutton = ttk.Button(choiceslf, text = 'Complex & Equations', style = 'btn.TButton', command = lambda: controller.show_frame(ComplexPage)) #Button to take us to complex and equation operations
         complexbutton.grid(row = 1, column = 2, padx = 10, pady = 20)
         complexbutton.config(width = '17')
 
@@ -939,7 +942,7 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
 
         def clrTrig(): #This is to program trig clear button
             trigfield.delete(0, 'end')
-            trigvar.set('Enter angle')
+            trigvar.set('Enter Angle')
 
         def loge(): #This function is for calculating natural log
             try:
@@ -949,27 +952,29 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
                 logval = str(logfield.get())#Acquires logfield input as string to accomodate fraction inputs
                 logfinal = float(eval(logval)) #Evaluates fraction input and converts it to float for math module
 
-                ans = str(round(math.log(logfinal), prec)) #Calculates ln rounded to 2 places, converts it to string for entry widget
+                ans = str(round(math.log(logfinal), prec)) #Calculates ln , converts it to string for entry widget
                 uStatement = str('Natural log of ' + logval + ' is ' + ans + '\n') #Usage history statement
                 uHist.append(uStatement)
                 logvar.set(ans) #Display answer
             except:
                 logvar.set('ERROR')
 
-        def log10(): #This function is for calculating natural log
+        def logx(): #This function is for calculating log base x
             try:
                 global uHist
                 global uStatement
 
-                logval = str(logfield.get())#Acquires logfield input as string to accomodate fraction inputs
+                logval = str(logfield.get()) #Acquires logfield input as string to accomodate fraction inputs
+                base = float(logbasefield.get()) #Acquires logbasefield input for custom base
                 logfinal = float(eval(logval)) #Evaluates fraction input and converts it to float for math module
 
-                ans = str(round(math.log10(logfinal), prec)) #Calculates log base 10 rounded to 2 places, converts it to string for entry widget
-                uStatement = str('Log base 10 of ' + logval + ' is ' + ans + '\n') #Usage history statement
+                ans = str(round(math.log(logfinal, base), prec)) #Calculates log base x , converts it to string for entry widget
+                uStatement = str('Log base ' + str(base) + ' of ' + logval + ' is ' + ans + '\n') #Usage history statement
                 uHist.append(uStatement)
                 logvar.set(ans) #Display answer
             except:
                 logvar.set('ERROR')
+                logbasevar.set('ERROR')
 
         def antilog(): #This function is for calculating natural log
             try:
@@ -988,7 +993,9 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
 
         def clrLog(): #This is to program log clear button
             logfield.delete(0, 'end')
-            logvar.set('Enter value')
+            logvar.set('Enter Value')
+            logbasefield.delete(0, 'end')
+            logbasevar.set('Enter Base')            
 
         def msclick1(event): #This function is to empty matcolfield1 upon mouse click
             matcolfield1.delete(0, 'end')
@@ -1026,6 +1033,10 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
             logfield.delete(0, 'end')
             return None
 
+        def msclick10(event): #Above function for logbasefield
+            logbasefield.delete(0, 'end')
+            return None
+
         mat1var = tk.StringVar() #These variables are the text variables for all the Entry fields
         mat1var.set('Enter Columns')
         mat2var = tk.StringVar()
@@ -1035,14 +1046,19 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
         matdivvar = tk.StringVar()
         matdivvar.set('Divisor')
         trigvar = tk.StringVar()
-        trigvar.set('Enter angle')
+        trigvar.set('Enter Angle')
         logvar = tk.StringVar()
-        logvar.set('Enter value')
+        logvar.set('Enter Value')
+        logbasevar = tk.StringVar()
+        logbasevar.set('Enter Base')
         radiovar = tk.IntVar()
         radiovar.set(1)
 
-        label = tk.Label(self, text = 'Matrices & More', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
-        label.grid(row = 0, column = 1, padx = 0, pady = 10, sticky = 'nsew')
+        label1 = tk.Label(self, text = 'Matrices, Logs', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
+        label1.grid(row = 0, column = 1, padx = 0, pady = 0)
+
+        label2 = tk.Label(self, text = ' & Trigonometry', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title label
+        label2.grid(row = 1, column = 1, padx = 0, pady = 0, sticky = 'n')
 
         backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the previous page
         backbutton.grid(row = 0, column = 2, padx = 10, pady = 20, sticky = 'e')
@@ -1129,8 +1145,8 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
         triglabel = tk.Label(otheropslf, text = 'Trigonometry:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Algebra Label
         triglabel.grid(row = 0, column = 0, padx = 2, pady = 10)
 
-        trigfield = tk.Entry(otheropslf, width = 10, font = LargeFont, textvariable = trigvar) #This field takes input for trigonometric operation
-        trigfield.grid(row = 1, column = 0, ipadx = 0.1, ipady = 3, padx = 2, pady = 7.5)
+        trigfield = tk.Entry(otheropslf, width = 21, font = LargeFont, textvariable = trigvar) #This field takes input for trigonometric operation
+        trigfield.grid(row = 1, column = 0, columnspan = 2, ipadx = 0.1, ipady = 3, padx = 2, pady = 7.5)
         trigfield.bind('<Button-1>', msclick8)
 
         clrtrigbutton = ttk.Button(otheropslf, text = 'Clear', style = 'btn.TButton', command = lambda: clrTrig()) #This button clears trigfield
@@ -1172,13 +1188,17 @@ class NumpyPage(tk.Frame): #This class is for Matrices, Trig and Logs page
         logfield.grid(row = 5, column = 0, ipadx = 0.1, ipady = 3, padx = 2, pady = 7.5)
         logfield.bind('<Button-1>', msclick9)
 
-        clrlogbutton = ttk.Button(otheropslf, text = 'Clear', style = 'btn.TButton', command = lambda: clrLog()) #This button clears logfield
+        logbasefield = tk.Entry(otheropslf, width = 10, font = LargeFont, textvariable = logbasevar) #This field takes custom base for logarithmic operation
+        logbasefield.grid(row = 5, column = 1, ipadx = 0.1, ipady = 3, padx = 2, pady = 7.5)
+        logbasefield.bind('<Button-1>', msclick10)
+
+        clrlogbutton = ttk.Button(otheropslf, text = 'Clear', style = 'btn.TButton', command = lambda: clrLog()) #This button clears logfield and logbasefield
         clrlogbutton.grid(row = 5, column = 2, padx = 2, pady = 7.5)
 
         btnlog = ttk.Button(otheropslf, text = 'Log (e)', style = 'btn.TButton', command = lambda: loge()) #These buttons are for different log operations
         btnlog.grid(row = 6, column = 0, padx = 0, pady = 10)           
 
-        btnlog10 = ttk.Button(otheropslf, text = 'Log (10)', style = 'btn.TButton', command = lambda: log10())
+        btnlog10 = ttk.Button(otheropslf, text = 'Log (x)', style = 'btn.TButton', command = lambda: logx())
         btnlog10.grid(row = 6, column = 1, padx = 0, pady = 10)
 
         btnantilog = ttk.Button(otheropslf, text = 'Antilog', style = 'btn.TButton', command = lambda: antilog())
@@ -2542,6 +2562,423 @@ class ConverterPage(tk.Frame): #This class is for Converter page
         currbtn = ttk.Button(rightlf, text = 'Convert', style = 'btn.TButton', command = lambda: convertCurr()) #This button converts currency
         currbtn.grid(row = 8, column = 3, padx = 5, pady = 5)
         currbtn.config(width = 7)
+
+class ComplexPage(tk.Frame): #This class is for the Complex & Equations page
+
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent, bg = '#222831')
+
+        def compArithPhase(): #This function calculates phase
+            try:
+                global uHist
+                global uStatement
+
+                real = float(realfield.get()) #Acquisition of required values
+                imag = float(imagfield.get())
+                z = complex(real, imag) #User input is converted into python complex number
+
+                phase = round((cmath.phase(z)), prec) #Phase is calculated in radians
+
+                comparithansvar.set(phase) #Phase is displayed
+
+                uStatement = str('You calculated phase of ' + realfield.get() + ' + ' + imagfield.get() + 'i, which is ' + comparithansfield.get() +' radians' + '\n') #Usage history statement
+                uHist.append(uStatement)
+            
+            except:
+                realvar.set('ERROR')
+                imagvar.set('ERROR')
+                comparithansvar.set('ERROR')
+
+        def compArithModulus(): #This function calculates modulus
+            try:
+                global uHist
+                global uStatement
+
+                real = float(realfield.get()) #Acquisition of required values
+                imag = float(imagfield.get())
+                z = complex(real, imag) #User input is converted into python complex number
+
+                mod = round((abs(z)), prec) #Modulus is calculated 
+
+                comparithansvar.set(mod) #Modulus is displayed
+
+                uStatement = str('You calculated modulus of ' + realfield.get() + ' + ' + imagfield.get() + 'i, which is ' + comparithansfield.get() + '\n') #Usage history statement
+                uHist.append(uStatement)
+            
+            except:
+                realvar.set('ERROR')
+                imagvar.set('ERROR')
+                comparithansvar.set('ERROR')
+
+        def compArithLoge(): #This function calculates natural log
+            try:
+                global uHist
+                global uStatement
+
+                real = float(realfield.get()) #Acquisition of required values
+                imag = float(imagfield.get())
+                z = complex(real, imag) #User input is converted into python complex number
+
+                loge = np.around((cmath.log(z, evar)), prec) #Natural log is calculated 
+
+                comparithansvar.set(loge) #Natural log is displayed
+
+                uStatement = str('You calculated natural log of ' + realfield.get() + ' + ' + imagfield.get() + 'i, which is ' + comparithansfield.get() + '\n') #Usage history statement
+                uHist.append(uStatement)
+            
+            except:
+                realvar.set('ERROR')
+                imagvar.set('ERROR')
+                comparithansvar.set('ERROR')
+
+        def compArithLogx(): #This function calculates log base x
+            try:
+                global uHist
+                global uStatement
+
+                real = float(realfield.get()) #Acquisition of required values
+                imag = float(imagfield.get())
+                base = float(logbasefield.get())
+                z = complex(real, imag) #User input is converted into python complex number
+
+                logx = np.around((cmath.log(z, base)), prec) #Log base x is calculated 
+
+                comparithansvar.set(logx) #Log base x is displayed
+
+                uStatement = str('You calculated log base ' + logbasefield.get() + ' of ' + realfield.get() + ' + ' + imagfield.get() + 'i, which is ' + comparithansfield.get() + '\n') #Usage history statement
+                uHist.append(uStatement)
+            
+            except:
+                realvar.set('ERROR')
+                imagvar.set('ERROR')
+                logbasevar.set('ERROR')
+                comparithansvar.set('ERROR')
+
+        def resetCompArith(): #This function resets complex arithmetic
+            realfield.delete(0, 'end')
+            realvar.set('Enter Real Part')
+            imagfield.delete(0, 'end')
+            imagvar.set('Enter Imaginary Part')
+            comparithansfield.delete(0, 'end')
+            comparithansvar.set('Answer Here')
+
+        def solveEquations(): #This function solves user's equations
+            try:
+                global uHist
+                global uStatement
+
+                varcount = varcombo.get() #Number of variables and thus equations is taken
+
+                if varcount == '1': #In case of 1 variable
+                    var1 = Symbol(varfield1.get()) #Taking equation variable
+
+                    eqn1 = eqnfield1.get() #Taking equation
+
+                    ans = solve((eqn1), (var1), dict = True) #Solving equation
+
+                    eqnansvar1.set(round(ans[0][var1], prec)) #Displaying output
+
+                    uStatement = str('You solved ' + varcount + ' equation ' + eqn1 + ' where ' + varfield1.get() + ' = ' + eqnansfield1.get() + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                    ans.clear() #Clearing ans dictionary for next operation
+
+                elif varcount == '2': #In case of 2 variables
+                    var1 = Symbol(varfield1.get()) #Taking equation variables
+                    var2 = Symbol(varfield2.get())
+
+                    eqn1 = eqnfield1.get() #Taking equations
+                    eqn2 = eqnfield2.get()
+
+                    ans = solve((eqn1, eqn2), (var1, var2), dict = True) #Solving equations
+
+                    eqnansvar1.set(round(ans[0][var1], prec)) #Displaying output
+                    eqnansvar2.set(round(ans[0][var2], prec))
+
+                    uStatement = str('You solved ' + varcount + ' equations ' + eqn1 + ', ' + eqn2 + ' where ' + varfield1.get() + ' = ' + eqnansfield1.get() + ', ' + varfield2.get() + ' = ' + eqnansfield2.get() + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                    ans.clear()
+
+                elif varcount == '3': #In case of 3 variables
+                    var1 = Symbol(varfield1.get()) #Taking equation variables
+                    var2 = Symbol(varfield2.get())
+                    var3 = Symbol(varfield3.get())
+
+                    eqn1 = eqnfield1.get() #Taking equations
+                    eqn2 = eqnfield2.get()
+                    eqn3 = eqnfield3.get()
+
+                    ans = solve((eqn1, eqn2, eqn3), (var1, var2, var3), dict = True) #Solving equations
+
+                    eqnansvar1.set(round(ans[0][var1], prec)) #Displaying output
+                    eqnansvar2.set(round(ans[0][var2], prec))
+                    eqnansvar3.set(round(ans[0][var3], prec))
+
+                    uStatement = str('You solved ' + varcount + ' equations ' + eqn1 + ', ' + eqn2 + ' where ' + varfield1.get() + ' = ' + eqnansfield1.get() + ', ' + varfield2.get() + ' = ' + eqnansfield2.get() + ', ' + varfield3.get() + ' = ' + eqnansfield3.get() + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                    ans.clear()
+
+                elif varcount == '4': #In case of 4 variables
+                    var1 = Symbol(varfield1.get()) #Taking equation variables
+                    var2 = Symbol(varfield2.get())
+                    var3 = Symbol(varfield3.get())
+                    var4 = Symbol(varfield4.get())
+
+                    eqn1 = eqnfield1.get() #Taking equations
+                    eqn2 = eqnfield2.get()
+                    eqn3 = eqnfield3.get()
+                    eqn4 = eqnfield4.get()
+
+                    ans = solve((eqn1, eqn2, eqn3, eqn4), (var1, var2, var3, var4), dict = True) #Solving equations
+
+                    eqnansvar1.set(round(ans[0][var1], prec)) #Displaying output
+                    eqnansvar2.set(round(ans[0][var2], prec))
+                    eqnansvar3.set(round(ans[0][var3], prec))
+                    eqnansvar4.set(round(ans[0][var4], prec))
+
+                    uStatement = str('You solved ' + varcount + ' equations ' + eqn1 + ', ' + eqn2 + ' where ' + varfield1.get() + ' = ' + eqnansfield1.get() + ', ' + varfield2.get() + ' = ' + eqnansfield2.get() + ', ' + varfield3.get() + ' = ' + eqnansfield3.get() + ', ' + varfield4.get() + ' = ' + eqnansfield4.get() + '\n') #Usage history statement
+                    uHist.append(uStatement)
+
+                    ans.clear()
+
+            except:
+                eqnansvar1.set('ERROR')
+                eqnansvar2.set('ERROR')
+                eqnansvar3.set('ERROR')
+                eqnansvar4.set('ERROR')
+
+        def resetEquations(): #This function resets equation solver
+            varfield1.delete(0, 'end')        
+            eqnvar1.set('Enter 1st Variable')        
+            varfield2.delete(0, 'end')        
+            eqnvar2.set('Enter 2nd Variable')       
+            varfield3.delete(0, 'end')        
+            eqnvar3.set('Enter 3rd Variable')        
+            varfield4.delete(0, 'end')        
+            eqnvar4.set('Enter 4th Variable')
+            eqnfield1.delete(0, 'end')
+            eqn1.set('Enter 1st Equation')
+            eqnfield2.delete(0, 'end')
+            eqn2.set('Enter 2nd Equation')
+            eqnfield3.delete(0, 'end')
+            eqn3.set('Enter 3rd Equation')
+            eqnfield4.delete(0, 'end')
+            eqn4.set('Enter 4th Equation')
+            eqnansfield1.delete(0, 'end')
+            eqnansvar1.set('1st Variable Value')
+            eqnansfield2.delete(0, 'end')
+            eqnansvar2.set('2nd Variable Value')
+            eqnansfield3.delete(0, 'end')
+            eqnansvar3.set('3rd Variable Value')
+            eqnansfield4.delete(0, 'end')
+            eqnansvar4.set('4th Variable Value')
+            varcombo.current(0)
+
+        def msclick1(event): #This function is to empty realfield upon mouse click
+            realfield.delete(0, 'end')
+            return None
+
+        def msclick2(event): #Above function for imagfield
+            imagfield.delete(0, 'end')
+            return None
+
+        def msclick3(event): #Above function for varfield1
+            varfield1.delete(0, 'end')
+            return None
+
+        def msclick4(event): #Above function for varfield2
+            varfield2.delete(0, 'end')
+            return None
+
+        def msclick5(event): #Above function for varfield3
+            varfield3.delete(0, 'end')
+            return None
+
+        def msclick6(event): #Above function for varfield4
+            varfield4.delete(0, 'end')
+            return None
+
+        def msclick7(event): #Above function for eqnfield1
+            eqnfield1.delete(0, 'end')
+            return None
+
+        def msclick8(event): #Above function for eqnfield2
+            eqnfield2.delete(0, 'end')
+            return None
+
+        def msclick9(event): #Above function for eqnfield3
+            eqnfield3.delete(0, 'end')
+            return None
+
+        def msclick10(event): #Above function for eqnfield4
+            eqnfield4.delete(0, 'end')
+            return None
+
+        def msclick11(event): #Above function for logbasefield
+            logbasefield.delete(0, 'end')
+            return None
+
+        realvar = tk.StringVar() #These variables are the text variables for all the Entry fields
+        realvar.set('Enter Real Part')
+        imagvar = tk.StringVar()
+        imagvar.set('Enter Imaginary Part')
+        logbasevar = tk.StringVar()
+        logbasevar.set('Enter Log Base')
+        comparithansvar = tk.StringVar()
+        comparithansvar.set('Answer Here')
+        eqnvar1 = tk.StringVar()
+        eqnvar1.set('Enter 1st Variable')
+        eqnvar2 = tk.StringVar()
+        eqnvar2.set('Enter 2nd Variable')
+        eqnvar3 = tk.StringVar()
+        eqnvar3.set('Enter 3rd Variable')
+        eqnvar4 = tk.StringVar()
+        eqnvar4.set('Enter 4th Variable')
+        eqn1 = tk.StringVar()
+        eqn1.set('Enter 1st Equation')
+        eqn2 = tk.StringVar()
+        eqn2.set('Enter 2nd Equation')
+        eqn3 = tk.StringVar()
+        eqn3.set('Enter 3rd Equation')
+        eqn4 = tk.StringVar()
+        eqn4.set('Enter 4th Equation')
+        eqnansvar1 = tk.StringVar()
+        eqnansvar1.set('1st Variable Value')
+        eqnansvar2 = tk.StringVar()
+        eqnansvar2.set('2nd Variable Value')
+        eqnansvar3 = tk.StringVar()
+        eqnansvar3.set('3rd Variable Value')
+        eqnansvar4 = tk.StringVar()
+        eqnansvar4.set('4th Variable Value')
+
+        label1 = tk.Label(self, text = 'Complex No.s &', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title Label
+        label1.grid(row = 0, column = 1, padx = 0, pady = 0)
+
+        label2 = tk.Label(self, text = 'Equations', font = TitleFont, fg = '#00adb5', bg = '#222831') #Title Label
+        label2.grid(row = 1, column = 1, padx = 0, pady = 0, sticky = 'n')
+
+        backbutton = ttk.Button(self, text = 'Back', style = 'btn.TButton', command = lambda: controller.show_frame(ChoicePage)) #This button takes us to the previous page
+        backbutton.grid(row = 0, column = 2, padx = 10, pady = 10, sticky = 'e')
+
+        histbutton = ttk.Button(self, text = 'History', style = 'btn.TButton', command = lambda: controller.show_frame(HistPage)) #This button takes us to the usage history page
+        histbutton.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = 'w')
+
+        complf = tk.LabelFrame(self, text = 'Complex Numbers:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains complex operations
+        complf.grid(row = 1, column = 0, padx = 10, pady = 10)
+
+        complabel = tk.Label(complf, text = 'Complex Arithmetic:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for complex arithmetic
+        complabel.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = 'w')
+
+        realfield = tk.Entry(complf, font = LargeFont, width = 17, textvariable = realvar) #This field takes real part of complex number
+        realfield.grid(row = 1, column = 0, ipadx = 1, ipady = 3, padx = 1.5, pady = 7.5)
+        realfield.bind('<Button-1>', msclick1)
+
+        imagfield = tk.Entry(complf, font = LargeFont, width = 17, textvariable = imagvar) #This field takes imaginary part of complex number
+        imagfield.grid(row = 1, column = 1, ipadx = 1, ipady = 3, padx = 1.5, pady = 7.5)
+        imagfield.bind('<Button-1>', msclick2)
+
+        logbasefield = tk.Entry(complf, font = LargeFont, width = 17, textvariable = logbasevar) #This field takes custom base of log
+        logbasefield.grid(row = 0, column = 1, ipadx = 1, ipady = 3, padx = 1.5, pady = 7.5)
+        logbasefield.bind('<Button-1>', msclick11)
+
+        comparithansfield = tk.Entry(complf, font = LargeFont, width = 17, textvariable = comparithansvar, state = 'readonly') #This field shows complex arithmetic output
+        comparithansfield.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 2.5, pady = 7.5)
+
+        resetcomparithbtn = ttk.Button(complf, text = 'Reset', style = 'btn.TButton', command = lambda: resetCompArith()) #This button resets complex arithmetic
+        resetcomparithbtn.grid(row = 0, column = 2, padx = 5, pady = 5)
+        resetcomparithbtn.config(width = 8)
+
+        phasebtn = ttk.Button(complf, text = 'Phase', style = 'btn.TButton', command = lambda: compArithPhase()) #This button is for phase calculation
+        phasebtn.grid(row = 1, column = 2, padx = 5, pady = 5)
+        phasebtn.config(width = 8)
+
+        absbtn = ttk.Button(complf, text = 'Modulus', style = 'btn.TButton', command = lambda: compArithModulus()) #This button is for modulus calculation
+        absbtn.grid(row = 2, column = 2, padx = 5, pady = 5)
+        absbtn.config(width = 8)
+
+        logebtn = ttk.Button(complf, text = 'Log (e)', style = 'btn.TButton', command = lambda: compArithLoge()) #This button is for natural log calculation
+        logebtn.grid(row = 2, column = 1, padx = 5, pady = 5, sticky = 'w')
+        logebtn.config(width = 8)
+
+        logxbtn = ttk.Button(complf, text = 'Log (x)', style = 'btn.TButton', command = lambda: compArithLogx()) #This button is for log base x calculation
+        logxbtn.grid(row = 2, column = 1, padx = 5, pady = 5, sticky = 'e')
+        logxbtn.config(width = 8)
+
+        eqnlf = tk.LabelFrame(self, text = 'Equation Solver:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains equation solver
+        eqnlf.grid(row = 1, column = 2, padx = 10, pady = 10)
+
+        varlabel = tk.Label(eqnlf, text = 'Variables:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Variable input label
+        varlabel.grid(row = 0, column = 0, padx = 3, pady = 3, sticky = 'w')   
+
+        s = ttk.Style() #Style for combo box
+        s.map('TCombobox', fieldbackground = [('readonly','white')])
+        s.map('TCombobox', selectbackground = [('readonly', 'white')])
+        s.map('TCombobox', selectforeground = [('readonly', 'black')])
+
+        varcombo = ttk.Combobox(eqnlf, width = 23, font = LargeFont, values = ['How Many Variables?', '1', '2', '3', '4'], state = 'readonly') #Combo box to select number of variables
+        varcombo.current(0)        
+        varcombo.grid(row = 0, column = 1, columnspan = 3, ipadx = 1, ipady = 3, padx = 3, pady = 3) 
+
+        varfield1 = tk.Entry(eqnlf, font = LargeFont, width = 16, textvariable = eqnvar1) #These entry fields take the equation variables from user
+        varfield1.grid(row = 1, column = 0, ipadx = 1, ipady = 3, padx = 3, pady = 3)
+        varfield1.bind('<Button-1>', msclick3)
+
+        varfield2 = tk.Entry(eqnlf, font = LargeFont, width = 16, textvariable = eqnvar2) 
+        varfield2.grid(row = 1, column = 1, ipadx = 1, ipady = 3, padx = 3, pady = 3)
+        varfield2.bind('<Button-1>', msclick4)
+
+        varfield3 = tk.Entry(eqnlf, font = LargeFont, width = 16, textvariable = eqnvar3) 
+        varfield3.grid(row = 2, column = 0, ipadx = 1, ipady = 3, padx = 3, pady = 3)
+        varfield3.bind('<Button-1>', msclick5)
+
+        varfield4 = tk.Entry(eqnlf, font = LargeFont, width = 16, textvariable = eqnvar4) 
+        varfield4.grid(row = 2, column = 1, ipadx = 1, ipady = 3, padx = 3, pady = 3)
+        varfield4.bind('<Button-1>', msclick6)
+
+        eqnlabel = tk.Label(eqnlf, text = 'Equations:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Equation input label
+        eqnlabel.grid(row = 3, column = 0, padx = 3, pady = 3, sticky = 'w')   
+
+        eqnfield1 = tk.Entry(eqnlf, font = LargeFont, width = 33, textvariable = eqn1) #These entry fields take the equations from user
+        eqnfield1.grid(row = 4, column = 0, ipadx = 1, ipady = 3, columnspan = 3, padx = 3, pady = 3)
+        eqnfield1.bind('<Button-1>', msclick7)
+
+        eqnfield2 = tk.Entry(eqnlf, font = LargeFont, width = 33, textvariable = eqn2) 
+        eqnfield2.grid(row = 5, column = 0, ipadx = 1, ipady = 3, columnspan = 3, padx = 3, pady = 3)
+        eqnfield2.bind('<Button-1>', msclick8)
+
+        eqnfield3 = tk.Entry(eqnlf, font = LargeFont, width = 33, textvariable = eqn3) 
+        eqnfield3.grid(row = 6, column = 0, ipadx = 1, ipady = 3, columnspan = 3, padx = 3, pady = 3)
+        eqnfield3.bind('<Button-1>', msclick9)
+
+        eqnfield4 = tk.Entry(eqnlf, font = LargeFont, width = 33, textvariable = eqn4) 
+        eqnfield4.grid(row = 7, column = 0, ipadx = 1, ipady = 3, columnspan = 3, padx = 3, pady = 3)
+        eqnfield4.bind('<Button-1>', msclick10)
+
+        reseteqnbtn = ttk.Button(eqnlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetEquations()) #This button resets equation solver
+        reseteqnbtn.grid(row = 3, column = 3, padx = 3, pady = 3)
+        reseteqnbtn.config(width = 8)
+
+        eqnanslabel = tk.Label(eqnlf, text = 'Answers:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Answer output label
+        eqnanslabel.grid(row = 8, column = 0, padx = 3, pady = 3, sticky = 'w')
+
+        eqnansfield1 = tk.Entry(eqnlf, font = LargeFont, width = 16, textvariable = eqnansvar1, state = 'readonly') #These fields display the values of the variables as answer
+        eqnansfield1.grid(row = 9, column = 0, ipadx = 1, ipady = 3, padx = 3, pady = 3)
+
+        eqnansfield2 = tk.Entry(eqnlf, font = LargeFont, width = 16, textvariable = eqnansvar2, state = 'readonly') 
+        eqnansfield2.grid(row = 9, column = 1, ipadx = 1, ipady = 3, padx = 3, pady = 3)
+
+        eqnansfield3 = tk.Entry(eqnlf, font = LargeFont, width = 16, textvariable = eqnansvar3, state = 'readonly') 
+        eqnansfield3.grid(row = 10, column = 0, ipadx = 1, ipady = 3, padx = 3, pady = 3)
+
+        eqnansfield4 = tk.Entry(eqnlf, font = LargeFont, width = 16, textvariable = eqnansvar4, state = 'readonly') 
+        eqnansfield4.grid(row = 10, column = 1, ipadx = 1, ipady = 3, padx = 3, pady = 3)
+
+        eqnbtn = ttk.Button(eqnlf, text = 'Solve', style = 'btn.TButton', command = lambda: solveEquations()) #This button solves user's equations
+        eqnbtn.grid(row = 8, column = 3, padx = 3, pady = 3)
+        eqnbtn.config(width = 8)
 
 class HistPage(tk.Frame): #This class is for the History page
 
