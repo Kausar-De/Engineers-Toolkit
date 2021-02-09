@@ -2655,6 +2655,132 @@ class ComplexPage(tk.Frame): #This class is for the Complex & Equations page
                 logbasevar.set('ERROR')
                 comparithansvar.set('ERROR')
 
+        def compTrigSin(): #This function calculates sin
+            try:
+                global uHist
+                global uStatement
+
+                real = float(realtrigfield.get()) #Acquisition of required values
+                imag = float(imagtrigfield.get())
+                z = complex(real, imag) #User input is converted into python complex number
+
+                ans = np.around(cmath.sin(z), prec)
+                
+                comptrigansvar.set(ans)
+
+                uStatement = str('You calculated sine of ' + realtrigfield.get() + ' + ' + imagtrigfield.get() + 'i, which is ' + comptrigansfield.get() + '\n')
+                uHist.append(uStatement)
+
+            except:
+                realtrigvar.set('ERROR')
+                imagtrigvar.set('ERROR')
+                comptrigansvar.set('ERROR')                                 
+
+        def compTrigAsin(): #This function calculates arcsin
+            try:
+                global uHist
+                global uStatement
+
+                real = float(realtrigfield.get()) #Acquisition of required values
+                imag = float(imagtrigfield.get())
+                z = complex(real, imag) #User input is converted into python complex number
+
+                ans = np.around(cmath.asin(z), prec)
+                
+                comptrigansvar.set(ans)
+
+                uStatement = str('You calculated arcsine of ' + realtrigfield.get() + ' + ' + imagtrigfield.get() + 'i, which is ' + comptrigansfield.get() + '\n')
+                uHist.append(uStatement)
+
+            except:
+                realtrigvar.set('ERROR')
+                imagtrigvar.set('ERROR')
+                comptrigansvar.set('ERROR')   
+
+        def compTrigCos(): #This function calculates cos
+            try:
+                global uHist
+                global uStatement
+
+                real = float(realtrigfield.get()) #Acquisition of required values
+                imag = float(imagtrigfield.get())
+                z = complex(real, imag) #User input is converted into python complex number
+
+                ans = np.around(cmath.cos(z), prec)
+                
+                comptrigansvar.set(ans)
+
+                uStatement = str('You calculated cosine of ' + realtrigfield.get() + ' + ' + imagtrigfield.get() + 'i, which is ' + comptrigansfield.get() + '\n')
+                uHist.append(uStatement)
+
+            except:
+                realtrigvar.set('ERROR')
+                imagtrigvar.set('ERROR')
+                comptrigansvar.set('ERROR')                                 
+
+        def compTrigAcos(): #This function calculates arccos
+            try:
+                global uHist
+                global uStatement
+
+                real = float(realtrigfield.get()) #Acquisition of required values
+                imag = float(imagtrigfield.get())
+                z = complex(real, imag) #User input is converted into python complex number
+
+                ans = np.around(cmath.acos(z), prec)
+                
+                comptrigansvar.set(ans)
+
+                uStatement = str('You calculated arccosine of ' + realtrigfield.get() + ' + ' + imagtrigfield.get() + 'i, which is ' + comptrigansfield.get() + '\n')
+                uHist.append(uStatement)
+
+            except:
+                realtrigvar.set('ERROR')
+                imagtrigvar.set('ERROR')
+                comptrigansvar.set('ERROR') 
+
+        def compTrigTan(): #This function calculates tan
+            try:
+                global uHist
+                global uStatement
+
+                real = float(realtrigfield.get()) #Acquisition of required values
+                imag = float(imagtrigfield.get())
+                z = complex(real, imag) #User input is converted into python complex number
+
+                ans = np.around(cmath.tan(z), prec)
+                
+                comptrigansvar.set(ans)
+
+                uStatement = str('You calculated tangent of ' + realtrigfield.get() + ' + ' + imagtrigfield.get() + 'i, which is ' + comptrigansfield.get() + '\n')
+                uHist.append(uStatement)
+
+            except:
+                realtrigvar.set('ERROR')
+                imagtrigvar.set('ERROR')
+                comptrigansvar.set('ERROR')                                 
+
+        def compTrigAtan(): #This function calculates arctan
+            try:
+                global uHist
+                global uStatement
+
+                real = float(realtrigfield.get()) #Acquisition of required values
+                imag = float(imagtrigfield.get())
+                z = complex(real, imag) #User input is converted into python complex number
+
+                ans = np.around(cmath.atan(z), prec)
+                
+                comptrigansvar.set(ans)
+
+                uStatement = str('You calculated arctangent of ' + realtrigfield.get() + ' + ' + imagtrigfield.get() + 'i, which is ' + comptrigansfield.get() + '\n')
+                uHist.append(uStatement)
+
+            except:
+                realtrigvar.set('ERROR')
+                imagtrigvar.set('ERROR')
+                comptrigansvar.set('ERROR') 
+
         def resetCompArith(): #This function resets complex arithmetic
             realfield.delete(0, 'end')
             realvar.set('Enter Real Part')
@@ -2662,6 +2788,14 @@ class ComplexPage(tk.Frame): #This class is for the Complex & Equations page
             imagvar.set('Enter Imaginary Part')
             comparithansfield.delete(0, 'end')
             comparithansvar.set('Answer Here')
+
+        def resetCompTrig(): #This function resets complex trigonometry
+            realtrigfield.delete(0, 'end')
+            realtrigvar.set('Enter Real Part')
+            imagtrigfield.delete(0, 'end')
+            imagtrigvar.set('Enter Imaginary Part')
+            comptrigansfield.delete(0, 'end')
+            comptrigansvar.set('Answer Here')
 
         def solveEquations(): #This function solves user's equations
             try:
@@ -2821,6 +2955,14 @@ class ComplexPage(tk.Frame): #This class is for the Complex & Equations page
             logbasefield.delete(0, 'end')
             return None
 
+        def msclick12(event): #Above function for realtrigfield
+            realtrigfield.delete(0, 'end')
+            return None
+
+        def msclick13(event): #Above function for imagtrigfield
+            imagtrigfield.delete(0, 'end')
+            return None
+
         realvar = tk.StringVar() #These variables are the text variables for all the Entry fields
         realvar.set('Enter Real Part')
         imagvar = tk.StringVar()
@@ -2829,6 +2971,12 @@ class ComplexPage(tk.Frame): #This class is for the Complex & Equations page
         logbasevar.set('Enter Log Base')
         comparithansvar = tk.StringVar()
         comparithansvar.set('Answer Here')
+        realtrigvar = tk.StringVar() 
+        realtrigvar.set('Enter Real Part')
+        imagtrigvar = tk.StringVar()
+        imagtrigvar.set('Enter Imaginary Part')
+        comptrigansvar = tk.StringVar()
+        comptrigansvar.set('Answer Here')
         eqnvar1 = tk.StringVar()
         eqnvar1.set('Enter 1st Variable')
         eqnvar2 = tk.StringVar()
@@ -2900,18 +3048,60 @@ class ComplexPage(tk.Frame): #This class is for the Complex & Equations page
         absbtn.config(width = 8)
 
         logebtn = ttk.Button(complf, text = 'Log (e)', style = 'btn.TButton', command = lambda: compArithLoge()) #This button is for natural log calculation
-        logebtn.grid(row = 2, column = 1, padx = 5, pady = 5, sticky = 'w')
+        logebtn.grid(row = 2, column = 1, padx = 2, pady = 5, sticky = 'w')
         logebtn.config(width = 8)
 
         logxbtn = ttk.Button(complf, text = 'Log (x)', style = 'btn.TButton', command = lambda: compArithLogx()) #This button is for log base x calculation
-        logxbtn.grid(row = 2, column = 1, padx = 5, pady = 5, sticky = 'e')
+        logxbtn.grid(row = 2, column = 1, padx = 2, pady = 5, sticky = 'e')
         logxbtn.config(width = 8)
+
+        comptriglabel = tk.Label(complf, text = 'Trigonometry:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for complex trigonometry
+        comptriglabel.grid(row = 3, column = 0, padx = 10, pady = 10, sticky = 'w')
+
+        realtrigfield = tk.Entry(complf, font = LargeFont, width = 17, textvariable = realtrigvar) #This field takes real part of complex number
+        realtrigfield.grid(row = 4, column = 0, ipadx = 1, ipady = 3, padx = 1.5, pady = 7.5)
+        realtrigfield.bind('<Button-1>', msclick12)
+
+        imagtrigfield = tk.Entry(complf, font = LargeFont, width = 17, textvariable = imagtrigvar) #This field takes imaginary part of complex number
+        imagtrigfield.grid(row = 4, column = 1, ipadx = 1, ipady = 3, padx = 1.5, pady = 7.5)
+        imagtrigfield.bind('<Button-1>', msclick13)
+
+        comptrigansfield = tk.Entry(complf, font = LargeFont, width = 17, textvariable = comptrigansvar, state = 'readonly') #This field shows complex trigonometry output
+        comptrigansfield.grid(row = 5, column = 0, ipadx = 1, ipady = 3, padx = 2.5, pady = 7.5)
+
+        resetcomptrigbtn = ttk.Button(complf, text = 'Reset', style = 'btn.TButton', command = lambda: resetCompTrig()) #This button resets complex trigonometry
+        resetcomptrigbtn.grid(row = 4, column = 2, padx = 5, pady = 5)
+        resetcomptrigbtn.config(width = 8)
+
+        sinbtn = ttk.Button(complf, text = 'Sin', style = 'btn.TButton', command = lambda: compTrigSin()) #This button is for sin calculation
+        sinbtn.grid(row = 5, column = 1, padx = 2, pady = 5, sticky = 'w')
+        sinbtn.config(width = 8)
+
+        arcsinbtn = ttk.Button(complf, text = 'Arcsin', style = 'btn.TButton', command = lambda: compTrigAsin()) #This button is for arcsin calculation
+        arcsinbtn.grid(row = 5, column = 1, padx = 2, pady = 5, sticky = 'e')
+        arcsinbtn.config(width = 8)
+
+        cosbtn = ttk.Button(complf, text = 'Cos', style = 'btn.TButton', command = lambda: compTrigCos()) #This button is for cos calculation
+        cosbtn.grid(row = 6, column = 0, padx = 6, pady = 5, sticky = 'w')
+        cosbtn.config(width = 8)
+
+        arccosbtn = ttk.Button(complf, text = 'Arccos', style = 'btn.TButton', command = lambda: compTrigAcos()) #This button is for arccos calculation
+        arccosbtn.grid(row = 6, column = 0, padx = 6, pady = 5, sticky = 'e')
+        arccosbtn.config(width = 8)
+
+        tanbtn = ttk.Button(complf, text = 'Tan', style = 'btn.TButton', command = lambda: compTrigTan()) #This button is for tan calculation
+        tanbtn.grid(row = 6, column = 1, padx = 2, pady = 5, sticky = 'w')
+        tanbtn.config(width = 8)
+
+        arctanbtn = ttk.Button(complf, text = 'Arctan', style = 'btn.TButton', command = lambda: compTrigAtan()) #This button is for arctan calculation
+        arctanbtn.grid(row = 6, column = 1, padx = 2, pady = 5, sticky = 'e')
+        arctanbtn.config(width = 8)
 
         eqnlf = tk.LabelFrame(self, text = 'Equation Solver:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame contains equation solver
         eqnlf.grid(row = 1, column = 2, padx = 10, pady = 10)
 
         varlabel = tk.Label(eqnlf, text = 'Variables:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Variable input label
-        varlabel.grid(row = 0, column = 0, padx = 3, pady = 3, sticky = 'w')   
+        varlabel.grid(row = 0, column = 0, padx = 3, pady = 1, sticky = 'w')   
 
         s = ttk.Style() #Style for combo box
         s.map('TCombobox', fieldbackground = [('readonly','white')])
@@ -2920,7 +3110,7 @@ class ComplexPage(tk.Frame): #This class is for the Complex & Equations page
 
         varcombo = ttk.Combobox(eqnlf, width = 23, font = LargeFont, values = ['How Many Variables?', '1', '2', '3', '4'], state = 'readonly') #Combo box to select number of variables
         varcombo.current(0)        
-        varcombo.grid(row = 0, column = 1, columnspan = 3, ipadx = 1, ipady = 3, padx = 3, pady = 3) 
+        varcombo.grid(row = 0, column = 1, columnspan = 3, ipadx = 1, ipady = 3, padx = 3, pady = 1) 
 
         varfield1 = tk.Entry(eqnlf, font = LargeFont, width = 16, textvariable = eqnvar1) #These entry fields take the equation variables from user
         varfield1.grid(row = 1, column = 0, ipadx = 1, ipady = 3, padx = 3, pady = 3)
@@ -2939,7 +3129,7 @@ class ComplexPage(tk.Frame): #This class is for the Complex & Equations page
         varfield4.bind('<Button-1>', msclick6)
 
         eqnlabel = tk.Label(eqnlf, text = 'Equations:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Equation input label
-        eqnlabel.grid(row = 3, column = 0, padx = 3, pady = 3, sticky = 'w')   
+        eqnlabel.grid(row = 3, column = 0, padx = 3, pady = 1, sticky = 'w')   
 
         eqnfield1 = tk.Entry(eqnlf, font = LargeFont, width = 33, textvariable = eqn1) #These entry fields take the equations from user
         eqnfield1.grid(row = 4, column = 0, ipadx = 1, ipady = 3, columnspan = 3, padx = 3, pady = 3)
@@ -2958,11 +3148,11 @@ class ComplexPage(tk.Frame): #This class is for the Complex & Equations page
         eqnfield4.bind('<Button-1>', msclick10)
 
         reseteqnbtn = ttk.Button(eqnlf, text = 'Reset', style = 'btn.TButton', command = lambda: resetEquations()) #This button resets equation solver
-        reseteqnbtn.grid(row = 3, column = 3, padx = 3, pady = 3)
+        reseteqnbtn.grid(row = 3, column = 3, padx = 3, pady = 1)
         reseteqnbtn.config(width = 8)
 
         eqnanslabel = tk.Label(eqnlf, text = 'Answers:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Answer output label
-        eqnanslabel.grid(row = 8, column = 0, padx = 3, pady = 3, sticky = 'w')
+        eqnanslabel.grid(row = 8, column = 0, padx = 3, pady = 1, sticky = 'w')
 
         eqnansfield1 = tk.Entry(eqnlf, font = LargeFont, width = 16, textvariable = eqnansvar1, state = 'readonly') #These fields display the values of the variables as answer
         eqnansfield1.grid(row = 9, column = 0, ipadx = 1, ipady = 3, padx = 3, pady = 3)
@@ -2977,7 +3167,7 @@ class ComplexPage(tk.Frame): #This class is for the Complex & Equations page
         eqnansfield4.grid(row = 10, column = 1, ipadx = 1, ipady = 3, padx = 3, pady = 3)
 
         eqnbtn = ttk.Button(eqnlf, text = 'Solve', style = 'btn.TButton', command = lambda: solveEquations()) #This button solves user's equations
-        eqnbtn.grid(row = 8, column = 3, padx = 3, pady = 3)
+        eqnbtn.grid(row = 8, column = 3, padx = 3, pady = 1)
         eqnbtn.config(width = 8)
 
 class HistPage(tk.Frame): #This class is for the History page
