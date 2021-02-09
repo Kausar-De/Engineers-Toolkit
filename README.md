@@ -20,6 +20,8 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 -Plotting bar graphs, histograms, line and scatter plots, pie charts and area bounded by 2 curves  
 -Unit Converter(US Imperial, UK Imperial and Metric)    
 -Real-Time Currency Converter (Powered by [Alpha Vantage API](https://www.alphavantage.co/))     
+-Arithmetic and Trigonometric operations on Complex Numbers  
+-Equation Solver supporting upto 4 variables  
 -Global precision setting  
 -Usage history  
 -Help menus to make sense of it all
@@ -43,7 +45,6 @@ As a new python developer who started coding in the lockdown, I fell in love wit
 ## Upcoming features:  
          
 -Cheat-sheet of useful math formulae, identities, etc.  
--Complex number operations  
 
 ![](Screenshots/ssconv.png)
 
