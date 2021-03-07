@@ -1223,13 +1223,13 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 Ylist = list(map(float, Y.split()))
                 Ylist = [round(i, prec) for i in Ylist]
 
-                XLim = graphtext5.get('1.0', 'end-1c') #Turn user input into list
-                XLimlist = list(map(float, XLim.split()))                
-                XLimlist = [round(i, prec) for i in XLimlist] 
+                XTick = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                XTicklist = list(map(float, XTick.split()))                
+                XTicklist = [round(i, prec) for i in XTicklist]
 
-                YLim = graphtext6.get('1.0', 'end-1c') #Turn user input into list
-                YLimlist = list(map(float, YLim.split()))                
-                YLimlist = [round(i, prec) for i in YLimlist]
+                YTick = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                YTicklist = list(map(float, YTick.split()))                
+                YTicklist = [round(i, prec) for i in YTicklist]
 
                 XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
 
@@ -1239,8 +1239,10 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                 f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
-                plt.xlim(XLimlist)
-                plt.ylim(YLimlist)
+                a.set_xticks(XTicklist)
+                a.set_xticklabels(XTicklist)
+                a.set_yticks(YTicklist)
+                a.set_yticklabels(YTicklist)
                 a.set_xlabel(XLbl)
                 a.set_ylabel(YLbl)
                 a.set_title(GraphTitle)
@@ -1284,13 +1286,13 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 Ylist = list(map(float, Y.split()))
                 Ylist = [round(i, prec) for i in Ylist]
 
-                XLim = graphtext5.get('1.0', 'end-1c') #Turn user input into list
-                XLimlist = list(map(float, XLim.split()))                
-                XLimlist = [round(i, prec) for i in XLimlist] 
+                XTick = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                XTicklist = list(map(float, XTick.split()))                
+                XTicklist = [round(i, prec) for i in XTicklist]
 
-                YLim = graphtext6.get('1.0', 'end-1c') #Turn user input into list
-                YLimlist = list(map(float, YLim.split()))                
-                YLimlist = [round(i, prec) for i in YLimlist]
+                YTick = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                YTicklist = list(map(float, YTick.split()))                
+                YTicklist = [round(i, prec) for i in YTicklist]
 
                 XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
 
@@ -1300,8 +1302,10 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                 f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
-                plt.xlim(XLimlist)
-                plt.ylim(YLimlist)
+                a.set_xticks(XTicklist)
+                a.set_xticklabels(XTicklist)
+                a.set_yticks(YTicklist)
+                a.set_yticklabels(YTicklist)
                 a.set_xlabel(XLbl)
                 a.set_ylabel(YLbl)
                 a.set_title(GraphTitle)
@@ -1345,13 +1349,13 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 Ylist = list(map(float, Y.split()))
                 Ylist = [round(i, prec) for i in Ylist]
 
-                XLim = graphtext5.get('1.0', 'end-1c') #Turn user input into list
-                XLimlist = list(map(float, XLim.split()))                
-                XLimlist = [round(i, prec) for i in XLimlist] 
+                XTick = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                XTicklist = list(map(float, XTick.split()))                
+                XTicklist = [round(i, prec) for i in XTicklist]
 
-                YLim = graphtext6.get('1.0', 'end-1c') #Turn user input into list
-                YLimlist = list(map(float, YLim.split()))                
-                YLimlist = [round(i, prec) for i in YLimlist]
+                YTick = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                YTicklist = list(map(float, YTick.split()))                
+                YTicklist = [round(i, prec) for i in YTicklist]
 
                 XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
 
@@ -1361,8 +1365,10 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                 f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
-                plt.xlim(XLimlist)
-                plt.ylim(YLimlist)
+                a.set_xticks(XTicklist)
+                a.set_xticklabels(XTicklist)
+                a.set_yticks(YTicklist)
+                a.set_yticklabels(YTicklist)
                 a.set_xlabel(XLbl)
                 a.set_ylabel(YLbl)
                 a.set_title(GraphTitle)
@@ -1406,13 +1412,13 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                 Ylist = list(map(float, Y.split()))
                 Ylist = [round(i, prec) for i in Ylist]
 
-                XLim = graphtext5.get('1.0', 'end-1c') #Turn user input into list
-                XLimlist = list(map(float, XLim.split()))                
-                XLimlist = [round(i, prec) for i in XLimlist] 
+                XTick = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                XTicklist = list(map(float, XTick.split()))                
+                XTicklist = [round(i, prec) for i in XTicklist]
 
-                YLim = graphtext6.get('1.0', 'end-1c') #Turn user input into list
-                YLimlist = list(map(float, YLim.split()))                
-                YLimlist = [round(i, prec) for i in YLimlist]
+                YTick = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                YTicklist = list(map(float, YTick.split()))                
+                YTicklist = [round(i, prec) for i in YTicklist]
 
                 XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
 
@@ -1422,8 +1428,10 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                 f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                 a = f.add_subplot(111)
-                plt.xlim(XLimlist)
-                plt.ylim(YLimlist)
+                a.set_xticks(XTicklist)
+                a.set_xticklabels(XTicklist)
+                a.set_yticks(YTicklist)
+                a.set_yticklabels(YTicklist)
                 a.set_xlabel(XLbl)
                 a.set_ylabel(YLbl)
                 a.set_title(GraphTitle)
@@ -1515,13 +1523,13 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                     Y2list = list(map(float, Y2.split()))
                     Y2list = [round(i, prec) for i in Y2list]
 
-                    XLim = graphtext5.get('1.0', 'end-1c') #Turn user input into list
-                    XLimlist = list(map(float, XLim.split()))                
-                    XLimlist = [round(i, prec) for i in XLimlist] 
+                    XTick = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                    XTicklist = list(map(float, XTick.split()))                
+                    XTicklist = [round(i, prec) for i in XTicklist]
 
-                    YLim = graphtext6.get('1.0', 'end-1c') #Turn user input into list
-                    YLimlist = list(map(float, YLim.split()))                
-                    YLimlist = [round(i, prec) for i in YLimlist]
+                    YTick = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                    YTicklist = list(map(float, YTick.split()))                
+                    YTicklist = [round(i, prec) for i in YTicklist]
 
                     XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
 
@@ -1531,8 +1539,10 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
                     f = Figure(figsize = (6.93, 3.3), dpi = 100) #Defines graph dimensions
                     a = f.add_subplot(111)
-                    plt.xlim(XLimlist)
-                    plt.ylim(YLimlist)
+                    a.set_xticks(XTicklist)
+                    a.set_xticklabels(XTicklist)
+                    a.set_yticks(YTicklist)
+                    a.set_yticklabels(YTicklist)
                     a.set_xlabel(XLbl)
                     a.set_ylabel(YLbl)
                     a.plot(Xlist, Y1list, color = '#00adb5') #Plots the graph
@@ -1572,12 +1582,26 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
                     X2list = list(map(float, X2.split()))
                     X2list = [round(i, prec) for i in X2list]
 
+                    XTick = graphtext5.get('1.0', 'end-1c') #Turn user input into list
+                    XTicklist = list(map(float, XTick.split()))                
+                    XTicklist = [round(i, prec) for i in XTicklist]
+
+                    YTick = graphtext6.get('1.0', 'end-1c') #Turn user input into list
+                    YTicklist = list(map(float, YTick.split()))                
+                    YTicklist = [round(i, prec) for i in YTicklist]
+
+                    XLbl = graphtext7.get('1.0', 'end-1c') #Takes X Axis label from user                
+
+                    YLbl = graphtext8.get('1.0', 'end-1c') #Takes Y Axis label from user  
+
                     GraphTitle = graphtext9.get('1.0', 'end-1c') #Takes graph title from user 
 
                     f = Figure(figsize = (7.55, 3.3), dpi = 100) #Defines graph dimensions
                     a = f.add_subplot(111)
-                    plt.xlim(XLimlist)
-                    plt.ylim(YLimlist)
+                    a.set_xticks(XTicklist)
+                    a.set_xticklabels(XTicklist)
+                    a.set_yticks(YTicklist)
+                    a.set_yticklabels(YTicklist)
                     a.set_xlabel(XLbl)
                     a.set_ylabel(YLbl)
                     a.plot(X1list, Ylist, color = '#00adb5') #Plots the graph
@@ -1626,9 +1650,9 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
 
         def resetAxis(): #This function is for resetting axis limit text fields         
             graphtext5.delete('1.0', 'end')
-            graphtext5.insert(tk.END, 'Enter X Axis Limit')
+            graphtext5.insert(tk.END, 'Enter X Axis Ticks')
             graphtext6.delete('1.0', 'end')
-            graphtext6.insert(tk.END, 'Enter Y Axis Limit')
+            graphtext6.insert(tk.END, 'Enter Y Axis Ticks')
 
         def resetGraph(): #This function is for resetting the graph
             try:
@@ -1772,17 +1796,17 @@ class MatPlotLibPage(tk.Frame): #This class is for Graph page
         limitlf = tk.LabelFrame(self, text = 'Axis Customization:', font = LabelFont, fg = '#00adb5', bg = '#393e46') #This label frame takes input for customizing axis limits and labels
         limitlf.grid(row = 1, column = 2, padx = 5, pady = 10)
 
-        graphlabel3 = tk.Label(limitlf, text = 'Axis Limits:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for axis limit input field
+        graphlabel3 = tk.Label(limitlf, text = 'Axis Ticks:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for axis tick input field
         graphlabel3.grid(row = 0, column = 0, padx = 5, pady = 5, sticky = 'w')
 
-        graphtext5 = tk.Text(limitlf, font = LargeFont, height = 1.3, width = 18) #This field takes input for X axis limit
+        graphtext5 = tk.Text(limitlf, font = LargeFont, height = 1.3, width = 18) #This field takes input for X axis ticks
         graphtext5.grid(row = 1, column = 0, ipady = 1, padx = 5, pady = 7)
-        graphtext5.insert(tk.END, 'Enter X Axis Limit')
+        graphtext5.insert(tk.END, 'Enter X Axis Ticks')
         graphtext5.bind('<Button-1>', msclick5)
 
-        graphtext6 = tk.Text(limitlf, font = LargeFont, height = 1.3, width = 18) #This field takes input for Y axis limit
+        graphtext6 = tk.Text(limitlf, font = LargeFont, height = 1.3, width = 18) #This field takes input for Y axis ticks
         graphtext6.grid(row = 2, column = 0, ipady = 1, padx = 5, pady = 7)     
-        graphtext6.insert(tk.END, 'Enter Y Axis Limit')
+        graphtext6.insert(tk.END, 'Enter Y Axis Ticks')
         graphtext6.bind('<Button-1>', msclick6)       
 
         graphlabel4 = tk.Label(limitlf, text = 'Axis Labels:', font = LabelFont, fg = '#00adb5', bg = '#222831') #Label for axis label input field
